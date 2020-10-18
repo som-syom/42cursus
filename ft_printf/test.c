@@ -4,14 +4,15 @@
 
 int main()
 {
+    int aa = 12345;
     printf("=========   printf  =========\n");
-    int ret1 = printf(" 21.1333");
+    int ret1 = printf("aa%+08d", aa);
     printf("       ret_val : %d\n", ret1);
     printf("========= ft_printf =========\n");
-    int ret2 = ft_printf(" 21.1333");
+    int ret2 = ft_printf("aa%+08d", aa);
     printf("       ret_val : %d\n", ret2);
 
     int a = 111;
-    printf("\ntest\n");
-    printf("%x", a);
+    printf("\n-----test-----\n");
+    printf("||%0d||\n", a);
 }
