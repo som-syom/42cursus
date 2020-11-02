@@ -5,17 +5,22 @@
 
 int main()
 {
-    float aa = 0.12345;
+    char *str = "abcde";
+    // float aa = 0.12345;
     printf("=========   printf  =========]\n");
-    int ret1 = printf("%f\n", aa);
-    printf("       ret_val : %d\n", ret1);
     printf("|||");
-    int ret11 = printf("%c", 128);
+    int ret1 = printf("%8.6S", str);
+    //int ret1 = printf("%s", "NULL");
     printf("|||\n");
-    printf("ret_val : %d\n", ret11);
-    printf("========= ft_printf =========\n");
+    printf("ret_val : %d\n", ret1);
+    // int e = 12345;
+    // int *ee = &e;
+    // printf("e == %d\n", *ee);
+    // printf("n ===== %n", ee);
+    // printf("\ne == %d", *ee);
+    printf("\n========= ft_printf =========\n");
     ft_putstr_fd("|||", 1);
-    int ret2 = ft_printf("%7c", 'z');
+    int ret2 = ft_printf("%8.6s", str);
     ft_putstr_fd("|||\n", 1);
     printf("ret_val : %d\n", ret2);
 

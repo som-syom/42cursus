@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/07 02:33:24 by dhyeon            #+#    #+#             */
-/*   Updated: 2020/10/31 19:39:06 by dhyeon           ###   ########.fr       */
+/*   Updated: 2020/11/02 21:30:08 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,16 +61,22 @@ void	check_width(char **fmt_ptr, t_flags *flag, va_list args)
 
 void	check_precision(char **fmt_ptr, t_flags *flag, va_list args)
 {
-	if (**fmt_ptr == '*')
+	if (**fmt_ptr == '.')
 	{
-		flag->precision = va_arg(args, int);
+		flag->dot = 1;
 		(*fmt_ptr)++;
-	}
-	else
-	{
-		flag->precision = ft_atoi(*fmt_ptr);
-		while (ft_isdigit(**fmt_ptr))
+		if (**fmt_ptr == '*')
+		{
+			flag->precision = va_arg(args, int);
 			(*fmt_ptr)++;
+		}
+		else
+		{
+			flag->precision = ft_atoi(*fmt_ptr);
+		// test_print(flag);
+			while (ft_isdigit(**fmt_ptr))
+				(*fmt_ptr)++;
+		}
 	}
 }
 
@@ -98,43 +104,90 @@ void	check_len(char **fmt_ptr, t_flags *flag)
 	}
 }
 
-void	check_type(char **fmt_ptr, t_flags *flag)
+void	check_type(char *fmt_ptr, t_flags *flag)
 {
-	if (**fmt_ptr == 'c' || **fmt_ptr == 's' || **fmt_ptr == 'p' 
-		|| **fmt_ptr =='d' || **fmt_ptr == 'i' || **fmt_ptr == 'u' 
-		|| **fmt_ptr == 'x' || **fmt_ptr == 'X' || **fmt_ptr == '%'
-		|| **fmt_ptr == 'n' || **fmt_ptr == 'f' || **fmt_ptr == 'g' 
-		|| **fmt_ptr =='e')
+	char *types;
+
+	types = "cCsSdDioOuUxXp%n";
+	while (*types)
 	{
-		flag->type = **fmt_ptr;
-		(*fmt_ptr)++;
+		if (*fmt_ptr == *types)
+			flag->type = *types;
+		if (flag->type != 0)
+			break ;
+		types++;
 	}
 }
-void	print_c(char **fmt_ptr, t_flags *flag, va_list args, int *return_val)
+
+void	print_space(int width, int precision, int len, int *return_val)
 {
-	if (flag->width > 0)
+	int i;
+
+	i = 0;
+	if (precision > 0 && len > precision)
+		i += precision;
+	width -= len;
+	while (i < width)
 	{
-		flag->width--;
-		while (flag->width != 0)
-		{
-			ft_putchar_fd(' ', 1);
-			flag->width--;
-			(*return_val)++;
-		}
+		ft_putchar_fd(' ', 1);
+		i++;
+		(*return_val)++;
 	}
+}
+
+void	print_c(t_flags *flag, va_list args, int *return_val)
+{
+	if (flag->plus_minus >= 0)
+		print_space(flag->width, 0, 1, return_val);
 	ft_putchar_fd(va_arg(args, int), 1);
+	if (flag->plus_minus == -1)
+		print_space(flag->width, 0, 1, return_val);
 	(*return_val)++;
-
-	(*fmt_ptr)++;
-	(*fmt_ptr)--;
-
-	
 }
 
-void	print_type(char **fmt_ptr, t_flags *flag, va_list args, int *return_val)
+void	print_s_str(t_flags *flag, int len, char *str, int *return_val)
+{
+	len--;
+	len++;	//
+	flag->sharp++; //
+	while (len > 0)
+	{
+		ft_putchar_fd((*str), 1);
+		str++;
+		(*return_val)++;
+		len--;
+	}
+}
+
+void	print_s(t_flags *flag, va_list args, int *return_val)
+{
+	char	*str;
+	int		len;
+
+	//test_print(flag);
+	str = va_arg(args, char*);
+	if (str == NULL)
+		str = "(null)";
+	if (flag->dot == 1 && flag->precision == 0)
+		str = "";
+	len = ft_strlen(str);
+	if (flag->precision > len)
+		flag->precision = len;
+	if (flag->precision != 0 && flag->precision < len)
+		len = flag->precision;
+	if (flag->plus_minus == 0 && flag->width != 0)
+		print_space(flag->width, flag->precision, len, return_val);
+	print_s_str(flag, len, str, return_val);
+	if (flag->plus_minus == -1 && flag->width != 0)
+		print_space(flag->width, flag->precision, len, return_val);
+}
+
+void	print_type(t_flags *flag, va_list args, int *return_val)
 {
 	if (flag->type == 'c')
-		print_c(fmt_ptr, flag, args, return_val);
+		print_c(flag, args, return_val);
+	else if (flag->type == 's')
+		print_s(flag, args, return_val);
 }
 
 void	parse_print_format(va_list args, char **format, int *return_val)
@@ -149,11 +202,11 @@ void	parse_print_format(va_list args, char **format, int *return_val)
 	while (check_flag(*fmt_ptr, flag))
 		fmt_ptr++;
 	check_width(&fmt_ptr, flag, args);
-	if (*fmt_ptr == '.')
-		check_precision(&fmt_ptr, flag, args);
-	check_len(&fmt_ptr, flag);
-	check_type(&fmt_ptr, flag);
-	print_type(&fmt_ptr, flag, args, return_val);
+	check_precision(&fmt_ptr, flag, args);
+	// check_len(&fmt_ptr, flag);
+	check_type(fmt_ptr, flag);
+	fmt_ptr++;
+	print_type(flag, args, return_val);
 	(*format) = fmt_ptr;
 	//test_print(flag);
 }
