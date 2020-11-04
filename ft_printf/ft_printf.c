@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/07 02:33:24 by dhyeon            #+#    #+#             */
-/*   Updated: 2020/11/02 21:30:08 by dhyeon           ###   ########.fr       */
+/*   Updated: 2020/11/04 21:02:51 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,15 +119,15 @@ void	check_type(char *fmt_ptr, t_flags *flag)
 	}
 }
 
-void	print_space(int width, int precision, int len, int *return_val)
+void	print_space(t_flags *flag, int len, int *return_val)
 {
-	int i;
+	int		i;
 
 	i = 0;
-	if (precision > 0 && len > precision)
-		i += precision;
-	width -= len;
-	while (i < width)
+	if (flag->precision > 0 && len > flag->precision)
+		i += flag->precision;
+	flag->width -= len;
+	while (i < flag->width)
 	{
 		ft_putchar_fd(' ', 1);
 		i++;
@@ -138,18 +138,15 @@ void	print_space(int width, int precision, int len, int *return_val)
 void	print_c(t_flags *flag, va_list args, int *return_val)
 {
 	if (flag->plus_minus >= 0)
-		print_space(flag->width, 0, 1, return_val);
+		print_space(flag, 1, return_val);
 	ft_putchar_fd(va_arg(args, int), 1);
 	if (flag->plus_minus == -1)
-		print_space(flag->width, 0, 1, return_val);
+		print_space(flag, 1, return_val);
 	(*return_val)++;
 }
 
-void	print_s_str(t_flags *flag, int len, char *str, int *return_val)
+void	print_s_str(int len, char *str, int *return_val)
 {
-	len--;
-	len++;	//
-	flag->sharp++; //
 	while (len > 0)
 	{
 		ft_putchar_fd((*str), 1);
@@ -176,10 +173,96 @@ void	print_s(t_flags *flag, va_list args, int *return_val)
 	if (flag->precision != 0 && flag->precision < len)
 		len = flag->precision;
 	if (flag->plus_minus == 0 && flag->width != 0)
-		print_space(flag->width, flag->precision, len, return_val);
-	print_s_str(flag, len, str, return_val);
+		print_space(flag, len, return_val);
+	print_s_str(len, str, return_val);
 	if (flag->plus_minus == -1 && flag->width != 0)
-		print_space(flag->width, flag->precision, len, return_val);
+		print_space(flag, len, return_val);
+}
+
+void	print_d_width(t_flags *flag, int d, int len, int *return_val)
+{
+	char	a;
+	int		i;
+
+	i = 0;
+	if (flag->zero == 1)
+		a = '0';
+	else
+		a = ' ';
+	if (flag->zero == 1 && d < 0)
+	{
+		ft_putchar_fd('-', 1);
+		(*return_val)++;
+	}
+	if (flag->sign == '+' || (flag->sign == '-' && flag->zero == 0))
+		i++;
+	if (flag->width > flag->precision && len < flag->precision)
+		flag->width -=  flag->precision;
+	else if (flag->width <= len || flag->width <= flag->precision)
+		flag->width = 0;
+	else if (flag->width > len)
+		flag->width -= len;
+	while (i < flag->width)
+	{
+		ft_putchar_fd(a, 1);
+		i++;
+		(*return_val)++;
+	}
+}
+
+void	print_d_num(t_flags *flag, char *str_d, int *return_val)
+{
+	int len;
+	int i;
+
+	i = 0;
+	if (flag->zero == 0 && (flag->sign == '+' || flag->sign == '-'))
+	{
+		ft_putchar_fd(flag->sign, 1);
+		(*return_val)++;
+	}
+	if (flag->sign == '-')
+		(str_d)++;
+	// printf("str = %s\n", str_d);
+	len = ft_strlen(str_d);
+	// printf("0 = %d\n", flag->precision - len);
+	// test_print(flag);
+	if (len < flag->precision)
+	{
+		while (i < (flag->precision - len))
+		{
+			ft_putchar_fd('0', 1);
+			i++;
+			(*return_val)++;
+		}
+	}
+	ft_putstr_fd(str_d, 1);
+	(*return_val) += len;
+}
+
+void	check_sign(t_flags *flag, int d, int len)
+{
+	if (flag->plus_minus == 1 && d > 0)
+		flag->sign = '+';
+	else if ((d < 0 && flag->zero == 1) || (d < 0 && flag->precision > len))
+		flag->sign = '-';
+}
+
+void	print_d(t_flags *flag, va_list args, int *return_val)
+{
+	int		d;
+	int		len;
+	char	*str_d;
+
+	d = va_arg(args, int);
+	str_d = ft_itoa(d);
+	len = ft_strlen(str_d);
+	check_sign(flag, d, len);
+	if (flag->plus_minus >= 0)
+		print_d_width(flag, d, len, return_val);
+	print_d_num(flag, str_d, return_val);
+	if (flag->plus_minus == -1)
+		print_d_width(flag, d, len, return_val);
 }
 
 void	print_type(t_flags *flag, va_list args, int *return_val)
@@ -188,6 +271,9 @@ void	print_type(t_flags *flag, va_list args, int *return_val)
 		print_c(flag, args, return_val);
 	else if (flag->type == 's')
 		print_s(flag, args, return_val);
+	else if (flag->type == 'd' || flag->type == 'i')
+		print_d(flag, args, return_val);
+
 }
 
 void	parse_print_format(va_list args, char **format, int *return_val)
