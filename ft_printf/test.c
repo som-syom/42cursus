@@ -9,7 +9,8 @@ int main()
     // float aa = 0.12345;
     printf("=========   printf  =========]\n");
     printf("|||");
-    int ret1 = printf("%08.5d", -14);
+    char *sss = 0;
+    int ret1 = printf("%.*s", -3, sss);
     //int ret1 = printf("%s", "NULL");
     printf("|||\n");
     printf("ret_val : %d\n", ret1);
@@ -20,7 +21,7 @@ int main()
     // printf("\ne == %d", *ee);
     printf("\n========= ft_printf =========\n");
     ft_putstr_fd("|||", 1);
-    int ret2 = ft_printf("%08.5d", -14);
+    int ret2 = ft_printf("%.*s", -3, sss);
     ft_putstr_fd("|||\n", 1);
     printf("ret_val : %d\n", ret2);
 

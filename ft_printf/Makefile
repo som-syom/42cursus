@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dhyeon <dhyeon@student.42.kr>              +#+  +:+       +#+         #
+#    By: dhyeon <dhyeon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/19 05:21:35 by dhyeon            #+#    #+#              #
-#    Updated: 2020/10/19 05:47:59 by dhyeon           ###   ########.fr        #
+#    Updated: 2020/11/05 21:09:50 by dhyeon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,11 @@ CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 
 FILES = ft_printf \
-		testprint
+		testprint \
+		print_cs \
+		print_di \
+		check_flag \
+		convert_base \
 
 SRCS_DIR = ./
 SRCS = $(addprefix $(SRCS_DIR), $(addsuffix .c, $(FILES)))
