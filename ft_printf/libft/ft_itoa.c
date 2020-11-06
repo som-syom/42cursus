@@ -6,13 +6,13 @@
 /*   By: dhyeon <dhyeon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 09:53:35 by dhyeon            #+#    #+#             */
-/*   Updated: 2020/07/02 10:39:30 by dhyeon           ###   ########.fr       */
+/*   Updated: 2020/11/06 20:01:20 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_to_num(char *res, int n, int i)
+char	*ft_to_num(char *res, long long int n, int i)
 {
 	long long	nbr;
 	int			j;
@@ -33,7 +33,7 @@ char	*ft_to_num(char *res, int n, int i)
 	return (res);
 }
 
-char	*ft_itoa(int n)
+char	*ft_itoa(long long int n)
 {
 	char		*res;
 	int			i;

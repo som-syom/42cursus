@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/05 20:59:21 by dhyeon            #+#    #+#             */
-/*   Updated: 2020/11/05 21:00:05 by dhyeon           ###   ########.fr       */
+/*   Updated: 2020/11/06 22:31:29 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ int		check_flag(char fmt_ptr, t_flags *flag)
 {
 
 	if (fmt_ptr == '+')
-		flag->plus_minus = 1;
+		flag->plus = 1;
 	else if (fmt_ptr == '-')
-		flag->plus_minus = -1;
+		flag->minus = -1;
 	else if (fmt_ptr == ' ')
 		flag->space = 1;
 	else if (fmt_ptr == '#')
@@ -33,7 +33,8 @@ int		check_flag(char fmt_ptr, t_flags *flag)
 
 void	init_flag(t_flags *flag)
 {
-	flag->plus_minus = 0;
+	flag->plus = 0;
+	flag->minus = 0;
 	flag->zero = 0;
 	flag->space = 0;
 	flag->dot = 0;
@@ -56,6 +57,11 @@ void	check_width(char **fmt_ptr, t_flags *flag, va_list args)
 		flag->width = ft_atoi(*fmt_ptr);
 		while (ft_isdigit(**fmt_ptr))
 			(*fmt_ptr)++;
+	}
+	if (flag->width < 0)
+	{
+		flag->minus = -1;
+		flag->width *= -1;
 	}
 }
 
@@ -80,7 +86,6 @@ void	check_precision(char **fmt_ptr, t_flags *flag, va_list args)
 	}
 	if (flag->precision < 0)
 	{
-		flag->dot = 0;
 		flag->precision = 0;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/30 04:57:12 by dhyeon            #+#    #+#             */
-/*   Updated: 2020/07/03 20:54:23 by dhyeon           ###   ########.fr       */
+/*   Updated: 2020/11/06 19:50:16 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ char			*ft_substr(char const *s, unsigned int start, size_t len);
 char			*ft_strjoin(char const *s1, char const *s2);
 char			*ft_strtrim(char const *s1, char const *set);
 char			**ft_split(char const *s1, char c);
-char			*ft_itoa(int n);
+char			*ft_itoa(long long int n);
 char			*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 
 void			ft_putchar_fd(char c, int fd);

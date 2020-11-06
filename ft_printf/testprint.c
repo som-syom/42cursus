@@ -3,7 +3,8 @@
 void	test_print(t_flags *flag)
 {
 	printf("=======t_flags=======\n");
-	printf("[[[ plus_minus = %d\n", flag->plus_minus);
+	printf("[[[ plus = %d\n", flag->plus);
+	printf("[[[ minus = %d\n", flag->minus);
 	printf("[[[ zero = %d\n", flag->zero);
 	printf("[[[ space = %d\n", flag->space);
 	printf("[[[ dot = %d\n", flag->dot);

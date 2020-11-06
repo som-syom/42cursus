@@ -6,12 +6,13 @@
 /*   By: dhyeon <dhyeon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/07 02:33:24 by dhyeon            #+#    #+#             */
-/*   Updated: 2020/11/05 21:00:31 by dhyeon           ###   ########.fr       */
+/*   Updated: 2020/11/06 21:30:54 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include "./libft/libft.h"
+
 
 void	print_type(t_flags *flag, va_list args, int *return_val)
 {
@@ -21,6 +22,15 @@ void	print_type(t_flags *flag, va_list args, int *return_val)
 		print_s(flag, args, return_val);
 	else if (flag->type == 'd' || flag->type == 'i')
 		print_d(flag, args, return_val);
+	else if (flag->type == 'u')
+		print_u(flag, args, return_val);
+	else if (flag->type == 'x' || flag-> type == 'X')
+		print_x(flag, args, return_val);
+	else if (flag->type == 'p')
+		print_p(flag, args, return_val);
+	else if (flag->type == '%')
+		print_pct(flag, return_val);
+		
 }
 
 void	parse_print_format(va_list args, char **format, int *return_val)
