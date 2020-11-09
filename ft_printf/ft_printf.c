@@ -6,31 +6,29 @@
 /*   By: dhyeon <dhyeon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/07 02:33:24 by dhyeon            #+#    #+#             */
-/*   Updated: 2020/11/06 21:30:54 by dhyeon           ###   ########.fr       */
+/*   Updated: 2020/11/09 22:09:32 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include "./libft/libft.h"
 
-
 void	print_type(t_flags *flag, va_list args, int *return_val)
 {
 	if (flag->type == 'c')
 		print_c(flag, args, return_val);
-	else if (flag->type == 's') // 조금 수정 필요
+	else if (flag->type == 's')
 		print_s(flag, args, return_val);
 	else if (flag->type == 'd' || flag->type == 'i')
 		print_d(flag, args, return_val);
 	else if (flag->type == 'u')
 		print_u(flag, args, return_val);
-	else if (flag->type == 'x' || flag-> type == 'X')
+	else if (flag->type == 'x' || flag->type == 'X')
 		print_x(flag, args, return_val);
 	else if (flag->type == 'p')
 		print_p(flag, args, return_val);
 	else if (flag->type == '%')
 		print_pct(flag, return_val);
-		
 }
 
 void	parse_print_format(va_list args, char **format, int *return_val)
@@ -46,12 +44,10 @@ void	parse_print_format(va_list args, char **format, int *return_val)
 		fmt_ptr++;
 	check_width(&fmt_ptr, flag, args);
 	check_precision(&fmt_ptr, flag, args);
-	// check_len(&fmt_ptr, flag);
 	check_type(fmt_ptr, flag);
 	fmt_ptr++;
 	print_type(flag, args, return_val);
 	(*format) = fmt_ptr;
-	//test_print(flag);
 }
 
 int		ft_printf(const char *format, ...)
@@ -64,10 +60,7 @@ int		ft_printf(const char *format, ...)
 	while (*format)
 	{
 		if (*format == '%')
-		{
 			parse_print_format(args, (char **)&format, &return_val);
-			//printf("status = %s||", format);
-		}
 		else
 		{
 			ft_putchar_fd(*format, 1);

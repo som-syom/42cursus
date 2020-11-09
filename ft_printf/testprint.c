@@ -12,5 +12,5 @@ void	test_print(t_flags *flag)
 	printf("[[[ sharp = %d\n", flag->sharp);
 	printf("[[[ precision = %d\n", flag->precision);
 	printf("[[[ type = %c\n", flag->type);
-	printf("[[[ sign = %c\n", flag->sign);
+	printf("[[[ sign = |%c|\n", flag->sign);
 }

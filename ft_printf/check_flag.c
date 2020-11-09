@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/05 20:59:21 by dhyeon            #+#    #+#             */
-/*   Updated: 2020/11/06 22:31:29 by dhyeon           ###   ########.fr       */
+/*   Updated: 2020/11/09 22:18:07 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 int		check_flag(char fmt_ptr, t_flags *flag)
 {
-
 	if (fmt_ptr == '+')
 		flag->plus = 1;
 	else if (fmt_ptr == '-')
@@ -28,7 +27,6 @@ int		check_flag(char fmt_ptr, t_flags *flag)
 		flag->zero = 1;
 	else
 		return (0);
-	return (1);
 }
 
 void	init_flag(t_flags *flag)
@@ -79,7 +77,6 @@ void	check_precision(char **fmt_ptr, t_flags *flag, va_list args)
 		else
 		{
 			flag->precision = ft_atoi(*fmt_ptr);
-		// test_print(flag);
 			while (ft_isdigit(**fmt_ptr))
 				(*fmt_ptr)++;
 		}
@@ -87,6 +84,7 @@ void	check_precision(char **fmt_ptr, t_flags *flag, va_list args)
 	if (flag->precision < 0)
 	{
 		flag->precision = 0;
+		flag->dot = 0;
 	}
 }
 

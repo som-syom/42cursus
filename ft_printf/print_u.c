@@ -6,41 +6,64 @@
 /*   By: dhyeon <dhyeon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 20:26:30 by dhyeon            #+#    #+#             */
-/*   Updated: 2020/11/06 21:30:29 by dhyeon           ###   ########.fr       */
+/*   Updated: 2020/11/09 22:07:20 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include "./libft/libft.h"
 
-void	print_u_width(t_flags *flag, int *return_val)
+void	check_u_sign_flag(t_flags *flag, int *len, char **str_d)
 {
-	char a;
-
-	if (flag->zero == 1 && flag->dot == 0)
-		a = '0';
+	if (flag->precision > (*len))
+		flag->precision -= (*len);
 	else
-		a = ' ';
+		flag->precision = 0;
 	if (flag->sign != 0)
-		flag->width--;
-	while (flag->width > 0)
-	{
-		ft_putchar_fd(a, 1);
-		(*return_val)++;
-		flag->width--;
-	}
+		(*len)++;
+	if (flag->width > (*len) + flag->precision)
+		flag->width = flag->width - (flag->precision + (*len));
+	else
+		flag->width = 0;
+	(*len) = flag->width + flag->precision + ft_strlen(*str_d);
+	if (flag->sign != 0)
+		(*len)++;
 }
 
-void	print_u_num(t_flags *flag, char *str, int *return_val)
+void	print_u_right(t_flags *flag, char *str, int len, int *return_val)
 {
-	while (flag->precision > 0)
-	{
+	while (flag->width-- > 0)
+		ft_putchar_fd(' ', 1);
+	while (flag->precision-- > 0)
 		ft_putchar_fd('0', 1);
-		(*return_val)++;
-		flag->precision--;
+	ft_putstr_fd(str, 1);
+	(*return_val) += len;
+}
+
+void	print_u_zero_right(t_flags *flag, char *str, int len, int *return_val)
+{
+	if (flag->dot == 1)
+	{
+		while (flag->width-- > 0)
+			ft_putchar_fd(' ', 1);
+	}
+	else
+	{
+		while (flag->width-- > 0)
+			ft_putchar_fd('0', 1);
 	}
 	ft_putstr_fd(str, 1);
-	(*return_val) += ft_strlen(str);
+	(*return_val) += len;
+}
+
+void	print_u_left(t_flags *flag, char *str, int len, int *return_val)
+{
+	while (flag->precision-- > 0)
+		ft_putchar_fd('0', 1);
+	ft_putstr_fd(str, 1);
+	while (flag->width-- > 0)
+		ft_putchar_fd(' ', 1);
+	(*return_val) += len;
 }
 
 void	print_u(t_flags *flag, va_list args, int *return_val)
@@ -57,11 +80,12 @@ void	print_u(t_flags *flag, va_list args, int *return_val)
 		str_u = ft_itoa(u);
 	temp = str_u;
 	len = ft_strlen(str_u);
-	reset_flag(flag, len);
-	if (flag->minus >= 0)
-		print_u_width(flag, return_val);
-	print_u_num(flag, str_u, return_val);
+	check_u_sign_flag(flag, &len, &str_u);
 	if (flag->minus == -1)
-		print_u_width(flag, return_val);
+		print_u_left(flag, str_u, len, return_val);
+	else if (flag->zero == 1 && flag->precision == 0)
+		print_u_zero_right(flag, str_u, len, return_val);
+	else
+		print_u_right(flag, str_u, len, return_val);
 	free(temp);
 }

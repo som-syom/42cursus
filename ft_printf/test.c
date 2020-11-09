@@ -5,13 +5,14 @@
 
 int main()
 {
-    int i = -123;
-    // int *p = &i;
+    int i = 0;
+    // int *p = 0;
+
     // float aa = 0.12345;
     printf("=========   printf  =========]\n");
     printf("|||");
     //char *sss = 0;
-    int ret1 = printf("%0*d", -6, i);
+    int ret1 = printf("  %-3.4d Hello", i);
     //int ret1 = printf("%s", "NULL");
     printf("|||\n");
     printf("ret_val : %d\n", ret1);
@@ -22,7 +23,7 @@ int main()
     // printf("\ne == %d", *ee);
     printf("\n========= ft_printf =========\n");
     ft_putstr_fd("|||", 1);
-    int ret2 = ft_printf("%0*d", -6, i);
+    int ret2 = ft_printf("  %-3.4d Hello", i);
     ft_putstr_fd("|||\n", 1);
     printf("ret_val : %d\n", ret2);
 
