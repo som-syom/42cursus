@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/07 02:33:35 by dhyeon            #+#    #+#             */
-/*   Updated: 2020/11/09 22:15:13 by dhyeon           ###   ########.fr       */
+/*   Updated: 2020/11/10 15:33:46 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,5 @@ void			print_u_zero_right(t_flags *flag, char *str, int len,
 								int *return_val);
 void			print_u_left(t_flags *flag, char *str, int len,
 								int *return_val);
-
-void			test_print(t_flags *flag);
 
 #endif

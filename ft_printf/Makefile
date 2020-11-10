@@ -6,7 +6,7 @@
 #    By: dhyeon <dhyeon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/19 05:21:35 by dhyeon            #+#    #+#              #
-#    Updated: 2020/11/06 21:03:19 by dhyeon           ###   ########.fr        #
+#    Updated: 2020/11/10 15:39:15 by dhyeon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,6 @@ CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 
 FILES = ft_printf \
-		testprint \
 		print_cs \
 		print_di \
 		print_u \
@@ -46,9 +45,6 @@ $(NAME): $(OBJS)
 
 bonus : all
 
-test : all
-		$(CC) $(CFLAGS) $(SRCS) $(NAME) test.c -I./libft
-
 clean :
 		rm -rf $(OBJS) $(LIBFT_OBJS)
 
@@ -57,4 +53,4 @@ fclean : clean
 
 re : fclean all
 
-.PHONY: bonus all clean fclean re test
+.PHONY: bonus all clean fclean re

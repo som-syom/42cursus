@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/07 02:33:24 by dhyeon            #+#    #+#             */
-/*   Updated: 2020/11/09 22:09:32 by dhyeon           ###   ########.fr       */
+/*   Updated: 2020/11/10 19:53:31 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ void	print_type(t_flags *flag, va_list args, int *return_val)
 		print_p(flag, args, return_val);
 	else if (flag->type == '%')
 		print_pct(flag, return_val);
+	else
+		return ;
 }
 
 void	parse_print_format(va_list args, char **format, int *return_val)
@@ -45,9 +47,15 @@ void	parse_print_format(va_list args, char **format, int *return_val)
 	check_width(&fmt_ptr, flag, args);
 	check_precision(&fmt_ptr, flag, args);
 	check_type(fmt_ptr, flag);
+	if (*fmt_ptr == '\0' || flag->type == '\0')
+	{
+		(*format) = fmt_ptr;
+		return ;
+	}
 	fmt_ptr++;
 	print_type(flag, args, return_val);
 	(*format) = fmt_ptr;
+	free(flag);
 }
 
 int		ft_printf(const char *format, ...)
