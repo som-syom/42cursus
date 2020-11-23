@@ -12,13 +12,21 @@ void	calc(t_info *info)
 		calc_step_init(info, &ray);
 		calc_dda(info, &ray);
 		
+		/*	stepX|Y 가 -1 이라면 : (1 - stepX|Y) / 2 = 1
+					    1 이라면 :					= 0 이 된다
+			이는 rayDirX|Y 가 0 보다 작을때 길이에 1을 더해주기 위함이다. (sideDist 때와 비슷)
+
+			** 수직거리 계산하는 법 :
+			mapX - posX + (1 - stepX) / 2
+			공식은 삼각형의 비에 의해 도출 //한번다시체크하자
+		*/
 		if (ray.side == 0)
 			ray.perpWallDist = (ray.mapX - info->posX + (1 - ray.stepX) / 2)
 								/ ray.rayDirX;
 		else
 			ray.perpWallDist = (ray.mapY - info->posY + (1 - ray.stepY) / 2)
 								/ ray.rayDirY;
-		calc_draw(&ray);
+		calc_draw(&ray, info, x);
 		verLine(info, x, ray.drawStart, ray.drawEnd, ray.color);
 		x++;
 	}
@@ -31,7 +39,10 @@ void	calc_ray_init(t_info *info, t_ray *ray, int *x)
 	ray->rayDirY = info->dirY + info->planeY * ray->cameraX;
 	ray->mapX = (int)info->posX;
 	ray->mapY = (int)info->posY;
-	ray->deltaDistX = fabs(1 / ray->rayDirX); //
+	/*	deltaDistX|Y 구하기
+
+	*/
+	ray->deltaDistX = fabs(1 / ray->rayDirX); 
 	ray->deltaDistY = fabs(1 / ray->rayDirY);
 	ray->hit = 0;
 }
@@ -39,7 +50,13 @@ void	calc_ray_init(t_info *info, t_ray *ray, int *x)
 void	calc_step_init(t_info *info, t_ray *ray)
 {
 	/*	초기값구하기
-		
+		stepX|Y : rayDirX|Y 의 값이 양수라면 +1, 음수라면 -1
+		sideDistX|Y : rayDirX|Y 가 양수라면 오른쪽,위쪽 방향으로 이동,
+								음수라면 왼쪽,아래쪽으로 이동.
+					sideDistX : deltaDistX
+					= (map + 1) - posX : 1
+						통분을통해
+					sideDistX = ((map + 1) - posX) * deltaDistX 가 된다.
 	*/
 	if (ray->rayDirX < 0)
 	{
@@ -65,9 +82,9 @@ void	calc_step_init(t_info *info, t_ray *ray)
 
 void	calc_dda(t_info *info, t_ray *ray)
 {
-	while (ray->hit == 0)
+	while (ray->hit == 0) // 벽에 부딪힐때까지 매번 한칸씩 광선을 이동시키는 루프
 	{
-		if (ray->sideDistX < ray->sideDistY)
+		if (ray->sideDistX < ray->sideDistY) // 점프할 때마다 각각의 값이 더해진다
 		{
 			ray->sideDistX += ray->deltaDistX;
 			ray->mapX += ray->stepX;
@@ -84,16 +101,53 @@ void	calc_dda(t_info *info, t_ray *ray)
 	}
 }
 
-void	calc_draw(t_ray *ray)
+void	calc_draw(t_ray *ray, t_info *info, int x)
 {
 	ray->lineHeight = (int)(height / ray->perpWallDist);
-	ray->drawStart = -ray->lineHeight / 2 + height / 2;
-	if(ray->drawStart < 0)
+		// 거리에 따라 크기를 조절하기 위해서 역수 + 픽셀단위로 맞춰주기 위해 *h
+		// 벽을 더 높게 그리기려면 (2 * h)
+	ray->drawStart = -ray->lineHeight / 2 + height / 2; // 중심점 밑에서부터
+	if(ray->drawStart < 0) // 벽이 화면 범위 아래 놓여있는 경우
 		ray->drawStart = 0;
-	ray->drawEnd = ray->lineHeight / 2 + height / 2;
-	if(ray->drawEnd >= height)
+	ray->drawEnd = ray->lineHeight / 2 + height / 2; // 중심점 위로
+	if(ray->drawEnd >= height) // 벽이 화면 범위 위에 놓여있는 경우
 		ray->drawEnd = height - 1;
 
+	//
+	double wallX;
+	if (ray->side == 0)
+		wallX = info->posY + ray->perpWallDist * ray->rayDirY;
+	else
+		wallX = info->posX + ray->perpWallDist * ray->rayDirX;
+	wallX -= floor(wallX);
+
+	int texX = (int)(wallX * (double)texWidth);
+	if (ray->side == 0 && ray->rayDirX > 0)
+		texX = texWidth - texX - 1;
+	if (ray->side == 1 &&  ray->rayDirY < 0)
+		texX = texWidth - texX - 1;
+	
+	double step;
+	step = 1.0 * texHeight / ray->lineHeight;
+
+	double texPos;
+	texPos = (ray->drawStart - height / 2 + ray->lineHeight / 2) * step;
+	int y = ray->drawStart;
+	// while (y < ray->drawEnd)
+	// {
+	// 	int texY;
+	// 	texY = (int)texPos & (texHeight - 1);
+	// 	texPos += step;
+	// 	ray->color = info->texture[0][texHeight * texY + texX];
+	// 	if (ray->side == 1)
+	// 		ray->color = (ray->color >> 1) & 8355711;
+	// 	info->buf[y][x] = ray->color;
+	// 	y++;
+	// }
+
+
+	//
+	int flag = 0;
 	if (worldMap[ray->mapY][ray->mapX] == 1)
 		ray->color = 0xFF0000;
 	else if (worldMap[ray->mapY][ray->mapX] == 2)
@@ -103,8 +157,21 @@ void	calc_draw(t_ray *ray)
 	else if (worldMap[ray->mapY][ray->mapX] == 4)
 		ray->color = 0xFFFFFF;
 	else
-		ray->color = 0xFFFF00;
+		{
+			while (y < ray->drawEnd)
+			{
+				int texY;
+				texY = (int)texPos & (texHeight - 1);
+				texPos += step;
+				ray->color = info->texture[0][texHeight * texY + texX];
+				if (ray->side == 1)
+					ray->color = (ray->color >> 1) & 8355711;
+				info->buf[y][x] = ray->color;
+				y++;
+				flag = 1;
+			}
+		}
 	
-	if (ray->side == 1)
+	if (ray->side == 1 && flag == 0) // y면에 부딪힌 경우 더 어둡게 설정
 		ray->color = ray->color / 2;
 }

@@ -26,6 +26,8 @@ typedef struct	s_img
 	int		size_l;
 	int		bpp;
 	int		endian;
+	int		img_width;
+	int		img_height;
 }				t_img;
 
 typedef struct	s_info
@@ -43,8 +45,8 @@ typedef struct	s_info
 	double	oldDirX;
 	double	oldPlaneX;
 	t_img	img;
-	int		**buf; // 스크린 버퍼 배열
-	double	texture[8][texWidth * texHeight]; // 텍스쳐 버퍼
+	int		buf[height][width]; // 스크린 버퍼 배열
+	int		**texture; // 텍스쳐 버퍼
 }				t_info;
 
 typedef struct	s_ray
@@ -79,7 +81,7 @@ void	calc(t_info *info);
 void	calc_ray_init(t_info *info, t_ray *ray, int *x);
 void	calc_step_init(t_info *info, t_ray *ray);
 void	calc_dda(t_info *info, t_ray *ray);
-void	calc_draw(t_ray *ray);
+void	calc_draw(t_ray *ray, t_info *info, int x);
 
 int		key_press(int key, t_info *info);
 void	key_press_w(t_info *info);
