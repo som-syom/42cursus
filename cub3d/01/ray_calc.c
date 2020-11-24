@@ -5,6 +5,68 @@ void	calc(t_info *info)
 	t_ray	ray;
 	int		x;
 
+
+	//FLOOR CASTING
+	for(int y = 0; y < height; y++)
+	{
+		// rayDir for leftmost ray (x = 0) and rightmost ray (x = w)
+		float rayDirX0 = info->dirX - info->planeX;
+		float rayDirY0 = info->dirY - info->planeY;
+		float rayDirX1 = info->dirX + info->planeX;
+		float rayDirY1 = info->dirY + info->planeY;
+
+		// Current y position compared to the center of the screen (the horizon)
+		int p = y - height / 2;
+
+		// Vertical position of the camera.
+		float posZ = 0.5 * height;
+
+		// Horizontal distance from the camera to the floor for the current row.
+		// 0.5 is the z position exactly in the middle between floor and ceiling.
+		float rowDistance = posZ / p;
+
+		// calculate the real world step vector we have to add for each x (parallel to camera plane)
+		// adding step by step avoids multiplications with a weight in the inner loop
+		float floorStepX = rowDistance * (rayDirX1 - rayDirX0) / width;
+		float floorStepY = rowDistance * (rayDirY1 - rayDirY0) / width;
+
+		// real world coordinates of the leftmost column. This will be updated as we step to the right.
+		float floorX = info->posX + rowDistance * rayDirX0;
+		float floorY = info->posY + rowDistance * rayDirY0;
+
+		for(int x = 0; x < width; ++x)
+		{
+			// the cell coord is simply got from the integer parts of floorX and floorY
+			int cellX = (int)(floorX);
+			int cellY = (int)(floorY);
+
+			// get the texture coordinate from the fractional part
+			int tx = (int)(texWidth * (floorX - cellX)) & (texWidth - 1);
+			int ty = (int)(texHeight * (floorY - cellY)) & (texHeight - 1);
+
+			floorX += floorStepX;
+			floorY += floorStepY;
+
+			// choose texture and draw the pixel
+			int floorTexture = 3;
+			int ceilingTexture = 6;
+
+			int color;
+
+			// floor
+			color = info->texture[floorTexture][texWidth * ty + tx];
+			color = (color >> 1) & 8355711; // make a bit darker
+
+			info->buf[y][x] = color;
+
+			//ceiling (symmetrical, at screenHeight - y - 1 instead of y)
+			color = info->texture[ceilingTexture][texWidth * ty + tx];
+			color = (color >> 1) & 8355711; // make a bit darker
+
+			info->buf[height - y - 1][x] = color;
+		}
+	}
+	//
 	x = 0;
 	while (x < width)
 	{
@@ -26,8 +88,9 @@ void	calc(t_info *info)
 		else
 			ray.perpWallDist = (ray.mapY - info->posY + (1 - ray.stepY) / 2)
 								/ ray.rayDirY;
+		
 		calc_draw(&ray, info, x);
-		verLine(info, x, ray.drawStart, ray.drawEnd, ray.color);
+		// verLine(info, x, ray.drawStart, ray.drawEnd, ray.color);
 		x++;
 	}
 }
@@ -132,46 +195,46 @@ void	calc_draw(t_ray *ray, t_info *info, int x)
 
 	double texPos;
 	texPos = (ray->drawStart - height / 2 + ray->lineHeight / 2) * step;
-	int y = ray->drawStart;
-	// while (y < ray->drawEnd)
-	// {
-	// 	int texY;
-	// 	texY = (int)texPos & (texHeight - 1);
-	// 	texPos += step;
-	// 	ray->color = info->texture[0][texHeight * texY + texX];
-	// 	if (ray->side == 1)
-	// 		ray->color = (ray->color >> 1) & 8355711;
-	// 	info->buf[y][x] = ray->color;
-	// 	y++;
-	// }
-
-
-	//
-	int flag = 0;
-	if (worldMap[ray->mapY][ray->mapX] == 1)
-		ray->color = 0xFF0000;
-	else if (worldMap[ray->mapY][ray->mapX] == 2)
-		ray->color = 0x00FF00;
-	else if (worldMap[ray->mapY][ray->mapX] == 3)
-		ray->color = 0x0000FF;
-	else if (worldMap[ray->mapY][ray->mapX] == 4)
-		ray->color = 0xFFFFFF;
-	else
-		{
-			while (y < ray->drawEnd)
-			{
-				int texY;
-				texY = (int)texPos & (texHeight - 1);
-				texPos += step;
-				ray->color = info->texture[0][texHeight * texY + texX];
-				if (ray->side == 1)
-					ray->color = (ray->color >> 1) & 8355711;
-				info->buf[y][x] = ray->color;
-				y++;
-				flag = 1;
-			}
-		}
 	
-	if (ray->side == 1 && flag == 0) // y면에 부딪힌 경우 더 어둡게 설정
-		ray->color = ray->color / 2;
+	//
+	// int flag = 0;
+	// if (worldMap[ray->mapY][ray->mapX] == 1)
+	// 	ray->color = 0xFF0000;
+	// else if (worldMap[ray->mapY][ray->mapX] == 2)
+	// 	ray->color = 0x00FF00;
+	// else if (worldMap[ray->mapY][ray->mapX] == 3)
+	// 	ray->color = 0x0000FF;
+	// else if (worldMap[ray->mapY][ray->mapX] == 4)
+	// 	ray->color = 0xFFFFFF;
+	// else
+	// 	{
+	// 		while (y < ray->drawEnd)
+	// 		{
+	// 			int texY;
+	// 			texY = (int)texPos & (texHeight - 1);
+	// 			texPos += step;
+	// 			ray->color = info->texture[0][texHeight * texY + texX];
+	// 			if (ray->side == 1)
+	// 				ray->color = (ray->color >> 1) & 8355711;
+	// 			info->buf[y][x] = ray->color;
+	// 			y++;
+	// 			flag = 1;
+	// 		}
+	// 	}
+	int texNum;
+	texNum = worldMap[ray->mapX][ray->mapY] - 1;
+	int y = ray->drawStart;
+	while (y < ray->drawEnd)
+	{
+		int texY;
+		texY = (int)texPos & (texHeight - 1);
+		texPos += step;
+		ray->color = info->texture[texNum][texHeight * texY + texX];
+		if (ray->side == 1)
+			ray->color = (ray->color >> 1) & 8355711;
+		info->buf[y][x] = ray->color;
+		
+		y++;
+	}
+	
 }

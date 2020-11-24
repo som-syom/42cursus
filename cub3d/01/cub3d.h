@@ -15,8 +15,8 @@
 #define mapHeight 24
 #define width 640
 #define height 480
-#define texWidth 64
-#define texHeight 64
+#define texWidth 280
+#define texHeight 280
 
 typedef struct	s_img
 {
@@ -91,7 +91,7 @@ void	key_press_a(t_info *info);
 void	key_press_left(t_info *info);
 void	key_press_right(t_info *info);
 
-void	verLine(t_info *info, int x, int y1, int y2, int color);
+// void	verLine(t_info *info, int x, int y1, int y2, int color);
 int		main_loop(t_info *info);
 
 int		worldMap[24][24];
