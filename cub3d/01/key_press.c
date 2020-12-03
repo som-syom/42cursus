@@ -41,10 +41,10 @@ void	key_press_s(t_info *info)
 
 void	key_press_d(t_info *info)
 {
-	if (!worldMap[(int)(info->posX - info->dirY * info->moveSpeed)][
+	if (!worldMap[(int)(info->posX + info->dirY * info->moveSpeed)][
 			(int)(info->posY)])
 		info->posX += info->dirY * info->moveSpeed;
-	if (!worldMap[(int)(info->posX)][(int)(info->posY + info->dirX
+	if (!worldMap[(int)(info->posX)][(int)(info->posY - info->dirX
 			* info->moveSpeed)])
 		info->posY -= info->dirX * info->moveSpeed;
 }

@@ -42,7 +42,18 @@ void	calc(t_info *info)
 
 			// get the texture coordinate from the fractional part
 			int tx = (int)(texWidth * (floorX - cellX)) & (texWidth - 1);
-			int ty = (int)(texHeight * (floorY - cellY)) & (texHeight - 1);
+			int ty = (int)(texHeight * (floorY - cellY)) & (texHeight - 1);			
+			
+			// if (flag < 3 && (tx < 0 || ty < 0))
+			// {
+			// 	printf("floorX           : %-10f\n", floorX);
+			// 	printf("cellX            : %-10d\n", cellX);
+			// 	printf("tx               : %-10d\n", tx);
+			// 	printf("(floorX - cellX) : %-10f\n", floorX - cellX);
+			// 	printf("texWidth-1       : %-10d\n", texWidth - 1);
+			// 	printf("===================\n");
+			// 	flag++;
+			// }
 
 			floorX += floorStepX;
 			floorY += floorStepY;
@@ -91,6 +102,7 @@ void	calc(t_info *info)
 		
 		calc_draw(&ray, info, x);
 		// verLine(info, x, ray.drawStart, ray.drawEnd, ray.color);
+		info->zBuffer[x] = ray.perpWallDist; //perpendicular distance is used
 		x++;
 	}
 }
@@ -236,5 +248,70 @@ void	calc_draw(t_ray *ray, t_info *info, int x)
 		
 		y++;
 	}
-	
+
+	//==================================================================
+
+	int i = 0;
+
+	while(i < numSprites)
+	{
+		spriteOrder[i] = i;
+		spriteDistance[i] = ((info->posX - sprite[i].x) * (info->posX - sprite[i].x) + (info->posY - sprite[i].y) * (info->posY - sprite[i].y)); //sqrt not taken, unneeded
+		i++;
+	}
+	sortSprites(spriteOrder, spriteDistance, numSprites);
+
+	i = 0;
+	while(i < numSprites)
+	{
+		double spriteX = sprite[spriteOrder[i]].x - info->posX;
+		double spriteY = sprite[spriteOrder[i]].y - info->posY;
+
+		double invDet = 1.0 / (info->planeX * info->dirY - info->dirX * info->planeY); //required for correct matrix multiplication
+
+		double transformX = invDet * (info->dirY * spriteX - info->dirX * spriteY);
+		double transformY = invDet * (-info->planeY * spriteX + info->planeX * spriteY); //this is actually the depth inside the screen, that what Z is in 3D, the distance of sprite to player, matching sqrt(spriteDistance[i])
+
+		int spriteScreenX = (int)((width / 2) * (1 + transformX / transformY));
+
+		int vMoveScreen = (int)(vMove / transformY);
+
+		//calculate height of the sprite on screen
+		int spriteHeight = (int)fabs((height / transformY) / vDiv); //using "transformY" instead of the real distance prevents fisheye
+		//calculate lowest and highest pixel to fill in current stripe
+		int drawStartY = -spriteHeight / 2 + height / 2 + vMoveScreen;
+		if(drawStartY < 0) drawStartY = 0;
+		int drawEndY = spriteHeight / 2 + height / 2 + vMoveScreen;
+		if(drawEndY >= height) drawEndY = height - 1;
+
+		//calculate width of the sprite
+		int spriteWidth = (int)fabs((height / transformY) / uDiv);
+		int drawStartX = -spriteWidth / 2 + spriteScreenX;
+		if(drawStartX < 0) drawStartX = 0;
+		int drawEndX = spriteWidth / 2 + spriteScreenX;
+		if(drawEndX >= width) drawEndX = width - 1;
+
+		//loop through every vertical stripe of the sprite on screen
+		for(int stripe = drawStartX; stripe < drawEndX; stripe++)
+		{
+			int texX = (int)((256 * (stripe - (-spriteWidth / 2 + spriteScreenX)) * texWidth / spriteWidth) / 256);
+			//the conditions in the if are:
+			//1) it's in front of camera plane so you don't see things behind you
+			//2) it's on the screen (left)
+			//3) it's on the screen (right)
+			//4) ZBuffer, with perpendicular distance
+			if(transformY > 0 && stripe > 0 && stripe < width && transformY < info->zBuffer[stripe])
+			for(int y = drawStartY; y < drawEndY; y++) //for every pixel of the current stripe
+			{
+				int d = (y-vMoveScreen) * 256 - height * 128 + spriteHeight * 128; //256 and 128 factors to avoid floats
+				int texY = ((d * texHeight) / spriteHeight) / 256;
+				if (texWidth * texY + texX > texHeight * texWidth) {
+					printf("%d\n", texWidth * texY + texX);
+				}
+				int color = info->texture[sprite[spriteOrder[i]].texture][texWidth * texY + texX]; //get current color from the texture
+				if((color & 0x00FFFFFF) != 0) info->buf[y][stripe] = color; //paint pixel if it isn't black, black is the invisible color
+			}
+		}
+		i++;
+	}
 }

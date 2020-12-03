@@ -15,8 +15,15 @@
 #define mapHeight 24
 #define width 640
 #define height 480
-#define texWidth 280
-#define texHeight 280
+#define texWidth 64
+#define texHeight 64
+#define numSprites 8
+
+#define uDiv 1
+#define vDiv 1
+#define vMove 0.0
+
+int	flag;
 
 typedef struct	s_img
 {
@@ -47,6 +54,7 @@ typedef struct	s_info
 	t_img	img;
 	int		buf[height][width]; // 스크린 버퍼 배열
 	int		**texture; // 텍스쳐 버퍼
+	double	zBuffer[width];
 }				t_info;
 
 typedef struct	s_ray
@@ -73,7 +81,27 @@ typedef struct	s_ray
 	
 }				t_ray;
 
+struct	Sprite
+{
+	double		x;
+	double		y;
+	int			texture;
+};
 
+struct Sprite	sprite[numSprites];
+
+typedef struct		s_pair
+{
+	double	first;
+	int		second;
+}					t_pair;
+
+int		spriteOrder[numSprites];
+double	spriteDistance[numSprites];
+
+void	sortSprites(int *order, double *dist, int amount);
+void	sort_order(t_pair *orders, int amount);
+static int	compare(const void *first, const void *second);
 
 void	info_new(t_info *info);
 

@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/15 12:12:25 by yohan             #+#    #+#             */
-/*   Updated: 2020/11/25 06:58:19 by dhyeon           ###   ########.fr       */
+/*   Updated: 2020/12/01 04:40:42 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,39 +17,98 @@ int	worldMap[24][24] = {
 							{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
 							{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
 							{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-							{1,0,0,0,0,0,2,2,2,2,2,0,0,0,0,3,0,3,0,3,0,0,0,1},
+							{1,0,0,0,0,0,2,2,2,2,2,0,0,0,0,2,0,2,0,2,0,0,0,1},
 							{1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1},
-							{1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,3,0,0,0,3,0,0,0,1},
+							{1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,2,0,0,0,2,0,0,0,1},
 							{1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1},
-							{1,0,0,0,0,0,2,2,0,2,2,0,0,0,0,3,0,3,0,3,0,0,0,1},
+							{1,0,0,0,0,0,2,2,0,2,2,0,0,0,0,2,0,2,0,2,0,0,0,1},
+							{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+							{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,1},
+							{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+							{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,1},
 							{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
 							{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
 							{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-							{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-							{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-							{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-							{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-							{1,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-							{1,4,0,4,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-							{1,4,0,0,0,0,5,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-							{1,4,0,4,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-							{1,4,0,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-							{1,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-							{1,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+							{1,2,2,2,2,2,2,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+							{1,2,0,2,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+							{1,2,0,0,0,0,2,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+							{1,2,0,2,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+							{1,2,0,2,2,2,2,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+							{1,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+							{1,2,2,2,2,2,2,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
 							{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
 						};
 
-// void	verLine(t_info *info, int x, int y1, int y2, int color)
-// {
-// 	int	y;
+struct Sprite	sprite[numSprites] =
+{
+	{20.5, 11.5, 4},
+	{18.5, 4.5, 4},
+	{10.0, 4.5, 4},
+	{10.0, 12.5, 4},
+	{3.5, 6.5, 4},
+	{3.5, 20.5, 4},
+	{3.5, 14.5, 4},
+	{14.5, 20.5, 4},
+};
 
-// 	y = y1;
-// 	while (y <= y2)
-// 	{
-// 		mlx_pixel_put(info->mlx, info->win, x, y, color);
-// 		y++;
-// 	}
-// }
+
+static int	compare(const void *first, const void *second)
+{
+	if (*(int *)first > *(int *)second)
+		return (1);
+	else if (*(int *)first < *(int *)second)
+		return (-1);
+	else
+		return (0);
+}
+
+void	sort_order(t_pair *orders, int amount)
+{
+	t_pair	tmp;
+
+	for (int i = 0; i < amount; i++)
+	{
+		for (int j = 0; j < amount - 1; j++)
+		{
+			if (orders[j].first > orders[j + 1].first)
+			{
+				tmp.first = orders[j].first;
+				tmp.second = orders[j].second;
+				orders[j].first = orders[j + 1].first;
+				orders[j].second = orders[j + 1].second;
+				orders[j + 1].first = tmp.first;
+				orders[j + 1].second = tmp.second;
+			}
+		}
+	}
+}
+
+void	sortSprites(int *order, double *dist, int amount)
+{
+	t_pair	*sprites;
+
+	//std::vector<std::pair<double, int>> sprites(amount);
+	sprites = (t_pair*)malloc(sizeof(t_pair) * amount);
+	for (int i = 0; i < amount; i++)
+	{
+		sprites[i].first = dist[i];
+		sprites[i].second = order[i];
+	}
+	sort_order(sprites, amount);
+	//std::sort(sprites.begin(), sprites.end());
+	for (int i = 0; i < amount; i++)
+	{
+		dist[i] = sprites[amount - i - 1].first;
+		order[i] = sprites[amount - i - 1].second;
+	}
+	free(sprites);
+}
+
+
+
+
+//========================================================
+
 
 void	draw(t_info *info)
 {
@@ -90,7 +149,7 @@ void	load_image(t_info *info, int *texture, char *path, t_img *img)
 					&img->img_width, &img->img_height);
 	img->data = (int *)mlx_get_data_addr(img->img, &img->bpp,
 					&img->size_l, &img->endian);
-	printf("width %d, height %d\n", img->img_width, img->img_height);
+	// printf("width %d, height %d\n", img->img_width, img->img_height);
 	y = 0;
 	while (y < img->img_height)
 	{
@@ -117,14 +176,14 @@ void	load_texture(t_info *info)
 {
 	t_img	img;
 
-	load_image(info, info->texture[0], "textures/concrete.xpm", &img);
-	load_image(info, info->texture[1], "textures/concrete.xpm", &img);
-	load_image(info, info->texture[2], "textures/concrete.xpm", &img);
-	load_image(info, info->texture[3], "textures/concrete.xpm", &img);
-	load_image(info, info->texture[4], "textures/concrete.xpm", &img);
-	load_image(info, info->texture[5], "textures/concrete.xpm", &img);
-	load_image(info, info->texture[6], "textures/concrete.xpm", &img);
-	load_image(info, info->texture[7], "textures/concrete.xpm", &img);
+	load_image(info, info->texture[0], "textures/conc.xpm", &img);
+	load_image(info, info->texture[1], "textures/conc.xpm", &img);
+	load_image(info, info->texture[2], "textures/conc.xpm", &img);
+	load_image(info, info->texture[3], "textures/conc.xpm", &img);
+	load_image(info, info->texture[4], "textures/catt.xpm", &img);
+	load_image(info, info->texture[5], "textures/conc.xpm", &img);
+	load_image(info, info->texture[6], "textures/conc.xpm", &img);
+	load_image(info, info->texture[7], "textures/conc.xpm", &img);
 }
 
 int	main(void)
