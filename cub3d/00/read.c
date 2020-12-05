@@ -85,17 +85,12 @@ int		check_texture(t_config *conf, char *str, int info)
 
 int		check_rgb(t_config *conf, int *c, int info)
 {
-	int r;
-	int g;
-	int b;
-	
 	if (!(0 <= c[0] && c[0] <= 255) || !(0 <= c[1] && c[1] <= 255)
 									|| !(0 <= c[2] && c[2] <= 255))
 		return (-3);
-	r = (c[0] >> 16) & 0xFF;
-	g = (c[1] >> 8) & 0xFF;
-	b = c[2] && 0xFF;
-	conf->rgb[info] = (r << 16) | (g << 8) | b;
+	conf->rgb[info] = (c[0] << 16) | (c[1] << 8) | c[2];
+	// printf("rgb[%d] = %d\n", info, conf->rgb[info]);
+	return (0);
 }
 
 int		check_color(t_config *conf, char *str, int info)
@@ -105,7 +100,7 @@ int		check_color(t_config *conf, char *str, int info)
 
 	if (conf->rgb[info] != -1)
 		return (-3);
-	color = ft_split(str, ",");
+	color = ft_split(str, ',');
 	if (check_digit(color) != 0 || color[3] != 0)
 		return (-3);
 	i_color[0] = ft_atoi(color[0]);
@@ -131,22 +126,40 @@ int		parse_line(t_config *conf, char *str)
 		return (check_texture(conf, str + 3, 3));
 	if (ft_strncmp(str, "S ", 2) == 0)
 		return (check_texture(conf, str + 2, 4));
-	// if (ft_strncmp(str, "F ", 2) == 0)
-	// 	return (check_color(conf, str + 2, 0));
-	// if (ft_strncmp(str, "C ", 2) == 0)
-	// 	return (check_color(conf, str + 2, 1));
+	if (ft_strncmp(str, "F ", 2) == 0)
+		return (check_color(conf, str + 2, 0));
+	if (ft_strncmp(str, "C ", 2) == 0)
+		return (check_color(conf, str + 2, 1));
 	return (-3);
+}
+
+int		is_blank(char *s)
+{
+	int i;
+
+	i = 0;
+	while (s[i] != 0)
+	{
+		if (s[i] == '\n' || (9 <= s[i] && s[i] <= 13) || s[i] == ' ')
+			i++;
+		else
+			return (-3);
+	}
+	return (0);
 }
 
 int		check_conf(t_config *conf, char *str)
 {
 	if (conf->map_cnt < 8)
 	{
-		if (parse_line(conf, str) != 0)
+		if (is_blank(str) == 0)
+			return (0);
+		else if (parse_line(conf, str) != 0)
 			return (-3);
 		else
 			conf->map_cnt++;
 	}
+	// printf("cnt = %d\n", conf->map_cnt);
 	// else
 	// 	parse_map(conf, str);
 	return (0);

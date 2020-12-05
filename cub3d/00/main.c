@@ -19,7 +19,8 @@ void    print_err(int err_num)
 	if (err_num == -2)
 		ft_putstr("맵 확장자 오류\n");
 	if (err_num == -3)
-		ft_putstr("맵 오류");
+		ft_putstr("맵 오류\n");
+	perror("error message");
 	exit(1);
 }
 
