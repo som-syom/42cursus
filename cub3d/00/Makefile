@@ -1,5 +1,5 @@
 all:
-	gcc -L./mlx -lmlx -framework OpenGL -framework AppKit *.c
-
+	gcc *.c
+	
 clean:
 	rm -rf *.out

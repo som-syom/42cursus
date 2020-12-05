@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/03 02:48:15 by dhyeon            #+#    #+#             */
-/*   Updated: 2020/12/03 09:52:53 by dhyeon           ###   ########.fr       */
+/*   Updated: 2020/12/04 06:20:43 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,46 +37,22 @@ int     check_arg(int ac, char **av, t_config * conf)
 	return (0);
 }
 
-int		init_new_mlx(t_cub *cub)
+int		init_new_mlx(t_cub *cub, t_config *conf)
 {
-	cub->info.mlx = mlx_init();
+	int i;
+
+	// cub->info.mlx = mlx_init();
+	if (!(conf->tex_path = (char**)malloc(sizeof(char *) * 8)))
+		return (-1);
+	i = -1;
+	while (++i < 8)
+		conf->tex_path[i] = 0;
+	conf->rgb[0] = -1;
+	conf->rgb[1] = -1;
 	return (0);
 }
 
-int		parse_line(t_cub *cub, char *str)
-{
-	if (ft_strncmp(str, "R", 1) == 0)
-		return(check_win_size(cub, str));
-}
 
-int		read_map_file(t_cub *cub, t_config *conf)
-{
-	int		gnl_err;
-	char	*line;
-
-	line = 0;
-	while (1)
-	{
-		if ((gnl_err = get_next_line(conf->fd, &line)) <= 0)
-			break ;
-		if (parse_line(cub, line) < 0)
-			return (-3);
-		// printf("%s\n", line);
-		free(line);
-	}
-	printf("%s\n", line);
-	free(line);
-	return (gnl_err);
-}
-
-int		set_map(t_cub *cub, t_config *conf, char *path)
-{
-	if ((conf->fd = open(path, O_RDONLY)) < 0)
-		return (-3);
-	if (read_map_file(cub, conf) != 0)
-		return (-3);
-	return (0);
-}
 
 int     main(int argc, char **argv)
 {
@@ -86,7 +62,7 @@ int     main(int argc, char **argv)
 
 	if ((err_num = check_arg(argc, argv, &conf)) != 0)
 		print_err(err_num);
-	if ((err_num = init_new_mlx(&cub)) != 0)
+	if ((err_num = init_new_mlx(&cub, &conf)) != 0)
 		print_err(err_num);
 	if ((err_num = set_map(&cub, &conf, argv[1])) != 0)
 		print_err(err_num);

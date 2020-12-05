@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/03 02:47:56 by dhyeon            #+#    #+#             */
-/*   Updated: 2020/12/03 07:12:07 by dhyeon           ###   ########.fr       */
+/*   Updated: 2020/12/05 18:04:49 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,11 @@ typedef struct	s_config
 {
 	int		is_save;
 	int		fd;
+	int		w;
+	int		h;
+	int		map_cnt;
+	char	**tex_path; //후에 프리
+	int		rgb[2];
 }				t_config;
 
 typedef struct	s_xy_d
@@ -73,6 +78,7 @@ typedef struct	s_cub
 {
 	t_info	info;
 	t_img	img;
+	int		test;
 }				t_cub;
 
 /*
@@ -84,6 +90,9 @@ int			ft_strncmp(const char *s1, const char *s2, size_t n);
 size_t		ft_strlen(char *str);
 char		*ft_strdup(char *src);
 char		*ft_strjoin(char *s1, char *s2);
+char		**ft_split(char const *s, char c);
+int			ft_isdigit(int c);
+int			ft_atoi(const char *str);
 
 /*
 **	get_next_line
@@ -95,7 +104,9 @@ int			get_next_line(int fd, char **line);
 **	cub3d
 */
 
-
+int			parse_line(t_config *conf, char *str);
+int			read_map_file(t_cub *cub, t_config *conf);
+int			set_map(t_cub *cub, t_config *conf, char *path);
 
 
 
