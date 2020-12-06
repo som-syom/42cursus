@@ -22,17 +22,6 @@
 # include <math.h>
 # include <limits.h>
 
-typedef struct	s_config
-{
-	int		is_save;
-	int		fd;
-	int		w;
-	int		h;
-	int		map_cnt;
-	char	**tex_path; //후에 프리
-	int		rgb[2];
-}				t_config;
-
 typedef struct	s_xy_d
 {
 	double	x;
@@ -81,6 +70,25 @@ typedef struct	s_cub
 	int		test;
 }				t_cub;
 
+typedef struct	s_list
+{
+	char	*content;
+	void	*next;
+}				t_list;
+
+typedef struct	s_config
+{
+	int		is_save;
+	int		fd;
+	int		w;
+	int		h;
+	int		map_cnt;
+	char	**tex_path; //후에 프리
+	int		rgb[2];
+	t_list	*map_lst; // init
+	t_xy_i	map_size; //init 필요
+}				t_config;
+
 /*
 **	libft - 나중에 라이브러리 따로 만들기
 */
@@ -93,6 +101,10 @@ char		*ft_strjoin(char *s1, char *s2);
 char		**ft_split(char const *s, char c);
 int			ft_isdigit(int c);
 int			ft_atoi(const char *str);
+t_list		*ft_lstnew(char *content);
+t_list		*ft_lstlast(t_list *lst);
+void		ft_lstadd_back(t_list **lst, t_list *new);
+int			ft_lstsize(t_list *lst);
 
 /*
 **	get_next_line

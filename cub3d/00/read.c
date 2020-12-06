@@ -47,12 +47,29 @@ void	ft_free(char **strs)
 	strs = 0;
 }
 
+void	skip_space(char **str)
+{
+	char	*tmp;
+	int		back;
+	int		len;
+
+	tmp = *str;
+	while (*tmp == ' ')
+		tmp++;
+	len = ft_strlen(tmp);
+	while (tmp[len - 1] == ' ')
+		len--;
+	tmp[len] = '\0';
+	*str = tmp;
+}
+
 int		check_win_size(t_config *conf, char *str)
 {
 	char **r;
 
 	if (conf->w != 0 || conf->h != 0)
 		return (-3);
+	skip_space(&str);
 	r = ft_split(str, ' ');
 	if (r[2] != 0)
 		return (-3);
@@ -74,6 +91,7 @@ int		check_texture(t_config *conf, char *str, int info)
 
 	if (conf->tex_path[info] != 0)
 		return (-3);
+	skip_space(&str);
 	len = ft_strlen(str);
 	if ((ft_strncmp(str + len - 4, ".xpm", 4) != 0) ||
 		(ft_strncmp(str, ".", 1) != 0))
@@ -100,6 +118,7 @@ int		check_color(t_config *conf, char *str, int info)
 
 	if (conf->rgb[info] != -1)
 		return (-3);
+	skip_space(&str);
 	color = ft_split(str, ',');
 	if (check_digit(color) != 0 || color[3] != 0)
 		return (-3);
@@ -148,10 +167,34 @@ int		is_blank(char *s)
 	return (0);
 }
 
+int		save_map(t_config *conf, char *str)
+{
+	int		len;
+	t_list	*new;
+	char	*tmp;
+
+	len = ft_strlen(str);
+	if (conf->map_size.x < len)
+		conf->map_size.x = len;
+	tmp = str;
+	while (*tmp)
+	{
+		if (ft_isdigit(*tmp) == 0 && *tmp != ' ' && *tmp != 'N' &&
+						*tmp != 'S' && *tmp != 'W' && *tmp != 'E')
+			return (-3);
+		tmp++;
+	}//dup해야함
+	new = ft_lstnew((void *)str);
+	printf("new = |%s|\n", str);
+	ft_lstadd_back(&conf->map_lst, new);
+	return (0);
+}
+
 int		check_conf(t_config *conf, char *str)
 {
 	if (conf->map_cnt < 8)
 	{
+		// skip_space(str);
 		if (is_blank(str) == 0)
 			return (0);
 		else if (parse_line(conf, str) != 0)
@@ -159,9 +202,13 @@ int		check_conf(t_config *conf, char *str)
 		else
 			conf->map_cnt++;
 	}
-	// printf("cnt = %d\n", conf->map_cnt);
-	// else
-	// 	parse_map(conf, str);
+	else if (conf->map_cnt == 8 && is_blank(str) == 0 && conf->map_size.x == 0)
+		return (0);
+	else
+	{
+		if (save_map(conf, str) != 0)
+			return (-3);
+	}
 	return (0);
 }
 
@@ -176,13 +223,16 @@ int		read_map_file(t_cub *cub, t_config *conf)
 		if ((gnl_err = get_next_line(conf->fd, &line)) < 0)
 			break ;
 		if (check_conf(conf, line) != 0)
-			return (-3);
+		{
+			gnl_err = -3;
+			break ;
+		}
 		free(line);
 		if (gnl_err == 0)
 			break ;
 	}
 	cub->test = 0;
-	printf("map_cnt = %d\n", conf->map_cnt);
+	printf("size = %d\n", conf->map_size.x);
 	return (gnl_err);
 }
 

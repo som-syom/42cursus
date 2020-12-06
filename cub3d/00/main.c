@@ -50,6 +50,8 @@ int		init_new_mlx(t_cub *cub, t_config *conf)
 		conf->tex_path[i] = 0;
 	conf->rgb[0] = -1;
 	conf->rgb[1] = -1;
+	conf->w = 0;
+	conf->h = 0;
 	return (0);
 }
 
