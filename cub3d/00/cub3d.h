@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/03 02:47:56 by dhyeon            #+#    #+#             */
-/*   Updated: 2020/12/05 18:04:49 by dhyeon           ###   ########.fr       */
+/*   Updated: 2020/12/08 17:31:35 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,8 @@ typedef struct	s_config
 	int		rgb[2];
 	t_list	*map_lst; // init
 	t_xy_i	map_size; //init 필요
+	char	player_dir;
+	char	**map;
 }				t_config;
 
 /*

@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/04 02:49:56 by dhyeon            #+#    #+#             */
-/*   Updated: 2020/12/05 18:04:48 by dhyeon           ###   ########.fr       */
+/*   Updated: 2020/12/08 22:51:30 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ int		check_texture(t_config *conf, char *str, int info)
 	if ((ft_strncmp(str + len - 4, ".xpm", 4) != 0) ||
 		(ft_strncmp(str, ".", 1) != 0))
 		return (-3);
-	conf->tex_path[info] = ft_strdup(str); //앞뒤로 공백있는지도 체크해야하는지?
+	conf->tex_path[info] = ft_strdup(str);
 	// printf("%d : %s\n", info, conf->tex_path[info]);
 	return (0);
 }
@@ -107,7 +107,7 @@ int		check_rgb(t_config *conf, int *c, int info)
 									|| !(0 <= c[2] && c[2] <= 255))
 		return (-3);
 	conf->rgb[info] = (c[0] << 16) | (c[1] << 8) | c[2];
-	// printf("rgb[%d] = %d\n", info, conf->rgb[info]);
+	// 나중에 합치기
 	return (0);
 }
 
@@ -182,10 +182,16 @@ int		save_map(t_config *conf, char *str)
 		if (ft_isdigit(*tmp) == 0 && *tmp != ' ' && *tmp != 'N' &&
 						*tmp != 'S' && *tmp != 'W' && *tmp != 'E')
 			return (-3);
+		if (*tmp == 'N' || *tmp == 'S' || *tmp == 'W' || *tmp == 'E')
+		{
+			if (conf->player_dir != 0)
+				return (-3);
+			else
+				conf->player_dir = *tmp;
+		}
 		tmp++;
-	}//dup해야함
-	new = ft_lstnew((void *)str);
-	printf("new = |%s|\n", str);
+	}
+	new = ft_lstnew(ft_strdup(str));
 	ft_lstadd_back(&conf->map_lst, new);
 	return (0);
 }
@@ -194,7 +200,6 @@ int		check_conf(t_config *conf, char *str)
 {
 	if (conf->map_cnt < 8)
 	{
-		// skip_space(str);
 		if (is_blank(str) == 0)
 			return (0);
 		else if (parse_line(conf, str) != 0)
@@ -202,7 +207,8 @@ int		check_conf(t_config *conf, char *str)
 		else
 			conf->map_cnt++;
 	}
-	else if (conf->map_cnt == 8 && is_blank(str) == 0 && conf->map_size.x == 0)
+	else if (conf->map_cnt == 8 && is_blank(str) == 0
+								&& conf->map_size.x == 0)
 		return (0);
 	else
 	{
@@ -224,6 +230,7 @@ int		read_map_file(t_cub *cub, t_config *conf)
 			break ;
 		if (check_conf(conf, line) != 0)
 		{
+			printf("test0\n");
 			gnl_err = -3;
 			break ;
 		}
@@ -232,15 +239,130 @@ int		read_map_file(t_cub *cub, t_config *conf)
 			break ;
 	}
 	cub->test = 0;
-	printf("size = %d\n", conf->map_size.x);
+	printf("gnl_err: %d\n", gnl_err);
 	return (gnl_err);
+}
+
+int		map_init(t_config *conf)
+{
+	int i;
+	int j;
+
+	if (!(conf->map = (char **)malloc(sizeof(char *) * (conf->map_size.y) + 3)))
+		return (-1);
+	i = -1;
+	while (++i < conf->map_size.y + 2)
+	{
+		if (!(conf->map[i] = (char *)malloc(sizeof(char) * conf->map_size.x + 2)))
+		{
+			ft_free(conf->map);
+			return (-1);
+		}
+	}
+	i = -1;
+	while (++i < conf->map_size.y + 2)
+	{
+		j = -1;
+		while (++j < conf->map_size.x + 2)
+		{
+			conf->map[i][j] = ' ';
+		}
+	}
+	conf->map[conf->map_size.y + 2] = 0;
+	return (0);
+}
+
+int		list_to_array(t_config *conf)
+{
+	int		i;
+	t_list	*tmp;
+
+	tmp = conf->map_lst;
+	i = 1;
+	printf("start\n");
+	while (tmp)
+	{
+		conf->map[i]= ft_strjoin(" ", tmp->content);
+		// printf("tmp : |%s|\n", ft_strjoin(" ", tmp->content));
+		if (conf->map[i] == 0)
+			return (-3);
+		tmp = tmp->next;
+		i++;
+	} //따로 프리해주기
+	return (0);
+}
+
+int		create_map(t_config *conf)
+{
+	int i;
+	int len;
+
+	conf->map_size.y = ft_lstsize(conf->map_lst);
+	if (map_init(conf) != 0)
+		return (-3);
+	if (list_to_array(conf) != 0)
+		return (-3);
+	i = 0;
+	while (++i < conf->map_size.y + 1)
+	{
+		if ((len = ft_strlen(conf->map[i])) < conf->map_size.x + 1)
+			conf->map[i][len] = ' ';
+		conf->map[i][conf->map_size.x + 1] = '\0';
+	}
+	int j = 0;
+	while (conf->map[j])
+	{
+		printf("arr[%3d] : |%s|\n", j , conf->map[j]);
+		j++;
+	}
+	return (0);
+}
+
+int		check_valid_map(t_config *conf)
+{
+	int i;
+	int j;
+
+	i = -1;
+	while (++i < conf->map_size.y + 1)
+	{
+		j = -1;
+		while (conf->map[i][++j] != '\0')
+		{
+			if (conf->map[i][j] == ' ')
+			{
+				if (conf->map[i][j + 1] == '0' || conf->map[i][j + 1] == '0')
+				{
+					printf("x : %d | y : %d\n", i, j);
+					return (-3);
+				}
+				if (i != 0 && conf->map[i - 1][j] == 0)
+				{
+					printf("x : %d | y : %d\n", i, j);
+					return (-3);
+				}
+				if (j != 0 && conf->map[i][j - 1] == 0)
+				{
+					printf("x : %d | y : %d\n", i, j);
+					return (-3);
+				}
+			}
+		}
+	}
+	return (0);
 }
 
 int		set_map(t_cub *cub, t_config *conf, char *path)
 {
+	int		err_num;
+
 	if ((conf->fd = open(path, O_RDONLY)) < 0)
-		return (-3);
-	if (read_map_file(cub, conf) != 0)
-		return (-3);
+		return (-4);
+	if ((err_num = read_map_file(cub, conf)) != 0)
+		return (err_num);
+	if ((err_num = create_map(conf)) != 0)
+		return (err_num);
+	if ((err_num = check_valid_map(conf)) != 0)
+		return (err_num);
 	return (0);
 }
