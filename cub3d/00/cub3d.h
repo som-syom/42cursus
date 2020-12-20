@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/03 02:47:56 by dhyeon            #+#    #+#             */
-/*   Updated: 2020/12/08 17:31:35 by dhyeon           ###   ########.fr       */
+/*   Updated: 2020/12/09 15:32:03 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,8 @@ typedef struct	s_cub
 
 typedef struct	s_list
 {
-	char	*content;
-	void	*next;
+	char			*content;
+	struct s_list	*next;
 }				t_list;
 
 typedef struct	s_config
@@ -107,6 +107,9 @@ t_list		*ft_lstnew(char *content);
 t_list		*ft_lstlast(t_list *lst);
 void		ft_lstadd_back(t_list **lst, t_list *new);
 int			ft_lstsize(t_list *lst);
+void		*ft_calloc(size_t n, size_t size);
+void		*ft_memset(void *ptr, int val, size_t n);
+char		*ft_strchr(const char *str, int c);
 
 /*
 **	get_next_line
@@ -122,6 +125,20 @@ int			parse_line(t_config *conf, char *str);
 int			read_map_file(t_cub *cub, t_config *conf);
 int			set_map(t_cub *cub, t_config *conf, char *path);
 
+int			check_win_size(t_config *conf, char *str);
+int			check_texture(t_config *conf, char *str, int info);
+int			check_rgb(t_config *conf, int *c, int info);
+int			check_color(t_config *conf, char *str, int info);
+int			parse_line(t_config *conf, char *str);
 
+int			map_init(t_config *conf);
+int			list_to_array(t_config *conf);
+int			create_map(t_config *conf);
+int			check_valid_map(t_config *conf);
+
+int			check_digit(char **strs);
+void		ft_free(char **strs);
+void		skip_space(char **str);
+int			is_blank(char *s);
 
 #endif
