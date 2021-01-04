@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/03 02:47:56 by dhyeon            #+#    #+#             */
-/*   Updated: 2020/12/09 15:32:03 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/01/04 03:01:13 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,18 @@ typedef struct s_info
 	double	*zbuffer; // width 만큼 배열
 }				t_info;
 
+typedef struct	s_player
+{
+	t_xy_d	pos;
+}				t_player;
+
+
 typedef struct	s_cub
 {
-	t_info	info;
-	t_img	img;
-	int		test;
+	t_info		info;
+	t_img		img;
+	t_player	player;
+	int			test;
 }				t_cub;
 
 typedef struct	s_list

@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/04 02:49:56 by dhyeon            #+#    #+#             */
-/*   Updated: 2020/12/09 15:34:52 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/01/04 20:47:32 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,73 @@ int		read_map_file(t_cub *cub, t_config *conf)
 	return (gnl_err);
 }
 
+void	set_player_dir(t_cub *cub, char dir)
+{
+	cub->info.dir.x = 0;
+	cub->info.dir.y = 0;
+	cub->info.plane.x = 0;
+	cub->info.plane.y = 0;
+	if (dir == 'N')
+	{
+		cub->info.dir.x = -1;
+		cub->info.plane.y = 0.66;
+	}
+	if (dir == 'E')
+	{
+		cub->info.dir.y = -1;
+		cub->info.plane.x = -0.66;
+	}
+	if (dir == 'W')
+	{
+		cub->info.dir.y = 1;
+		cub->info.plane.x = 0.66;
+	}
+	if (dir == 'S')
+	{
+		cub->info.dir.x = 1;
+		cub->info.plane.y = -0.66;
+	}
+}
+
+int		set_player_pos(t_config *conf, t_cub *cub, int i, int j)
+{
+	cub->info.pos.x = i + 0.5;
+	cub->info.pos.y = j + 0.5;
+	if (conf->map[i + 1][j] == 1 && conf->map[i - 1][j] == 1
+		&& conf->map[i][j + 1] == 1 && conf->map[i][j - 1] == 1)
+		return (-3);
+	return (0);
+}
+
+int		check_player_sp(t_config *conf, t_cub *cub, int i, int j)
+{
+	if (conf->player_dir == 0)
+		return (-3);
+	else
+		set_player_dir(cub, conf->player_dir);
+	i = -1;
+	while (++i < conf->map_size.y + 2)
+	{
+		j = -1;
+		while (conf->map[i][j] != '\0')
+		{
+			printf("[]%c", conf->map[i][j]);
+			if (ft_strchr("NEWS", conf->map[i][j]) != 0)////////수정수정수정
+			{
+				if(set_player_pos(conf, cub, i, j) != 0)
+					return (-3);
+				printf("i j = %d %d\n", i, j);
+			}
+			// if (conf->map[i][j] > 1)
+			// {
+			// 	if (set_sprite(cub, conf, i, j) != 0)
+			// 		return (-3);
+			// }
+		}
+	}
+	return (0);
+}
+
 int		set_map(t_cub *cub, t_config *conf, char *path)
 {
 	int		err_num;
@@ -95,6 +162,8 @@ int		set_map(t_cub *cub, t_config *conf, char *path)
 	if ((err_num = create_map(conf)) != 0)
 		return (err_num);
 	if ((err_num = check_valid_map(conf)) != 0)
+		return (err_num);
+	if ((err_num = check_player_sp(conf, cub, 0, 0)) != 0)
 		return (err_num);
 	return (0);
 }

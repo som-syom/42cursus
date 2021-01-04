@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 04:34:29 by dhyeon            #+#    #+#             */
-/*   Updated: 2020/08/12 05:43:22 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/01/04 00:29:47 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int		gnl_return(char **back, char **line, char *buf)
 
 int		get_next_line(int fd, char **line)
 {
-	static char	*back[OPEN_MAX];
+	static char	*back[FOPEN_MAX];
 	char		*buf;
 	char		*tmp;
 	int			gnl_read;

@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 15:27:08 by dhyeon            #+#    #+#             */
-/*   Updated: 2020/12/09 15:27:42 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/01/04 04:07:34 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,17 +104,17 @@ int		check_valid_map(t_config *conf)
 				if (i < conf->map_size.y + 1 &&
 					(conf->map[i][j + 1] == '0' || conf->map[i + 1][j] == '0'))
 				{
-					printf("x : %d | y : %d\n", i, j);
+					// printf("x : %d | y : %d\n", i, j);
 					return (-3);
 				}
 				if (i != 0 && conf->map[i - 1][j] == '0')
 				{
-					printf("x : %d | y : %d\n", i, j);
+					// printf("x : %d | y : %d\n", i, j);
 					return (-3);
 				}
 				if (j != 0 && conf->map[i][j - 1] == '0')
 				{
-					printf("x : %d | y : %d\n", i, j);
+					// printf("x : %d | y : %d\n", i, j);
 					return (-3);
 				}
 			}
