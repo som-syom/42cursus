@@ -6,7 +6,7 @@
 			"label": "makefile",
 			"command": "make",
 			"args": [
-				"all"
+				"re"
 			],
 			"options": {
 				"cwd": "${workspaceFolder}"

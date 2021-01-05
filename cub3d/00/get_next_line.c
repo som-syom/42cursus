@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 04:34:29 by dhyeon            #+#    #+#             */
-/*   Updated: 2020/12/04 04:40:01 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/01/06 06:21:10 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int		gnl_return(char **back, char **line, char *buf)
 		*back = ft_strdup(back_tmp + idx + 1);
 		if (back_tmp != 0)
 			free(back_tmp);
-		return (GNL_SUCCESS);
+		return (1);
 	}
 	if (*back != 0)
 	{
@@ -54,7 +54,7 @@ int		gnl_return(char **back, char **line, char *buf)
 	}
 	else
 		*line = ft_strdup("");
-	return (GNL_EOF);
+	return (0);
 }
 
 int		get_next_line(int fd, char **line)
@@ -65,9 +65,9 @@ int		get_next_line(int fd, char **line)
 	int			gnl_read;
 
 	if (fd < 0 || line == 0 || BUFFER_SIZE <= 0)
-		return (GNL_ERROR);
+		return (-1);
 	if (!(buf = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1))))
-		return (GNL_ERROR);
+		return (-1);
 	while ((get_index(back[fd]) == -1)
 		&& ((gnl_read = read(fd, buf, BUFFER_SIZE)) > 0))
 	{
@@ -80,7 +80,7 @@ int		get_next_line(int fd, char **line)
 	if (gnl_read < 0)
 	{
 		free(buf);
-		return (GNL_ERROR);
+		return (-1);
 	}
 	return (gnl_return(&back[fd], line, buf));
 }

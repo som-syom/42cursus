@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/03 02:48:15 by dhyeon            #+#    #+#             */
-/*   Updated: 2020/12/08 19:19:48 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/01/06 06:43:07 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,44 +41,105 @@ int     check_arg(int ac, char **av, t_config * conf)
 	return (0);
 }
 
-int		init_new_mlx(t_cub *cub, t_config *conf)
+int		init_all(t_cub *cub)
 {
 	int i;
 
-	// cub->info.mlx = mlx_init();
-	if (!(conf->tex_path = (char**)malloc(sizeof(char *) * 8)))
+	ft_memset(&cub->conf, 0, sizeof(cub->conf));
+	if (!(cub->conf.tex_path = ft_calloc(4, sizeof(char *))))
 		return (-1);
-	if (!(conf->map_lst = malloc(sizeof(t_list))))
+	if (!(cub->info.texture = (int **)malloc(sizeof(int *) * 5)))
 		return (-1);
-	conf->map_lst = 0;
 	i = -1;
-	while (++i < 8)
-		conf->tex_path[i] = 0;
-	conf->rgb[0] = -1;
-	conf->rgb[1] = -1;
-	conf->w = 0;
-	conf->h = 0;
-	conf->player_dir = 0;
-	conf->map_cnt = 0;
+	while (++i < 4)
+	{
+		if (!(cub->info.texture[i] = ft_calloc(64 * 64, sizeof(int))))
+			return (-1);
+	}
+	if (!(cub->conf.map_lst = malloc(sizeof(t_list))))
+		return (-1);
+	cub->conf.map_lst = 0;
+	ft_memset(cub->conf.rgb, -1, sizeof(int) * 2);
+	// i = -1;
+	// while (++i < 8)
+	// 	cub->conf.tex_path[i] = 0;
+	cub->info.sp_num = 0;
+	cub->info.move_speed = 0.1;
+	cub->info.rot_speed = 0.1;
 	return (0);
 }
 
+void	draw(t_cub *cub)
+{
+	int x;
+	int y;
 
+	y = 0;
+	while (y < cub->conf.h)
+	{
+		x = 0;
+		while (x < cub->conf.w)
+		{
+			cub->info.img->data[y * cub->conf.w + x] = cub->info.buf[y][x];
+			x++;
+		}
+		y++;
+	}
+	mlx_put_image_to_window(cub->info.mlx, cub->info.win, cub->info.img, 0, 0);
+}
+
+int		main_loop(t_cub *cub)
+{
+	calc(cub);
+	draw(cub);
+	return (0);
+}
+
+int		parse_data(t_cub *cub)
+{
+	int i;
+	int x;
+	int y;
+
+	i = -1;
+	while (++i < 5)
+	{
+		if (!(cub->info.texture[i] = mlx_xpm_file_to_image(cub->info.mlx,
+			cub->conf.tex_path[i], &x, &y)) || x != 64 || y != 64)
+			return (-4);
+	}
+	if(!(cub->info.buf = (int **)malloc(sizeof(int *) * cub->conf.h)))
+		return (-1);
+	i = -1;
+	while (++i < cub->conf.h)
+	{
+		if (!(cub->info.buf[i] = ft_calloc(cub->conf.w, sizeof(int))))
+			return (-1);
+	}
+	return (0);
+}
 
 int     main(int argc, char **argv)
 {
-	t_config    conf;
+	// t_config    conf;
 	t_cub		cub;
-	int         err_num;
+	int			err_num;
 
-	if ((err_num = check_arg(argc, argv, &conf)) != 0)
+	cub.info.mlx = mlx_init();
+	if ((err_num = check_arg(argc, argv, &cub.conf)) != 0)
 		print_err(err_num);
-	printf("err1 : %d\n", err_num);
-	if ((err_num = init_new_mlx(&cub, &conf)) != 0)
+	if ((err_num = init_all(&cub)) != 0)
 		print_err(err_num);
-	printf("err2 : %d\n", err_num);
-	if ((err_num = set_map(&cub, &conf, argv[1])) != 0)
+	if ((err_num = set_map(&cub, &cub.conf, argv[1])) != 0)
 		print_err(err_num);
-	printf("err3 : %d\n", err_num);
+	if ((err_num = parse_data(&cub)) != 0)
+		print_err(err_num);
+
+	cub.info.win = mlx_new_window(cub.info.mlx, cub.conf.w, cub.conf.h, "CUB3D");
+	cub.info.img = mlx_new_image(cub.info.mlx, cub.conf.w, cub.conf.h);
+	// cub.info.img.data = (int *)mlx_get_data_addr(cub.img.img,)
+	mlx_hook(cub.info.win, 2, 1, &key_press, &cub);
+	mlx_loop_hook(cub.info.mlx, &main_loop, &cub);
+	mlx_loop(cub.info.mlx);
 	return (0);
 }

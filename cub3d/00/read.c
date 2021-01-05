@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/04 02:49:56 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/01/04 20:47:32 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/01/05 23:55:02 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,14 +112,35 @@ void	set_player_dir(t_cub *cub, char dir)
 	}
 }
 
-int		set_player_pos(t_config *conf, t_cub *cub, int i, int j)
+int		set_player_pos(t_cub *cub, int i, int j)
 {
 	cub->info.pos.x = i + 0.5;
 	cub->info.pos.y = j + 0.5;
-	if (conf->map[i + 1][j] == 1 && conf->map[i - 1][j] == 1
-		&& conf->map[i][j + 1] == 1 && conf->map[i][j - 1] == 1)
-		return (-3);
 	return (0);
+}
+
+void	save_sprite(t_cub *cub)
+{
+	int cnt;
+	int i;
+	int j;
+
+	cub->info.sprites = ft_calloc(cub->info.sp_num, sizeof(t_xy_d));
+	cnt = 0;
+	i = -1;
+	while (++i < cub->conf.map_size.y + 2)
+	{
+		j = -1;
+		while (cub->conf.map[i][++j] != '\0')
+		{
+			if (cub->conf.map[i][j] == '2')
+			{
+				cub->info.sprites[cnt].x = j;
+				cub->info.sprites[cnt].y = i;
+				cnt++;
+			}
+		}
+	}
 }
 
 int		check_player_sp(t_config *conf, t_cub *cub, int i, int j)
@@ -132,24 +153,23 @@ int		check_player_sp(t_config *conf, t_cub *cub, int i, int j)
 	while (++i < conf->map_size.y + 2)
 	{
 		j = -1;
-		while (conf->map[i][j] != '\0')
+		while (conf->map[i][++j] != '\0')
 		{
-			printf("[]%c", conf->map[i][j]);
-			if (ft_strchr("NEWS", conf->map[i][j]) != 0)////////수정수정수정
+			if (ft_strchr("NEWS", conf->map[i][j]) != 0)
 			{
-				if(set_player_pos(conf, cub, i, j) != 0)
+				if(set_player_pos(cub, i, j) != 0)
 					return (-3);
 				printf("i j = %d %d\n", i, j);
 			}
-			// if (conf->map[i][j] > 1)
-			// {
-			// 	if (set_sprite(cub, conf, i, j) != 0)
-			// 		return (-3);
-			// }
+			if (conf->map[i][j] == '2')
+				cub->info.sp_num++;
 		}
 	}
+	save_sprite(cub);
 	return (0);
 }
+
+
 
 int		set_map(t_cub *cub, t_config *conf, char *path)
 {

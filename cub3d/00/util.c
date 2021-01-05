@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 15:22:55 by dhyeon            #+#    #+#             */
-/*   Updated: 2020/12/09 15:24:05 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/01/06 00:06:48 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ void	ft_free(char **strs)
 void	skip_space(char **str)
 {
 	char	*tmp;
-	int		back;
 	int		len;
 
 	tmp = *str;
@@ -68,6 +67,8 @@ int		is_blank(char *s)
 	int i;
 
 	i = 0;
+	if (ft_strlen(s) == 0)
+		return (0);
 	while (s[i] != 0)
 	{
 		if (s[i] == '\n' || (9 <= s[i] && s[i] <= 13) || s[i] == ' ')

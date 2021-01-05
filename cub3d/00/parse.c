@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 15:24:43 by dhyeon            #+#    #+#             */
-/*   Updated: 2020/12/09 15:24:52 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/01/06 04:42:27 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ int		check_win_size(t_config *conf, char *str)
 	conf->w = ft_atoi(r[0]);
 	conf->h = ft_atoi(r[1]);
 	ft_free(r);
-	if (conf->w < 500 || conf->w > 1400)
+	if (conf->w < 500 || conf->w > MAX_WIDTH)
 		conf->w = 640;
-	if (conf->h < 500 || conf->h > 1000)
+	if (conf->h < 500 || conf->h > MAX_HEIGHT)
 		conf->h = 640;
 	return (0);
 }

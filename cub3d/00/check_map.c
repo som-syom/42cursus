@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 15:27:08 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/01/04 04:07:34 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/01/06 00:24:05 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ int		map_init(t_config *conf)
 	i = -1;
 	while (++i < conf->map_size.y + 2)
 	{
-		if (!(conf->map[i] = (char *)malloc(sizeof(char) * conf->map_size.x + 3)))
+		if (!(conf->map[i] = (char *)malloc(sizeof(char)
+							* conf->map_size.x + 3)))
 		{
 			ft_free(conf->map);
 			return (-1);
@@ -67,7 +68,6 @@ int		list_to_array(t_config *conf)
 int		create_map(t_config *conf)
 {
 	int i;
-	int len;
 
 	conf->map_size.y = ft_lstsize(conf->map_lst);
 	if (map_init(conf) != 0)
@@ -79,12 +79,12 @@ int		create_map(t_config *conf)
 	{
 		conf->map[i][conf->map_size.x + 2] = '\0';
 	}
-	int j = 0;
-	while (j < 16)
-	{
-		printf("arr[%3d] : |%s|\n", j , conf->map[j]);
-		j++;
-	}
+	// int j = 0;
+	// while (j < 16)
+	// {
+	// 	printf("arr[%3d] : |%s|\n", j , conf->map[j]);
+	// 	j++;
+	// }
 	return (0);
 }
 
@@ -103,20 +103,11 @@ int		check_valid_map(t_config *conf)
 			{
 				if (i < conf->map_size.y + 1 &&
 					(conf->map[i][j + 1] == '0' || conf->map[i + 1][j] == '0'))
-				{
-					// printf("x : %d | y : %d\n", i, j);
 					return (-3);
-				}
 				if (i != 0 && conf->map[i - 1][j] == '0')
-				{
-					// printf("x : %d | y : %d\n", i, j);
 					return (-3);
-				}
 				if (j != 0 && conf->map[i][j - 1] == '0')
-				{
-					// printf("x : %d | y : %d\n", i, j);
 					return (-3);
-				}
 			}
 		}
 	}
