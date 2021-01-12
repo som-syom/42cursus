@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/03 02:47:56 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/01/06 06:20:52 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/01/13 07:19:43 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,29 @@
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 1
 # endif
+
+# pragma pack(push, 1)
+
+typedef struct	s_bmp_header
+{
+	char		magic[2];
+	int			filesz;
+	int			reserved_0;
+	int			start_offset_54;
+	int			header_sz_40;
+	int			width;
+	int			height;
+	short		plane_1;
+	short		bitcnt_24;
+	int			compress_0;
+	int			imgsz;
+	int			xppm_0;
+	int			yppm_0;
+	int			clr_used_0;
+	int			clr_imp_0;
+}				t_bmp_header;
+# pragma pack(pop)
+
 typedef struct	s_xy_d
 {
 	double	x;
@@ -64,6 +87,21 @@ typedef struct		s_img
 	int				format;
 	int				*data;
 }					t_img;
+
+typedef struct		s_sprite
+{
+	int				screen_x;
+	int				offset;
+	int				size;
+	int				x;
+	int				y;
+	int				tx;
+	int				ty;
+	double			xoffset;
+	double			yoffset;
+	t_xy_d			draw_x;
+	t_xy_d			draw_y;
+}					t_sprite;
 
 typedef struct s_info
 {
@@ -115,26 +153,31 @@ typedef struct	s_cub
 
 typedef struct	s_ray
 {
-	double	cameraX; // 카메라평면 좌표
-	double	cameraY;
-	double	rayDirX; // 광선의 방향벡터
-	double	rayDirY;
-	int		mapX; // 현재 광선의 위치(한칸)
-	int		mapY;
-	double	sideDistX; // 시작점 ~ 첫번째 x면까지 광선의 이동거리
-	double	sideDistY;
-	double	perpWallDist; // camera plane에서 벽까지의 수직거리
-	double	deltaDistX; // 첫번째 x면 ~ 그 다음 x면까지의 광선의 이동거리
-	double	deltaDistY;
-	int		stepX; //광선의 방향이 어느 방향으로 건너뛰는지
-	int		stepY; // x|y방향 rayDirX|Y 값이 양수면 +1 음수면 -1, 0이라면 상관없음
+	double	c_x; // 카메라평면 좌표
+	double	c_y;
+	double	r_x; // 광선의 방향벡터
+	double	r_y;
+	int		m_x; // 현재 광선의 위치(한칸)
+	int		m_y;
+	double	side_x; // 시작점 ~ 첫번째 x면까지 광선의 이동거리
+	double	side_y;
+	double	perp; // camera plane에서 벽까지의 수직거리
+	double	delta_x; // 첫번째 x면 ~ 그 다음 x면까지의 광선의 이동거리
+	double	delta_y;
+	int		step_x; //광선의 방향이 어느 방향으로 건너뛰는지
+	int		step_y; // x|y방향 rayDirX|Y 값이 양수면 +1 음수면 -1, 0이라면 상관없음
 	int		hit; // 벽과 부딪혔는지 여부 (루프 종료조건)
 	int		side; // (부딪힌 면  0: x면 | 1: y면 )
-	int		lineHeight; // 화면에 그려야하는 수직 선의 높이
-	int		drawStart;
-	int		drawEnd;
+	int		line_h; // 화면에 그려야하는 수직 선의 높이
+	int		draw_s;
+	int		draw_e;
 	int		color;
-
+	int		tex_num;
+	double	w_x;
+	int		t_x;
+	int		t_y;
+	double	step;
+	double	t_p;
 }				t_ray;
 
 /*
@@ -155,6 +198,7 @@ void		ft_lstadd_back(t_list **lst, t_list *new);
 int			ft_lstsize(t_list *lst);
 void		*ft_calloc(size_t n, size_t size);
 void		*ft_memset(void *ptr, int val, size_t n);
+void		*ft_memcpy(void *dest, const void *src, size_t n);
 char		*ft_strchr(const char *str, int c);
 
 /*
@@ -188,4 +232,5 @@ void		skip_space(char **str);
 int			is_blank(char *s);
 void		calc(t_cub *cub);
 int			key_press(int key, t_cub *cub);
+int			main_loop(t_cub *cub);
 #endif

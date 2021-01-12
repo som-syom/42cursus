@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/03 02:48:15 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/01/06 06:43:07 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/01/13 07:27:06 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,12 @@ int     check_arg(int ac, char **av, t_config * conf)
 {
 	int		len;
 
-	if (!(ac == 2 || (ac == 3 && !(ft_strncmp(av[2], "--save", 6)))))
+	if (ac >= 4)
 		return (-1);
-	if (ac == 3)
+	if (ac == 3 && !(ft_strncmp(av[2], "--save", 6)))
 		conf->is_save = 1;
+	else if (ac == 3)
+		return (-1);
 	len = ft_strlen(av[1]);
 	if (ft_strncmp(av[1] + len - 4, ".cub", 4) != 0)
 		return (-2);
@@ -44,8 +46,11 @@ int     check_arg(int ac, char **av, t_config * conf)
 int		init_all(t_cub *cub)
 {
 	int i;
+	int save;
 
+	save = cub->conf.is_save;
 	ft_memset(&cub->conf, 0, sizeof(cub->conf));
+	cub->conf.is_save = save;
 	if (!(cub->conf.tex_path = ft_calloc(4, sizeof(char *))))
 		return (-1);
 	if (!(cub->info.texture = (int **)malloc(sizeof(int *) * 5)))
@@ -58,6 +63,7 @@ int		init_all(t_cub *cub)
 	}
 	if (!(cub->conf.map_lst = malloc(sizeof(t_list))))
 		return (-1);
+
 	cub->conf.map_lst = 0;
 	ft_memset(cub->conf.rgb, -1, sizeof(int) * 2);
 	// i = -1;
@@ -88,12 +94,7 @@ void	draw(t_cub *cub)
 	mlx_put_image_to_window(cub->info.mlx, cub->info.win, cub->info.img, 0, 0);
 }
 
-int		main_loop(t_cub *cub)
-{
-	calc(cub);
-	draw(cub);
-	return (0);
-}
+
 
 int		parse_data(t_cub *cub)
 {
@@ -108,14 +109,77 @@ int		parse_data(t_cub *cub)
 			cub->conf.tex_path[i], &x, &y)) || x != 64 || y != 64)
 			return (-4);
 	}
-	if(!(cub->info.buf = (int **)malloc(sizeof(int *) * cub->conf.h)))
+	if(!(cub->info.buf = (int **)malloc(sizeof(int *) * (cub->conf.h + 1))))
 		return (-1);
 	i = -1;
 	while (++i < cub->conf.h)
 	{
-		if (!(cub->info.buf[i] = ft_calloc(cub->conf.w, sizeof(int))))
+		if (!(cub->info.buf[i] = ft_calloc(cub->conf.w + 1, sizeof(int))))
 			return (-1);
 	}
+	if (!(cub->info.zbuffer = ft_calloc(cub->conf.w, sizeof(double *))))
+		return (-1);
+	return (0);
+}
+
+int		add_header(const int fd, t_cub *cub)
+{
+	t_bmp_header		header;
+	int					tmp;
+	const unsigned char	header_base[] = {
+		0x42, 0x4D, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+		0x00, 0x00, 0x36, 0x00, 0x00, 0x00, 0x28, 0x00,
+		0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+		0x00, 0x00, 0x01, 0x00, 0x18, 0x00, 0x00, 0x00,
+		0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+		0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+		0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	};
+
+	ft_memcpy(&header, header_base, sizeof(header));
+	header.width = cub->conf.w;
+	header.height = cub->conf.h;
+	tmp = 3 * header.width;
+	while (tmp % 4 != 0)
+		tmp++;
+	header.imgsz = tmp * header.height;
+	header.filesz = header.start_offset_54 + header.imgsz;
+	write(fd, &header, sizeof(header));
+	return (tmp - 3 * header.width);
+}
+
+void	draw_img(const int fd, t_cub *cub, int padding)
+{
+	int	i;
+	int	j;
+
+	i = cub->conf.h;
+	while (--i >= 0)
+	{
+		j = -1;
+		while (++j < cub->conf.w)
+			write(fd, &cub->info.img->data[i * cub->conf.w + j], 3);
+		j = -1;
+		while (++j < padding)
+			write(fd, "\x00", 1);
+	}
+}
+
+void	save_bmp(t_cub *cub)
+{
+	const int fd = open("screenshot.bmp", O_CREAT | O_RDWR | O_TRUNC, 0644);
+
+	if (fd == -1)
+		print_err(-1);
+	draw_img(fd, cub, add_header(fd, cub));
+	close(fd);
+	exit(0);
+}
+
+int		main_loop(t_cub *cub)
+{
+	calc(cub);
+	draw(cub);
 	return (0);
 }
 
@@ -134,9 +198,13 @@ int     main(int argc, char **argv)
 		print_err(err_num);
 	if ((err_num = parse_data(&cub)) != 0)
 		print_err(err_num);
-
 	cub.info.win = mlx_new_window(cub.info.mlx, cub.conf.w, cub.conf.h, "CUB3D");
 	cub.info.img = mlx_new_image(cub.info.mlx, cub.conf.w, cub.conf.h);
+	if (cub.conf.is_save == 1)
+	{
+		main_loop(&cub);
+		save_bmp(&cub);
+	}
 	// cub.info.img.data = (int *)mlx_get_data_addr(cub.img.img,)
 	mlx_hook(cub.info.win, 2, 1, &key_press, &cub);
 	mlx_loop_hook(cub.info.mlx, &main_loop, &cub);

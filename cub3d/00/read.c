@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/04 02:49:56 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/01/05 23:55:02 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/01/13 06:30:50 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,8 +135,8 @@ void	save_sprite(t_cub *cub)
 		{
 			if (cub->conf.map[i][j] == '2')
 			{
-				cub->info.sprites[cnt].x = j;
-				cub->info.sprites[cnt].y = i;
+				cub->info.sprites[cnt].x = i;
+				cub->info.sprites[cnt].y = j;
 				cnt++;
 			}
 		}
