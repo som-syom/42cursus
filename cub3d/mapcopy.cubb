@@ -1,5 +1,5 @@
 R  1920 1080
-NO      ./textures/01.xpm
+NO      ../textures/01.xpm
 SO    ./textures/02.xpm
 WE  ./textures/03.xpm
 EA ./textures/04.xpm

@@ -24,11 +24,11 @@ else
 	MAX_HEIGHT = $(shell xdpyinfo | grep dimensions | awk '{print $$2}' | cut -dx -f2)
 	LINK = -L $(MLX) -lmlx -lm -lXext -lX11
 endif
-$(NAME): all
 .c.o: $(SRCS)
 	$(CC) -c $(FLAGS) $^ -I $(INCDIR) -I $(MLX) -o $@ -DMAX_WIDTH=$(MAX_WIDTH) -DMAX_HEIGHT=$(MAX_HEIGHT)
-all: $(OBJS)
+$(NAME): $(OBJS)
 	$(CC) $(FLAGS) $^ -o $(NAME) -I $(MLX) $(LINK)
+all: $(NAME)
 clean:
 	rm -rf $(OBJS)
 fclean: clean
