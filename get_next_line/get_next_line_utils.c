@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhyeon <dhyeon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 03:43:38 by dhyeon            #+#    #+#             */
-/*   Updated: 2020/08/06 03:44:53 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/03/12 23:50:33 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 size_t	ft_strlen(char *str)
 {
-	size_t i;
+	size_t	i;
 
 	i = 0;
 	while (str[i])
@@ -51,9 +51,14 @@ char	*ft_strjoin(char *s1, char *s2)
 	if (!(s1) && !(s2))
 		return (0);
 	else if (!(s1) || !(s2))
-		return (!(s1) ? ft_strdup(s2) : ft_strdup(s1));
+	{
+		if (!(s1))
+			return (ft_strdup(s2));
+		else
+			return (ft_strdup(s1));
+	}
 	len = (ft_strlen(s1)) + (ft_strlen(s2));
-	if (!(res = (char *)malloc(sizeof(char) * (len + 1))))
+	if (!ft_calloc(sizeof(char *), len + 1, &res))
 		return (0);
 	i = 0;
 	while (*s1)

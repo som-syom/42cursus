@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhyeon <dhyeon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 04:34:29 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/01/04 00:29:47 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/03/12 23:25:49 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int		get_index(char *back)
+int	get_index(char *back)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (back == 0)
@@ -28,7 +28,7 @@ int		get_index(char *back)
 	return (-1);
 }
 
-int		gnl_return(char **back, char **line, char *buf)
+int	gnl_return(char **back, char **line, char *buf)
 {
 	char	*back_tmp;
 	int		idx;
@@ -57,7 +57,7 @@ int		gnl_return(char **back, char **line, char *buf)
 	return (GNL_EOF);
 }
 
-int		get_next_line(int fd, char **line)
+int	get_next_line(int fd, char **line)
 {
 	static char	*back[FOPEN_MAX];
 	char		*buf;
