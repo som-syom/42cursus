@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhyeon <dhyeon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 01:56:38 by dhyeon            #+#    #+#             */
-/*   Updated: 2020/07/02 02:05:45 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/03/12 23:44:37 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	*ft_memchr(void *ptr, int val, size_t n)
 {
-	unsigned char *ptr_tmp;
-	unsigned char val_tmp;
+	unsigned char	*ptr_tmp;
+	unsigned char	val_tmp;
 
 	ptr_tmp = ptr;
 	val_tmp = val;

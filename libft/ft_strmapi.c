@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhyeon <dhyeon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 21:08:53 by dhyeon            #+#    #+#             */
-/*   Updated: 2020/07/02 23:01:31 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/03/13 00:02:37 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 	if (s == 0 || f == 0)
 		return (0);
 	len = ft_strlen(s);
-	if (!(res = (char *)malloc(sizeof(char) * (len + 1))))
+	if (!ft_calloc(sizeof(char *), len + 1, (void *)& res))
 		return (0);
 	i = 0;
 	while (s[i])

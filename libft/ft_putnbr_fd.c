@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhyeon <dhyeon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 21:38:10 by dhyeon            #+#    #+#             */
-/*   Updated: 2020/07/02 23:00:49 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/03/12 23:45:26 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	ft_rec_nbr(int n, int fd)
 {
 	if (n >= 10)
 		ft_rec_nbr((n / 10), fd);
-	write(fd, &"0123456789"[n % 10], 1);
+	write(fd, &"0123456789" [n % 10], 1);
 }
 
 void	ft_putnbr_fd(int n, int fd)

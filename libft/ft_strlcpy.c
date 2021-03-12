@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhyeon <dhyeon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/30 04:34:13 by dhyeon            #+#    #+#             */
-/*   Updated: 2020/07/03 04:52:35 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/03/12 23:45:50 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 unsigned int	ft_strlcpy(char *dest, const char *src, unsigned int size)
 {
-	unsigned int i;
-	unsigned int srclen;
+	unsigned int	i;
+	unsigned int	srclen;
 
 	srclen = 0;
 	if (dest == 0 || src == 0)

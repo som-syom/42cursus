@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhyeon <dhyeon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 08:12:58 by dhyeon            #+#    #+#             */
-/*   Updated: 2020/07/02 09:42:34 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/03/13 00:01:32 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		ft_str_cnt(char const *s, char c)
+int	ft_str_cnt(char const *s, char c)
 {
-	int cnt;
-	int i;
+	int	cnt;
+	int	i;
 
 	cnt = 0;
 	i = 0;
@@ -33,9 +33,9 @@ int		ft_str_cnt(char const *s, char c)
 	return (cnt);
 }
 
-int		ft_get_len(char const *s, char c, int i)
+int	ft_get_len(char const *s, char c, int i)
 {
-	int len;
+	int	len;
 
 	len = 0;
 	while (s[i] != 0)
@@ -50,7 +50,7 @@ int		ft_get_len(char const *s, char c, int i)
 
 char	**ft_all_free(char **res)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (res[i])
@@ -64,10 +64,10 @@ char	**ft_all_free(char **res)
 
 char	**ft_put_str(char **res, char const *s, char c)
 {
-	int i;
-	int j;
-	int k;
-	int len;
+	int	i;
+	int	j;
+	int	k;
+	int	len;
 
 	i = 0;
 	k = 0;
@@ -76,7 +76,7 @@ char	**ft_put_str(char **res, char const *s, char c)
 		if (s[k] != c)
 		{
 			len = ft_get_len(s, c, k);
-			if (!(res[i] = (char *)malloc(sizeof(char) * (len + 1))))
+			if (!ft_calloc(sizeof(char *), len + 1, (void *)& res[i]))
 				return (ft_all_free(res));
 			j = 0;
 			while (j < len)
@@ -99,7 +99,7 @@ char	**ft_split(char const *s, char c)
 	if (s == 0)
 		return (0);
 	n = ft_str_cnt(s, c);
-	if (!(res = (char **)malloc(sizeof(char *) * (n + 1))))
+	if (!ft_calloc(sizeof(char **), n + 1, (void **)& res))
 		return (0);
 	res = ft_put_str(res, s, c);
 	if (res == 0)

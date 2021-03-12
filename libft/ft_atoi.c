@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhyeon <dhyeon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 04:55:26 by dhyeon            #+#    #+#             */
-/*   Updated: 2020/07/03 20:51:59 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/03/12 23:27:50 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		ft_toi(const char *str, int min, long long res, int i)
+int	print_i(const char *str, int min, long long res, int i)
 {
-	long long tmp;
+	long long	tmp;
 
 	tmp = 0;
 	while (str[i] != 0 && ('0' <= str[i] && str[i] <= '9'))
@@ -33,7 +33,7 @@ int		ft_toi(const char *str, int min, long long res, int i)
 	return (res);
 }
 
-int		ft_atoi(const char *str)
+int	ft_atoi(const char *str)
 {
 	int				i;
 	int				min;
@@ -48,6 +48,6 @@ int		ft_atoi(const char *str)
 		min = -1;
 	if (str[i] == '-' || str[i] == '+')
 		i++;
-	res = ft_toi(str, min, res, i);
+	res = print_i(str, min, res, i);
 	return (res);
 }

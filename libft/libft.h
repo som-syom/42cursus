@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhyeon <dhyeon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/30 04:57:12 by dhyeon            #+#    #+#             */
-/*   Updated: 2020/07/03 20:54:23 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/03/12 23:57:32 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 
-typedef struct	s_list
+typedef struct s_list
 {
 	void			*content;
 	struct s_list	*next;
@@ -47,7 +47,7 @@ int				ft_isprint(int c);
 int				ft_toupper(int c);
 int				ft_tolower(int c);
 
-void			*ft_calloc(size_t n, size_t size);
+int				ft_calloc(size_t n, size_t size, void **ret);
 char			*ft_strdup(const char *str);
 
 char			*ft_substr(char const *s, unsigned int start, size_t len);
@@ -70,7 +70,7 @@ void			ft_lstadd_back(t_list **lst, t_list *new);
 void			ft_lstdelone(t_list *lst, void (*del)(void *));
 void			ft_lstclear(t_list **lst, void (*del)(void *));
 void			ft_lstiter(t_list *lst, void (*f)(void *));
-t_list			*ft_lstmap(t_list *lst, void *(*f)(void *),
-		void (*del)(void *));
+t_list			*ft_lstmap(t_list *lst, void *(*f)(void *), \
+void (*del)(void *));
 
 #endif

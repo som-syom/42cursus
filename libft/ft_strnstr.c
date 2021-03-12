@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhyeon <dhyeon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 04:23:24 by dhyeon            #+#    #+#             */
-/*   Updated: 2020/07/02 04:42:41 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/03/12 23:47:07 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		sfind(const char *s, const char *f, size_t s_pos, size_t n)
+int	sfind(const char *s, const char *f, size_t s_pos, size_t n)
 {
-	size_t f_pos;
+	size_t	f_pos;
 
 	f_pos = 0;
 	while (f[f_pos] != '\0')
@@ -29,9 +29,9 @@ int		sfind(const char *s, const char *f, size_t s_pos, size_t n)
 
 char	*ft_strnstr(const char *str, const char *to_find, size_t n)
 {
-	size_t s_len;
-	size_t t_len;
-	size_t i;
+	size_t	s_len;
+	size_t	t_len;
+	size_t	i;
 
 	i = 0;
 	if (to_find[0] == '\0')
