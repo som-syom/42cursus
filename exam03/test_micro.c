@@ -28,7 +28,7 @@ void	print_error(char *str)
 int	check_arg(int w, int h, char c)
 {
 	if (c == 0)
-		return (-1)
+		return (-1);
 	if (!(0 < w && w <= 300) || !(0 < h && h <= 300))
 		return (-1);
 	return (0);
@@ -39,16 +39,16 @@ int	make_empty_map(t_info *info)
 	int	i;
 	int	j;
 
-	if (!(info->map = (char **)malloc(sizeof(char *) * (h + 1))))
+	if (!(info->map = (char **)malloc(sizeof(char *) * (info->h + 1))))
 		return (0);
 	memset((void *)info->map, 0, sizeof(info->map));
 	i = 0;
-	while (i < h)
+	while (i < info->h)
 	{
 		j = 0;
-		if (!(info->map[i] = (char *)malloc(sizeof(char) * (w + 1))))
+		if (!(info->map[i] = (char *)malloc(sizeof(char) * (info->w + 1))))
 			return (0);
-		while (j < w)
+		while (j < info->w)
 		{
 			info->map[i][j] = info->c;
 			j++;
@@ -64,7 +64,25 @@ int	check_draw(t_info *info)
 {
 	if (info->rec.w <= 0 || info->rec.h <= 0 || info->rec.c == 0)
 		return (0);
+	if (info->rec.type != 'r' && info->rec.type != 'R')
+		return (0);
 	//map 에 그리기
+	int i = 0;
+	int j = 0;
+	while (info->h > i)
+	{
+		j = 0;
+		while (info->w > j)
+		{
+			if (!(info->rec.x <= j && j <= info->rec.x + info->rec.w) || !(info->rec.y <= i && i <= info->rec.y + info->rec.h))
+			{
+				j++;
+				continue ;
+			}
+			if ()
+
+		}
+	}
 	return (1);
 }
 
@@ -91,7 +109,7 @@ int main(int argc, char **argv)
 		return (1);
 	while ((size = fscanf(fd, "%c %f %f %f %f %c", info.rec.type, info.rec.x, info.rec.y, info.rec.w, info.rec.h, info.rec.c)) != EOF)
 	{
-		if (size != 6 || !check_draw(&info))
+		if (size != 6 || info.rec.x + info.rec.w < 0 || info.rec.y + info.rec.h < 0 || !check_draw(&info))
 			print_error("Error\n");
 	}
 	print_rec(&info);
