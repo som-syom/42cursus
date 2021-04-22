@@ -6,7 +6,7 @@
 #include <math.h>
 #include <string.h>
 
-typedef struct s_rec
+typedef struct s_info
 {
 	char	type;
 	float	w;
@@ -14,15 +14,6 @@ typedef struct s_rec
 	float	x;
 	float	y;
 	char	c;
-}				t_rec;
-
-typedef struct s_info
-{
-	int		w;
-	int		h;
-	char	c;
-	char	**map;
-	t_rec	rec;
 }				t_info;
 
 
