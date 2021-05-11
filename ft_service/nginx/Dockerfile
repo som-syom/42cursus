@@ -11,5 +11,6 @@ RUN apk update &&\
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY index.html /www/index.html
 
+EXPOSE 80 443
 ENTRYPOINT ["nginx"]
 CMD ["-g", "daemon off;"]
