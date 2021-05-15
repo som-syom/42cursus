@@ -92,7 +92,6 @@ int	check_draw(t_info *info)
 		return (0);
 	if (!(info->type == 'r' || info->type == 'R'))
 		return (0);
-	//map 에 그리기
 	int i = 0;
 	int j = 0;
 	while (h > i)
@@ -131,19 +130,15 @@ int main(int argc, char **argv)
 	if (check_arg(w, h, c, size) == -1)
 		return (close_file(fd) && print_error("Error: Operation file corrupted\n"));
 	make_empty_map();
-	// printf("check =====\n");
-	// printf("w : %d h : %d c : %c\n", w, h, c);
 	while ((size = fscanf(fd, "%c %f %f %f %f %c\n", &info.type, &info.x, &info.y, &info.w, &info.h, &info.c)) != EOF)
 	{
-		// printf("size = %d\n", size);
-		// printf("t : %c x: %f y: %f w : %f h : %f c : %c\n", info.type, info.x, info.y, info.w, info.h, info.c);
 		if (size != 6)
 			return (close_file(fd) && print_error("Error: Operation file corrupted\n"));
-		// if (info.x + info.w < 0 || info.y + info.h < 0)
-		// 	continue ;
 		if (!check_draw(&info))
 			return (close_file(fd) && print_error("Error: Operation file corrupted\n"));
 	}
+	if (size != EOF) // ㅇㅣ건 확실히하자
+		return (close_file(fd) && print_error("Error: Operation file corrupted\n"));
 	print_map();
 	fclose(fd);
 	return (0);
