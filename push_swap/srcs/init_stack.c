@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/16 04:04:02 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/05/16 06:13:11 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/05/18 14:47:06 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	create_stack(t_stack *a, char **av)
 		// printf("num : %lld\n", num);
 		if (!(INT_MIN < num && num < INT_MAX))
 			print_error();
-		if (!check_dupicated(a, (int)num))
+		if (!check_duplicated(a, (int)num))
 			print_error();
 		push_front_num(a, (int)num);
 		i++;

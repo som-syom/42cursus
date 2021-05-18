@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/16 02:27:49 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/05/17 18:20:25 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/05/18 14:47:19 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ void		create_stack(t_stack *a, char **av);
 void		init_stack(int ac, char **av, t_info *info);
 void		push_front_num(t_stack *a, int num);
 t_node		*create_new_node(int num, t_node *prev, t_node *next);
+int			check_duplicated(t_stack *a, int num);
 
 void		pa(t_info *info);
 void		pb(t_info *info);
