@@ -40,6 +40,20 @@ int	check_arg(int ac, char **argv)
 	return (1);
 }
 
+int		check_duplicated(t_stack *a, int num)
+{
+	t_node	*tmp;
+
+	tmp = a->top;
+	while (tmp)
+	{
+		if (tmp->num == num)
+			return (0);
+		tmp = tmp->next;
+	}
+	return (1);
+}
+
 void	create_stack(t_stack *a, char **av)
 {
 	int			i;
@@ -50,8 +64,10 @@ void	create_stack(t_stack *a, char **av)
 	while (av[i])
 	{
 		num = ft_atoi(av[i]);
-		printf("num : %lld\n", num);
+		// printf("num : %lld\n", num);
 		if (!(INT_MIN < num && num < INT_MAX))
+			print_error();
+		if (!check_dupicated(a, (int)num))
 			print_error();
 		push_front_num(a, (int)num);
 		i++;

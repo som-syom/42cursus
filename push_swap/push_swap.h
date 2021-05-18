@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/16 02:27:49 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/05/16 06:07:42 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/05/17 18:20:25 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,18 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <limits.h>
+
+# define PA 1
+# define PB 2
+# define SA 3
+# define SB 4
+# define SS 5
+# define RA 6
+# define RB 7
+# define RR 8
+# define RRA 9
+# define RRB 10
+# define RRR 11
 
 typedef struct	s_node
 {
@@ -44,6 +56,7 @@ void		*ft_calloc(size_t n, size_t size);
 long long	ft_atoi(const char *str);
 void		*ft_memset(void *ptr, int val, size_t n);
 int			ft_isdigit(int c);
+int			ft_strncmp(const char *s1, const char *s2, size_t n);
 
 void		print_error(void);
 int			check_arg(int ac, char **argv);

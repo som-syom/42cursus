@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/16 02:36:05 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/05/16 06:17:25 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/05/17 19:35:26 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	test(t_info *info)
 		}
 		if (bb)
 		{
-			printf("%10d", bb->num);
+			printf("%-10d", bb->num);
 			bb = bb->next;
 		}
 		printf("\n");
