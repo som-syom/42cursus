@@ -6,14 +6,16 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/17 18:11:40 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/05/19 17:06:38 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/05/19 20:58:25 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	command(t_info *info, int cmd)
+void	command(t_info *info, int cmd, char *str)
 {
+	if (str != 0)
+		write(1, str, ft_strlen(str));
 	if (cmd == PA)
 		pa(info);
 	else if (cmd == PB)

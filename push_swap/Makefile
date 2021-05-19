@@ -6,7 +6,7 @@
 #    By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/18 14:49:27 by dhyeon            #+#    #+#              #
-#    Updated: 2021/05/19 17:57:02 by dhyeon           ###   ########.fr        #
+#    Updated: 2021/05/19 20:59:20 by dhyeon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,8 @@ SRCS = srcs/main.c \
 		srcs/rotate.c \
 		srcs/revers_rotate.c \
 		srcs/util.c \
-		srcs/sort.c 
+		srcs/sort.c \
+		srcs/mini_sort_3_a.c 
 INCS	=	-I includes -I libft
 OBJS	=	$(SRCS:.c=.o)
 LIBFT	=	libft/libft.a

@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/16 02:27:49 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/05/19 18:21:42 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/05/19 20:55:19 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,8 @@ int			*make_arr_sort(t_stack *s, int size);
 */
 
 void		solve(t_info *info);
+void		command(t_info *info, int cmd, char *str);
+void		mini_sort_3_a(t_info *info);
 
 /*
 **	instuctions

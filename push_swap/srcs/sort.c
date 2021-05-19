@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/18 14:09:42 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/05/19 18:23:22 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/05/19 20:46:50 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,16 +124,30 @@ void	init_solve(t_solve *sol, t_stack *s, int size)
 	int		*arr;
 
 	arr = make_arr_sort(s, size);
-	sol->pivot1 = arr[size / 3];
-	sol->pivot2 = arr[size / 3 * 2];
+	sol->pivot1 = arr[(size - 1) / 3];
+	sol->pivot2 = arr[(size - 1) / 3 * 2];
 	free(arr);
+}
+
+void	small_sort(t_info *info, int size, char stack_name)
+{
+	if (stack_name == 'a')
+	{
+		if (size == 3)
+			mini_sort_3_a(info);
+	}
 }
 
 void	a_to_b(t_info *info, int size)
 {
 	t_solve	sol;
-
+	if (size <= 3)
+	{
+		small_sort(info, size, 'a');
+		return ;
+	}
 	init_solve(&sol, info->a, size);
+
 }
 
 void	solve(t_info *info)
