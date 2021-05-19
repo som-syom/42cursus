@@ -1,29 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   util.c                                             :+:      :+:    :+:   */
+/*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/16 04:15:21 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/05/19 14:30:59 by dhyeon           ###   ########.fr       */
+/*   Created: 2020/07/02 21:28:01 by dhyeon            #+#    #+#             */
+/*   Updated: 2021/03/12 23:44:56 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "libft.h"
 
-int	ft_isdigit(int c)
+void	ft_putchar_fd(char c, int fd)
 {
-	return ('0' <= c && c <= '9');
-}
+	unsigned char	tmp;
 
-void	*ft_salloc(size_t n, size_t size)
-{
-	void	*ret;
-
-	ret = (char *)malloc(size * n);
-	if (!ret)
-		print_error();
-	ft_memset(ret, 0, (n * size));
-	return (ret);
+	if (fd < 0)
+		return ;
+	if ((unsigned char)c >= 0x80)
+	{
+		tmp = (unsigned char)c / 0x40 + 0xC0;
+		write(fd, &tmp, 1);
+		tmp = (unsigned char)c % 0x40 + 0x80;
+		write(fd, &tmp, 1);
+	}
+	else
+		write(fd, &c, 1);
 }

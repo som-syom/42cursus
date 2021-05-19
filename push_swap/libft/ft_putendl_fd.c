@@ -1,29 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   util.c                                             :+:      :+:    :+:   */
+/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: dhyeon <dhyeon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/16 04:15:21 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/05/19 14:30:59 by dhyeon           ###   ########.fr       */
+/*   Created: 2020/07/02 21:35:00 by dhyeon            #+#    #+#             */
+/*   Updated: 2020/07/02 21:52:54 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "libft.h"
 
-int	ft_isdigit(int c)
+void	ft_putendl_fd(char *s, int fd)
 {
-	return ('0' <= c && c <= '9');
-}
-
-void	*ft_salloc(size_t n, size_t size)
-{
-	void	*ret;
-
-	ret = (char *)malloc(size * n);
-	if (!ret)
-		print_error();
-	ft_memset(ret, 0, (n * size));
-	return (ret);
+	if (fd < 0 || s == 0)
+		return ;
+	write(fd, s, ft_strlen(s));
+	write(fd, "\n", 1);
 }

@@ -1,41 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_calloc.c                                        :+:      :+:    :+:   */
+/*   ft_isalnum.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/07/02 05:41:07 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/05/16 03:39:18 by dhyeon           ###   ########.fr       */
+/*   Created: 2020/07/02 05:17:23 by dhyeon            #+#    #+#             */
+/*   Updated: 2021/03/12 23:27:59 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "libft.h"
 
-void	*ft_memset(void *ptr, int val, size_t n)
+int	ft_isalnum(int c)
 {
-	unsigned char	*tmp_ptr;
-	unsigned char	tmp_val;
-	size_t			i;
-
-	tmp_ptr = ptr;
-	tmp_val = val;
-	i = 0;
-	while (i < n)
-	{
-		tmp_ptr[i] = tmp_val;
-		i++;
-	}
-	return (ptr);
-}
-
-void	*ft_calloc(size_t n, size_t size)
-{
-	void	*ret;
-
-	ret = (char *)malloc(size * n);
-	if (!ret)
-		print_error();
-	ft_memset(ret, 0, (n * size));
-	return (ret);
+	return (ft_isdigit(c) || ft_isalpha(c));
 }

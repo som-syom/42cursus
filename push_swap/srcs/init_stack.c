@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/16 04:04:02 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/05/18 14:47:06 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/05/19 14:27:08 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ int	check_arg(int ac, char **argv)
 	int	i;
 	int	j;
 
-	if (ac < 2)
-		return (0);
+	if (ac == 1)
+		exit (1);
 	i = 1;
 	while (argv[i])
 	{
@@ -81,8 +81,8 @@ void	create_stack(t_stack *a, char **av)
 void	init_stack(int ac, char **av, t_info *info)
 {
 	ft_memset((void *)info, 0, sizeof(info));
-	info->a = ft_calloc(1, sizeof(t_stack));
-	info->b = ft_calloc(1, sizeof(t_stack));
+	info->a = ft_salloc(1, sizeof(t_stack));
+	info->b = ft_salloc(1, sizeof(t_stack));
 	ft_memset((void *)info->a, 0, sizeof(t_stack));
 	ft_memset((void *)info->b, 0, sizeof(t_stack));
 	info->size = ac - 1;

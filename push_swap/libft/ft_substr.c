@@ -1,29 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   util.c                                             :+:      :+:    :+:   */
+/*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/16 04:15:21 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/05/19 14:30:59 by dhyeon           ###   ########.fr       */
+/*   Created: 2020/07/02 05:56:12 by dhyeon            #+#    #+#             */
+/*   Updated: 2021/03/13 00:02:44 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "libft.h"
 
-int	ft_isdigit(int c)
+char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	return ('0' <= c && c <= '9');
-}
+	char	*res;
+	size_t	i;
 
-void	*ft_salloc(size_t n, size_t size)
-{
-	void	*ret;
-
-	ret = (char *)malloc(size * n);
-	if (!ret)
-		print_error();
-	ft_memset(ret, 0, (n * size));
-	return (ret);
+	if (s == 0 || ft_strlen(s) < start)
+		return (ft_strdup(""));
+	if (!ft_calloc(sizeof(char *), len + 1, (void *)& res))
+		return (0);
+	i = 0;
+	while (i < len)
+	{
+		res[i] = s[start + i];
+		i++;
+	}
+	res[i] = '\0';
+	return (res);
 }

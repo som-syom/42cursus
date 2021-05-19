@@ -1,29 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   util.c                                             :+:      :+:    :+:   */
+/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/16 04:15:21 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/05/19 14:30:59 by dhyeon           ###   ########.fr       */
+/*   Created: 2020/07/03 00:20:55 by dhyeon            #+#    #+#             */
+/*   Updated: 2021/03/12 23:29:17 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "libft.h"
 
-int	ft_isdigit(int c)
+void	ft_lstadd_back(t_list **lst, t_list *new)
 {
-	return ('0' <= c && c <= '9');
-}
+	t_list	*tmp;
 
-void	*ft_salloc(size_t n, size_t size)
-{
-	void	*ret;
-
-	ret = (char *)malloc(size * n);
-	if (!ret)
-		print_error();
-	ft_memset(ret, 0, (n * size));
-	return (ret);
+	if (lst == 0 || new == 0)
+		return ;
+	if (*lst == 0)
+	{
+		*lst = new;
+		return ;
+	}
+	tmp = ft_lstlast(*lst);
+	new->next = 0;
+	tmp->next = new;
 }

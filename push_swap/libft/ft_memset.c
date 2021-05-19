@@ -1,29 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   util.c                                             :+:      :+:    :+:   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: dhyeon <dhyeon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/16 04:15:21 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/05/19 14:30:59 by dhyeon           ###   ########.fr       */
+/*   Created: 2020/06/30 04:36:15 by dhyeon            #+#    #+#             */
+/*   Updated: 2020/07/01 23:03:31 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "libft.h"
 
-int	ft_isdigit(int c)
+void	*ft_memset(void *ptr, int val, size_t n)
 {
-	return ('0' <= c && c <= '9');
-}
+	unsigned char	*tmp_ptr;
+	unsigned char	tmp_val;
+	size_t			i;
 
-void	*ft_salloc(size_t n, size_t size)
-{
-	void	*ret;
-
-	ret = (char *)malloc(size * n);
-	if (!ret)
-		print_error();
-	ft_memset(ret, 0, (n * size));
-	return (ret);
+	tmp_ptr = ptr;
+	tmp_val = val;
+	i = 0;
+	while (i < n)
+	{
+		tmp_ptr[i] = tmp_val;
+		i++;
+	}
+	return (ptr);
 }

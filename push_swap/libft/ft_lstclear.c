@@ -1,29 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   util.c                                             :+:      :+:    :+:   */
+/*   ft_lstclear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/16 04:15:21 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/05/19 14:30:59 by dhyeon           ###   ########.fr       */
+/*   Created: 2020/07/03 00:42:56 by dhyeon            #+#    #+#             */
+/*   Updated: 2021/03/12 23:29:27 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "libft.h"
 
-int	ft_isdigit(int c)
+void	ft_lstclear(t_list **lst, void (*del)(void *))
 {
-	return ('0' <= c && c <= '9');
-}
+	t_list	*tmp;
+	t_list	*current;
 
-void	*ft_salloc(size_t n, size_t size)
-{
-	void	*ret;
-
-	ret = (char *)malloc(size * n);
-	if (!ret)
-		print_error();
-	ft_memset(ret, 0, (n * size));
-	return (ret);
+	tmp = *lst;
+	while (tmp != 0)
+	{
+		current = tmp->next;
+		if (tmp == 0)
+			break ;
+		ft_lstdelone(tmp, del);
+		tmp = 0;
+		tmp = current;
+	}
+	*lst = 0;
 }

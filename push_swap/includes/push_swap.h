@@ -6,13 +6,14 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/16 02:27:49 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/05/18 14:47:19 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/05/19 14:29:10 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
 
+# include "../libft/libft.h"
 # include <unistd.h>
 # include <stdio.h>
 # include <stdlib.h>
@@ -52,12 +53,7 @@ typedef struct	s_info
 	int			count;
 }				t_info;
 
-void		*ft_calloc(size_t n, size_t size);
-long long	ft_atoi(const char *str);
-void		*ft_memset(void *ptr, int val, size_t n);
-int			ft_isdigit(int c);
-int			ft_strncmp(const char *s1, const char *s2, size_t n);
-
+void		*ft_salloc(size_t n, size_t size);
 void		print_error(void);
 int			check_arg(int ac, char **argv);
 void		create_stack(t_stack *a, char **av);
@@ -65,6 +61,8 @@ void		init_stack(int ac, char **av, t_info *info);
 void		push_front_num(t_stack *a, int num);
 t_node		*create_new_node(int num, t_node *prev, t_node *next);
 int			check_duplicated(t_stack *a, int num);
+
+void		solve(t_info *info);
 
 void		pa(t_info *info);
 void		pb(t_info *info);

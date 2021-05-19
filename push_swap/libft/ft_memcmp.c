@@ -1,29 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   util.c                                             :+:      :+:    :+:   */
+/*   ft_memcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/16 04:15:21 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/05/19 14:30:59 by dhyeon           ###   ########.fr       */
+/*   Created: 2020/07/02 02:16:40 by dhyeon            #+#    #+#             */
+/*   Updated: 2021/03/12 23:44:41 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "libft.h"
 
-int	ft_isdigit(int c)
+int	ft_memcmp(const void *s1, const void *s2, size_t n)
 {
-	return ('0' <= c && c <= '9');
-}
+	unsigned char	*t1;
+	unsigned char	*t2;
+	size_t			i;
 
-void	*ft_salloc(size_t n, size_t size)
-{
-	void	*ret;
-
-	ret = (char *)malloc(size * n);
-	if (!ret)
-		print_error();
-	ft_memset(ret, 0, (n * size));
-	return (ret);
+	if (n == 0)
+		return (0);
+	t1 = (unsigned char *)s1;
+	t2 = (unsigned char *)s2;
+	i = 0;
+	while (n--)
+	{
+		if (t1[i] != t2[i])
+			return (t1[i] - t2[i]);
+		i++;
+	}
+	return (0);
 }

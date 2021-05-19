@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/16 02:36:05 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/05/18 14:48:00 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/05/19 14:26:56 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_node	*create_new_node(int num, t_node *prev, t_node *next)
 {
 	t_node	*new;
 
-	new = ft_calloc(1, sizeof(t_node));
+	new = ft_salloc(1, sizeof(t_node));
 	new->num = num;
 	new->prev = prev;
 	new->next = next;
@@ -75,8 +75,6 @@ int	main(int argc, char **argv)
 		print_error();
 	init_stack(argc, argv, &info);
 	test(&info);
-	pb(&info);
-	pb(&info);
-	test(&info);
+	solve(&info);
 	return (0);
 }

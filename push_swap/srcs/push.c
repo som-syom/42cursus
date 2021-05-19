@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/16 04:23:45 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/05/16 04:50:04 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/05/19 14:27:00 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	push_back_node(t_stack *s, int num)
 {
 	t_node	*tmp;
 
-	tmp = ft_calloc(1, sizeof(t_node));
+	tmp = ft_salloc(1, sizeof(t_node));
 	ft_memset((void *)tmp, 0, sizeof(t_node));
 	if (s->size == 0)
 		s->bottom = tmp;

@@ -6,11 +6,11 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 04:55:26 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/05/16 03:47:42 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/03/12 23:27:50 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "libft.h"
 
 int	print_i(const char *str, int min, long long res, int i)
 {
@@ -33,7 +33,7 @@ int	print_i(const char *str, int min, long long res, int i)
 	return (res);
 }
 
-long long	ft_atoi(const char *str)
+int	ft_atoi(const char *str)
 {
 	int				i;
 	int				min;
