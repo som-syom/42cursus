@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/16 02:27:49 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/05/19 14:29:10 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/05/19 18:21:42 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,20 @@
 # define RRB 10
 # define RRR 11
 
+typedef struct	s_solve
+{
+	int			pivot1;
+	int			pivot2;
+	int			ra_cnt;
+	int			rb_cnt;
+	int			pa_cnt;
+	int			pb_cnt;
+}				t_solve;
+
 typedef struct	s_node
 {
 	int				num;
+	int				rank;
 	struct s_node	*prev;
 	struct s_node	*next;
 }					t_node;
@@ -53,6 +64,10 @@ typedef struct	s_info
 	int			count;
 }				t_info;
 
+/*
+**	init & utils
+*/
+
 void		*ft_salloc(size_t n, size_t size);
 void		print_error(void);
 int			check_arg(int ac, char **argv);
@@ -61,8 +76,17 @@ void		init_stack(int ac, char **av, t_info *info);
 void		push_front_num(t_stack *a, int num);
 t_node		*create_new_node(int num, t_node *prev, t_node *next);
 int			check_duplicated(t_stack *a, int num);
+int			*make_arr_sort(t_stack *s, int size);
+
+/*
+**	solve
+*/
 
 void		solve(t_info *info);
+
+/*
+**	instuctions
+*/
 
 void		pa(t_info *info);
 void		pb(t_info *info);

@@ -3,17 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dhyeon <marvin@42.fr>                      +#+  +:+       +#+         #
+#    By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/07/01 23:08:08 by dhyeon            #+#    #+#              #
-#    Updated: 2020/07/06 17:50:06 by dhyeon           ###   ########.fr        #
+#    Updated: 2021/05/19 17:56:58 by dhyeon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libft.a
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 
 FILES = ft_memset \
 		ft_bzero \

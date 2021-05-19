@@ -6,14 +6,14 @@
 #    By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/18 14:49:27 by dhyeon            #+#    #+#              #
-#    Updated: 2021/05/19 14:31:13 by dhyeon           ###   ########.fr        #
+#    Updated: 2021/05/19 17:57:02 by dhyeon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = push_swap
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 SRCDIR = srcs
 SRCS = srcs/main.c \
 		srcs/init_stack.c \

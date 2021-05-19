@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/16 04:04:02 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/05/19 14:27:08 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/05/19 17:55:15 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@ void	print_error(void)
 	exit(1);
 }
 
-int	check_arg(int ac, char **argv)
+int		check_arg(int ac, char **argv)
 {
 	int	i;
 	int	j;
 
 	if (ac == 1)
-		exit (1);
+		exit(1);
 	i = 1;
 	while (argv[i])
 	{
@@ -59,13 +59,15 @@ void	create_stack(t_stack *a, char **av)
 	int			i;
 	long long	num;
 	t_node		*tmp;
+	int			flag;
 
 	i = 1;
 	while (av[i])
 	{
-		num = ft_atoi(av[i]);
+		flag = 0;
+		num = ft_atoi(av[i], &flag);
 		// printf("num : %lld\n", num);
-		if (!(INT_MIN < num && num < INT_MAX))
+		if (!(INT_MIN < num && num < INT_MAX) || flag == 1)
 			print_error();
 		if (!check_duplicated(a, (int)num))
 			print_error();

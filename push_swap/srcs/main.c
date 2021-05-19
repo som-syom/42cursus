@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/16 02:36:05 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/05/19 14:26:56 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/05/19 17:07:13 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	test(t_info *info)
 	}
 }
 
-int	main(int argc, char **argv)
+int		main(int argc, char **argv)
 {
 	t_info	info;
 

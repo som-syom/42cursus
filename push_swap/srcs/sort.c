@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/18 14:09:42 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/05/18 16:29:34 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/05/19 18:23:22 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,20 +63,82 @@ void	test_arr(int arr[], int size)
 	printf("\n");
 }
 
-void	solve(t_info *info)
+void	test_rank(t_info *info)
 {
-	int		arr[info->a->size];
 	t_node	*tmp;
-	int		i;
 
 	tmp = info->a->top;
+	while (tmp)
+	{
+		printf("num : %5d | rank : %d\n", tmp->num, tmp->rank);
+		tmp = tmp->next;
+	}
+}
+
+int		*make_arr_sort(t_stack *s, int size)
+{
+	int		i;
+	int		*arr;
+	t_node	*tmp;
+
+	arr = ft_salloc(size, sizeof(int));
+	tmp = s->top;
 	i = -1;
 	while (tmp)
 	{
 		arr[++i] = tmp->num;
 		tmp = tmp->next;
 	}
-	test_arr(arr, i);
-	quick_sort(arr, 0, i);
-	test_arr(arr, i);
+	quick_sort(arr, 0, size - 1);
+	return (arr);
+}
+
+void	save_rank(t_info *info)
+{
+	int		*arr;
+	int		j;
+	int		i;
+	t_node	*tmp;
+
+	arr = make_arr_sort(info->a, info->size);
+	i = -1;
+	tmp = info->a->top;
+	while (++i < info->size)
+	{
+		j = -1;
+		while (++j < info->size)
+		{
+			if (arr[j] == tmp->num)
+			{
+				tmp->rank = j + 1;
+				break ;
+			}
+		}
+		tmp = tmp->next;
+	}
+	free(arr);
+}
+
+void	init_solve(t_solve *sol, t_stack *s, int size)
+{
+	int		*arr;
+
+	arr = make_arr_sort(s, size);
+	sol->pivot1 = arr[size / 3];
+	sol->pivot2 = arr[size / 3 * 2];
+	free(arr);
+}
+
+void	a_to_b(t_info *info, int size)
+{
+	t_solve	sol;
+
+	init_solve(&sol, info->a, size);
+}
+
+void	solve(t_info *info)
+{
+	save_rank(info);
+	test_rank(info);
+	a_to_b(info, info->a->size);
 }
