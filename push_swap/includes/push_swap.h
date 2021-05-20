@@ -102,4 +102,12 @@ void		rra(t_info *info);
 void		rrb(t_info *info);
 void		rrr(t_info *info);
 
+/*
+**	test
+*/
+
+void		test_arr(int arr[], int size);
+void		test(t_info *info);
+void		test_rank(t_info *info);
+
 #endif

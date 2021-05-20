@@ -43,30 +43,6 @@ void	push_front_num(t_stack *a, int num)
 	}
 }
 
-void	test(t_info *info)
-{
-	t_node	*aa;
-	t_node	*bb;
-
-	aa = info->a->top;
-	bb = info->b->top;
-	printf("========[ a | b ]========\n");
-	while (aa || bb)
-	{
-		if (aa)
-		{
-			printf("%10d | ", aa->num);
-			aa = aa->next;
-		}
-		if (bb)
-		{
-			printf("%-10d", bb->num);
-			bb = bb->next;
-		}
-		printf("\n");
-	}
-}
-
 int		main(int argc, char **argv)
 {
 	t_info	info;

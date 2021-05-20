@@ -50,31 +50,6 @@ void	quick_sort(int arr[], int left, int right)
 		quick_sort(arr, l, right);
 }
 
-void	test_arr(int arr[], int size)
-{
-	int	i;
-
-	i = 0;
-	while (i <= size)
-	{
-		printf("%d ", arr[i]);
-		i++;
-	}
-	printf("\n");
-}
-
-void	test_rank(t_info *info)
-{
-	t_node	*tmp;
-
-	tmp = info->a->top;
-	while (tmp)
-	{
-		printf("num : %5d | rank : %d\n", tmp->num, tmp->rank);
-		tmp = tmp->next;
-	}
-}
-
 int		*make_arr_sort(t_stack *s, int size)
 {
 	int		i;
@@ -126,6 +101,10 @@ void	init_solve(t_solve *sol, t_stack *s, int size)
 	arr = make_arr_sort(s, size);
 	sol->pivot1 = arr[(size - 1) / 3];
 	sol->pivot2 = arr[(size - 1) / 3 * 2];
+	sol->pa_cnt = 0;
+	sol->pb_cnt = 0;
+	sol->ra_cnt = 0;
+	sol->rb_cnt = 0;
 	free(arr);
 }
 
@@ -136,16 +115,40 @@ void	small_sort(t_info *info, int size, char stack_name)
 		if (size == 3)
 			mini_sort_3_a(info);
 	}
+	if (stack_name == 'b')
+	{
+		if (size == 3)
+			mini_sort_3_b(info);
+	}
 }
 
 void	re_rotate(t_info *info, int ra_size, int rb_size)
 {
+	
+	while (ra_size-- && rb_size--)
+		command(info, RRR, "rrr\n");
+	while (ra_size-- > 0)
+		command(info, RRA, "rra\n");
+	while (rb_size-- > 0)
+		command(info, RRB, "rrb\n");
 
 }
 
 void	b_to_a(t_info *info, int size)
 {
-	
+	t_solve	sol;
+
+	if (size <= 3)
+	{
+		small_sort(info, size, 'b');
+		return ;
+	}
+	init_solve(&sol, info->b, size);
+	while (size--)
+	{
+		if (info->b->top->rank > sol.pivot1)
+			;
+	}
 }
 
 void	a_to_b(t_info *info, int size)

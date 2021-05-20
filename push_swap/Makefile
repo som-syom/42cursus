@@ -24,7 +24,9 @@ SRCS = srcs/main.c \
 		srcs/revers_rotate.c \
 		srcs/util.c \
 		srcs/sort.c \
-		srcs/mini_sort_3_a.c 
+		srcs/mini_sort_3_a.c \
+		srcs/test.c 
+
 INCS	=	-I includes -I libft
 OBJS	=	$(SRCS:.c=.o)
 LIBFT	=	libft/libft.a
