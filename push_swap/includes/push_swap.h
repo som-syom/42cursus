@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/16 02:27:49 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/05/19 20:55:19 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/05/20 21:31:57 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,9 @@
 # define RRA 9
 # define RRB 10
 # define RRR 11
+
+# define NUM 1
+# define RANK 2
 
 typedef struct	s_solve
 {
@@ -76,7 +79,7 @@ void		init_stack(int ac, char **av, t_info *info);
 void		push_front_num(t_stack *a, int num);
 t_node		*create_new_node(int num, t_node *prev, t_node *next);
 int			check_duplicated(t_stack *a, int num);
-int			*make_arr_sort(t_stack *s, int size);
+int			*make_arr_sort(t_stack *s, int size, int type);
 
 /*
 **	solve
@@ -85,6 +88,9 @@ int			*make_arr_sort(t_stack *s, int size);
 void		solve(t_info *info);
 void		command(t_info *info, int cmd, char *str);
 void		mini_sort_3_a(t_info *info);
+void		a_to_b(t_info *info, int size);
+void		b_to_a(t_info *info, int size);
+void		mini_sort_3_b(t_info *info);
 
 /*
 **	instuctions

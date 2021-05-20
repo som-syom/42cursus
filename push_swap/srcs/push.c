@@ -6,13 +6,13 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/16 04:23:45 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/05/19 14:27:00 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/05/20 18:15:14 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	push_back_node(t_stack *s, int num)
+void	push_back_node(t_stack *s, int num, int rank)
 {
 	t_node	*tmp;
 
@@ -26,6 +26,7 @@ void	push_back_node(t_stack *s, int num)
 		tmp->next = s->top;
 	}
 	tmp->num = num;
+	tmp->rank = rank;
 	s->top = tmp;
 	s->size++;
 }
@@ -45,7 +46,7 @@ void	pa(t_info *info)
 {
 	if (info->b->size > 0)
 	{
-		push_back_node(info->a, info->b->top->num);
+		push_back_node(info->a, info->b->top->num, info->b->top->rank);
 		remove_top_node(info->b);
 		info->count++;
 	}
@@ -55,7 +56,7 @@ void	pb(t_info *info)
 {
 	if (info->a->size > 0)
 	{
-		push_back_node(info->b, info->a->top->num);
+		push_back_node(info->b, info->a->top->num, info->a->top->rank);
 		remove_top_node(info->a);
 		info->count++;
 	}

@@ -6,7 +6,7 @@
 #    By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/18 14:49:27 by dhyeon            #+#    #+#              #
-#    Updated: 2021/05/19 20:59:20 by dhyeon           ###   ########.fr        #
+#    Updated: 2021/05/20 21:32:28 by dhyeon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,7 @@ SRCS = srcs/main.c \
 		srcs/util.c \
 		srcs/sort.c \
 		srcs/mini_sort_3_a.c \
+		srcs/mini_sort_3_b.c \
 		srcs/test.c 
 
 INCS	=	-I includes -I libft

@@ -1,78 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mini_sort_3_a.c                                    :+:      :+:    :+:   */
+/*   mini_sort_3_b.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/19 20:46:05 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/05/20 18:19:29 by dhyeon           ###   ########.fr       */
+/*   Created: 2021/05/20 19:56:29 by dhyeon            #+#    #+#             */
+/*   Updated: 2021/05/20 21:32:36 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	mini_sort_132_a(t_info *info)
-{
-	if (info->a->size == 3)
-	{
-		command(info, SA, "sa\n");
-		command(info, RA, "ra\n");
-	}
-	else
-	{
-		command(info, PB, "pb\n");
-		command(info, SA, "sa\n");
-		command(info, PA, "pa\n");
-	}
-}
-
-void	mini_sort_231_a(t_info *info)
-{
-	if (info->a->size == 3)
-	{
-		command(info, RRA, "rra\n");
-	}
-	else
-	{
-		command(info, PB, "pb\n");
-		command(info, SA, "sa\n");
-		command(info, PA, "pa\n");
-		command(info, SA, "sa\n");
-	}
-}
-
-void	mini_sort_312_a(t_info *info)
-{
-	if (info->a->size == 3)
-		command(info, RA, "ra\n");
-	else
-	{
-		command(info, SA, "sa\n");
-		command(info, PB, "pb\n");
-		command(info, SA, "sa\n");
-		command(info, PA, "pa\n");
-	}
-}
-
-void	mini_sort_321_a(t_info *info)
-{
-	if (info->a->size == 3)
-	{
-		command(info, RA, "ra\n");
-		command(info, SA, "sa\n");
-	}
-	else
-	{
-		command(info, SA, "sa\n");
-		command(info, PB, "pb\n");
-		command(info, SA, "sa\n");
-		command(info, PA, "pa\n");
-		command(info, SA, "sa\n");
-	}
-}
-
-void	mini_sort_3_a(t_info *info)
+void	mini_sort_3_b(t_info *info)
 {
 	int	rank[3];
 
