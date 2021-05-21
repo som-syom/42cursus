@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/16 02:36:05 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/05/20 18:17:07 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/05/21 15:39:51 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int		main(int argc, char **argv)
 	if (!check_arg(argc, argv))
 		print_error();
 	init_stack(argc, argv, &info);
-	test(&info);
+	// test(&info);
 	solve(&info);
 	test(&info);
 

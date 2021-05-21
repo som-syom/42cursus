@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/16 04:23:45 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/05/20 18:15:14 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/05/21 15:29:20 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,26 +38,31 @@ void	remove_top_node(t_stack *s)
 	tmp = s->top->next;
 	free(s->top);
 	s->top = tmp;
-	s->top->prev = 0;
 	s->size--;
+	if (s->size > 0)
+		s->top->prev = 0;
 }
 
-void	pa(t_info *info)
+int		pa(t_info *info)
 {
 	if (info->b->size > 0)
 	{
 		push_back_node(info->a, info->b->top->num, info->b->top->rank);
 		remove_top_node(info->b);
 		info->count++;
+		return (1);
 	}
+	return (0);
 }
 
-void	pb(t_info *info)
+int		pb(t_info *info)
 {
 	if (info->a->size > 0)
 	{
 		push_back_node(info->b, info->a->top->num, info->a->top->rank);
 		remove_top_node(info->a);
 		info->count++;
+		return (1);
 	}
+	return (0);
 }

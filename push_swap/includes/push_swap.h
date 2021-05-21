@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/16 02:27:49 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/05/20 21:31:57 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/05/21 17:44:18 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,9 @@ int			*make_arr_sort(t_stack *s, int size, int type);
 **	solve
 */
 
+int			command(t_info *info, int cmd, char *str);
+void		commands(t_info *info, int cmd, char *str, int size);
 void		solve(t_info *info);
-void		command(t_info *info, int cmd, char *str);
 void		mini_sort_3_a(t_info *info);
 void		a_to_b(t_info *info, int size);
 void		b_to_a(t_info *info, int size);
@@ -96,17 +97,17 @@ void		mini_sort_3_b(t_info *info);
 **	instuctions
 */
 
-void		pa(t_info *info);
-void		pb(t_info *info);
-void		sa(t_info *info);
-void		sb(t_info *info);
-void		ss(t_info *info);
-void		ra(t_info *info);
-void		rb(t_info *info);
-void		rr(t_info *info);
-void		rra(t_info *info);
-void		rrb(t_info *info);
-void		rrr(t_info *info);
+int			pa(t_info *info);
+int			pb(t_info *info);
+int			sa(t_info *info);
+int			sb(t_info *info);
+int			ss(t_info *info);
+int			ra(t_info *info);
+int			rb(t_info *info);
+int			rr(t_info *info);
+int			rra(t_info *info);
+int			rrb(t_info *info);
+int			rrr(t_info *info);
 
 /*
 **	test
@@ -115,5 +116,6 @@ void		rrr(t_info *info);
 void		test_arr(int arr[], int size);
 void		test(t_info *info);
 void		test_rank(t_info *info);
+void		test_pivot(int size, int p1, int p2);
 
 #endif

@@ -6,13 +6,13 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/16 04:16:12 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/05/20 18:16:30 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/05/21 15:32:47 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	sa(t_info *info)
+int		sa(t_info *info)
 {
 	int	tmp;
 
@@ -25,10 +25,12 @@ void	sa(t_info *info)
 		info->a->top->rank = info->a->top->next->rank;
 		info->a->top->next->rank = tmp;
 		info->count++;
+		return (1);
 	}
+	return (0);
 }
 
-void	sb(t_info *info)
+int		sb(t_info *info)
 {
 	int	tmp;
 
@@ -41,12 +43,17 @@ void	sb(t_info *info)
 		info->b->top->rank = info->b->top->next->rank;
 		info->b->top->next->rank = tmp;
 		info->count++;
+		return (1);
 	}
+	return (0);
 }
 
-void	ss(t_info *info)
+int		ss(t_info *info)
 {
-	sa(info);
-	sb(info);
-	info->count--;
+	if (sa(info) && sb(info))
+	{
+		info->count--;
+		return (1);
+	}
+	return (0);
 }

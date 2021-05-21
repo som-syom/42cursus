@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/18 14:09:42 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/05/20 19:55:36 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/05/21 17:48:23 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,11 +117,26 @@ void	small_sort(t_info *info, int size, char stack_name)
 	{
 		if (size == 3)
 			mini_sort_3_a(info);
+		else if (size == 2)
+		{
+			if (info->a->size >= 2 && info->a->top->rank > info->a->top->next->rank)
+				command(info, SA, "sa\n");
+		}
 	}
-	if (stack_name == 'b')
+	else if (stack_name == 'b')
 	{
-		// if (size == 3)
-		// 	mini_sort_3_b(info);
+		if (size == 3)
+			mini_sort_3_b(info);
+		else
+		{
+			if (size < 3)
+			{
+				if (info->b->size >= 2 && info->b->top->rank < info->b->top->next->rank)
+					command(info, SB, "sb\n");
+				command(info, PA, "pa\n");
+			}
+			// command(info, PA, "pa\n");
+		}
 	}
 }
 
@@ -148,28 +163,32 @@ void	re_rotate2(t_info *info, int ra_size, int rb_size)
 
 void	re_rotate(t_info *info, int ra_size, int rb_size)
 {
-	if (info->a->size / 2 > ra_size && info->b->size / 2 > rb_size)
-	{
+	if (ra_size != 0)
+		ra_size =  ra_size % info->a->size;
+	if (rb_size != 0)
+		rb_size = rb_size % info->b->size;
+	// if (info->a->size / 2 > ra_size && info->b->size / 2 > rb_size)
+	// {
 		while (ra_size-- && rb_size--)
 			command(info, RRR, "rrr\n");
 		while (ra_size-- > 0)
 			command(info, RRA, "rra\n");
 		while (rb_size-- > 0)
 			command(info, RRB, "rrb\n");
-	}
-	else if (info->a->size / 2 < ra_size && info->b->size / 2 < rb_size)
-	{
-		ra_size = info->a->size - ra_size;
-		rb_size = info->b->size - rb_size;
-		while (ra_size-- && rb_size--)
-			command(info, RR, "rr\n");
-		while (ra_size-- > 0)
-			command(info, RA, "ra\n");
-		while (rb_size-- > 0)
-			command(info, RB, "rb\n");
-	}
-	else //	반대로 도는 경우
-		re_rotate2(info, ra_size, rb_size);
+	// }
+	// else if (info->a->size / 2 < ra_size && info->b->size / 2 < rb_size)
+	// {
+	// 	ra_size = info->a->size - ra_size;
+	// 	rb_size = info->b->size - rb_size;
+		// while (ra_size-- && rb_size--)
+		// 	command(info, RR, "rr\n");
+		// while (ra_size-- > 0)
+		// 	command(info, RA, "ra\n");
+		// while (rb_size-- > 0)
+		// 	command(info, RB, "rb\n");
+	// }
+	// else //	반대로 도는 경우
+	// 	re_rotate2(info, ra_size, rb_size);
 }
 
 void	b_to_a(t_info *info, int size)
@@ -182,56 +201,42 @@ void	b_to_a(t_info *info, int size)
 		return ;
 	}
 	init_solve(&sol, info->b, size);
+	test_pivot(size, sol.pivot1, sol.pivot2);
 	while (size--)
 	{
 		if (info->b->top->rank < sol.pivot1)
-		{
-			command(info, RB, "rb\n");
-			sol.rb_cnt++;
-		}
+			sol.rb_cnt += command(info, RB, "rb\n");
 		else
-		{
-			command(info, PA, "pa\n");
-			sol.pa_cnt++;
-			if (info->b->top->rank >= sol.pivot2)
-			{
-				command(info, RA, "ra\n");
-				sol.ra_cnt++;
-			}
-		}
+			sol.pa_cnt += command(info, PA, "pa\n");
+			if (info->a->top->rank < sol.pivot2)
+				sol.ra_cnt += command(info, RA, "ra\n");
 	}
 	a_to_b(info, sol.pa_cnt - sol.ra_cnt);
 	re_rotate(info, sol.ra_cnt, sol.rb_cnt);
-	a_to_b(info, sol.rb_cnt);
-	b_to_a(info, sol.ra_cnt);
+	a_to_b(info, sol.ra_cnt);
+	b_to_a(info, sol.rb_cnt);
 }
 
 void	a_to_b(t_info *info, int size)
 {
 	t_solve	sol;
 
-	if (size <= 3)
+	if (size < 3)
 	{
 		small_sort(info, size, 'a');
 		return ;
 	}
 	init_solve(&sol, info->a, size);
+	test_pivot(size, sol.pivot1, sol.pivot2);
 	while (size--)
 	{
 		if (info->a->top->rank >= sol.pivot2)
-		{
-			command(info, RA, "ra\n");
-			sol.ra_cnt++;
-		}
+			sol.ra_cnt += command(info, RA, "ra\n");
 		else
 		{
-			command(info, PB, "pb\n");
-			sol.pb_cnt++;
-			if (info->a->top->rank >= sol.pivot1)
-			{
-				command(info, RB, "rb\n");
-				sol.rb_cnt++;
-			}
+			sol.pb_cnt += command(info, PB, "pb\n");
+			if (info->b->top->rank >= sol.pivot1)
+				sol.rb_cnt += command(info, RB, "rb\n");
 		}
 	}
 	re_rotate(info, sol.ra_cnt, sol.rb_cnt);
@@ -240,9 +245,27 @@ void	a_to_b(t_info *info, int size)
 	b_to_a(info, sol.pb_cnt - sol.rb_cnt);
 }
 
+int		is_sorted(t_info *info)
+{
+	t_node	*tmp;
+	int		i;
+
+	i = 1;
+	tmp = info->a->top;
+	while (i <= info->size)
+	{
+		if (tmp->rank != i)
+			return (0);
+		i++;
+		tmp = tmp->next;
+	}
+	return (1);
+}
+
 void	solve(t_info *info)
 {
 	save_rank(info);
 	test_rank(info);
-	a_to_b(info, info->a->size);
+	if (!is_sorted(info))
+		a_to_b(info, info->a->size);
 }

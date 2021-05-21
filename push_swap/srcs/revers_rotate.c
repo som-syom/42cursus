@@ -6,13 +6,13 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/16 05:49:37 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/05/16 06:00:58 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/05/21 15:30:22 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	rra(t_info *info)
+int		rra(t_info *info)
 {
 	t_node	*new_bottom;
 
@@ -24,9 +24,10 @@ void	rra(t_info *info)
 	info->a->bottom = new_bottom;
 	info->a->bottom->next = 0;
 	info->count++;
+	return (1);
 }
 
-void	rrb(t_info *info)
+int		rrb(t_info *info)
 {
 	t_node	*new_bottom;
 
@@ -38,11 +39,13 @@ void	rrb(t_info *info)
 	info->b->bottom = new_bottom;
 	info->b->bottom->next = 0;
 	info->count++;
+	return (1);
 }
 
-void	rrr(t_info *info)
+int		rrr(t_info *info)
 {
 	rra(info);
 	rrb(info);
 	info->count--;
+	return (1);
 }
