@@ -6,14 +6,14 @@
 #    By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/18 14:49:27 by dhyeon            #+#    #+#              #
-#    Updated: 2021/05/20 21:32:28 by dhyeon           ###   ########.fr        #
+#    Updated: 2021/05/21 20:15:42 by dhyeon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = push_swap
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
 SRCDIR = srcs
 SRCS = srcs/main.c \
 		srcs/init_stack.c \

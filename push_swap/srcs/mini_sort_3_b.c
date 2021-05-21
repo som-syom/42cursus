@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 19:56:29 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/05/21 15:21:07 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/05/21 19:16:44 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,17 +49,27 @@ void	mini_sort_213_b(t_info *info)
 
 void	mini_sort_132_b(t_info *info)
 {
-	command(info, RB, "rb\n");
-	commands(info, PA, "pa\n", 3);
+	if (info->b->size == 3)
+	{
+		command(info, RB, "rb\n");
+		commands(info, PA, "pa\n", 3);
+	}
+	else
+	{
+		command(info, SB, "sb\n");
+		command(info, PA, "pa\n");
+		command(info, SB, "sb\n");
+		commands(info, PA, "pa\n", 2);
+	}
 }
 
 void	mini_sort_3_b(t_info *info)
 {
 	int	rank[3];
 
-	rank[0] = info->a->top->rank;
-	rank[1] = info->a->top->next->rank;
-	rank[2] = info->a->top->next->next->rank;
+	rank[0] = info->b->top->rank;
+	rank[1] = info->b->top->next->rank;
+	rank[2] = info->b->top->next->next->rank;
 	if (rank[0] < rank[1] && rank[0] < rank[2] && rank[1] < rank[2]) // 123
 		mini_sort_123_b(info);
 	else if (rank[0] < rank[1] && rank[0] < rank[2] && rank[1] > rank[2]) // 132

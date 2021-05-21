@@ -7,7 +7,7 @@ void	test(t_info *info)
 
 	aa = info->a->top;
 	bb = info->b->top;
-	printf("========[ a | b ]========\n");
+	printf("====================[ a | b ]===================\n");
 	while (aa || bb)
 	{
 		if (aa)
@@ -15,6 +15,8 @@ void	test(t_info *info)
 			printf("%10d | ", aa->num);
 			aa = aa->next;
 		}
+		else
+			printf("           | ");
 		if (bb)
 		{
 			printf("| %-10d", bb->num);
@@ -53,7 +55,7 @@ void	test_rank(t_info *info)
 
 void	test_pivot(int size, int p1, int p2)
 {
-	printf("size : %d==================================\n", size);
+	printf("size : %d ==================================\n", size);
 	printf("pivot1 : %d\n", p1);
 	printf("pivot2 : %d\n", p2);
 }
