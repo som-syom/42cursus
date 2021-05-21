@@ -54,7 +54,7 @@ int		command(t_info *info, int cmd, char *str)
 	else
 		flag = command2(info, cmd);
 	print_cmd(str, flag);
-	test(info);
+	// test(info);
 	// test_rank(info);
 	return (1);
 }

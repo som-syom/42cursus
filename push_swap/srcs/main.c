@@ -52,7 +52,7 @@ int		main(int argc, char **argv)
 	init_stack(argc, argv, &info);
 	// test(&info);
 	solve(&info);
-	test(&info);
+	// test(&info);
 
 	return (0);
 }

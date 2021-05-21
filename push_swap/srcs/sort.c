@@ -134,7 +134,7 @@ void	small_sort(t_info *info, int size, char stack_name)
 			mini_sort_3_b(info);
 		else
 		{
-			if (size < 3)
+			if (size == 2)
 			{
 				if (info->b->size >= 2 && info->b->top->rank < info->b->top->next->rank)
 				{
@@ -145,7 +145,7 @@ void	small_sort(t_info *info, int size, char stack_name)
 				}
 				command(info, PA, "pa\n");
 			}
-			// command(info, PA, "pa\n");
+			command(info, PA, "pa\n");
 		}
 	}
 }
@@ -219,8 +219,8 @@ void	b_to_a(t_info *info, int size)
 		return ;
 	}
 	init_solve(&sol, info->b, size);
-	printf("===================[ btoa ] \n");
-	test_pivot(size, sol.pivot1, sol.pivot2);
+	// printf("===================[ btoa ] \n");
+	// test_pivot(size, sol.pivot1, sol.pivot2);
 	while (size--)
 	{
 		if (info->b->top->rank < sol.pivot1)
@@ -231,7 +231,7 @@ void	b_to_a(t_info *info, int size)
 				sol.ra_cnt += command(info, RA, "ra\n");
 	}
 	a_to_b(info, sol.pa_cnt - sol.ra_cnt);
-		printf("       rotate : ra = %d | rb = %d | pa - ra = %d\n", sol.ra_cnt, sol.rb_cnt, sol.pa_cnt - sol.ra_cnt);
+		// printf("       rotate : ra = %d | rb = %d | pa - ra = %d\n", sol.ra_cnt, sol.rb_cnt, sol.pa_cnt - sol.ra_cnt);
 	re_rotate(info, sol.ra_cnt, sol.rb_cnt);
 	a_to_b(info, sol.ra_cnt);
 	b_to_a(info, sol.rb_cnt);
@@ -247,8 +247,8 @@ void	a_to_b(t_info *info, int size)
 		return ;
 	}
 	init_solve(&sol, info->a, size);
-	printf("===================[ atob ]\n");
-	test_pivot(size, sol.pivot1, sol.pivot2);
+	// printf("===================[ atob ]\n");
+	// test_pivot(size, sol.pivot1, sol.pivot2);
 	while (size--)
 	{
 		if (info->a->top->rank >= sol.pivot2)
@@ -260,7 +260,7 @@ void	a_to_b(t_info *info, int size)
 				sol.rb_cnt += command(info, RB, "rb\n");
 		}
 	}
-		printf("       rotate : ra = %d | rb = %d | pb - rb = %d\n", sol.ra_cnt, sol.rb_cnt, sol.pb_cnt - sol.rb_cnt);
+		// printf("       rotate : ra = %d | rb = %d | pb - rb = %d\n", sol.ra_cnt, sol.rb_cnt, sol.pb_cnt - sol.rb_cnt);
 	re_rotate(info, sol.ra_cnt, sol.rb_cnt);
 	a_to_b(info, sol.ra_cnt);
 	b_to_a(info, sol.rb_cnt);
@@ -287,7 +287,7 @@ int		is_sorted(t_info *info)
 void	solve(t_info *info)
 {
 	save_rank(info);
-	test_rank(info);
+	// test_rank(info);
 	if (!is_sorted(info))
 		a_to_b(info, info->a->size);
 }
