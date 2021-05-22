@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/16 02:27:49 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/05/21 17:44:18 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/05/22 17:55:50 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <limits.h>
+# include <fcntl.h>
 
 # define PA 1
 # define PB 2
@@ -33,6 +34,13 @@
 
 # define NUM 1
 # define RANK 2
+
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 1024
+# endif
+# define GNL_SUCCESS 1
+# define GNL_EOF 0
+# define GNL_ERROR -1
 
 typedef struct	s_solve
 {
@@ -80,6 +88,9 @@ void		push_front_num(t_stack *a, int num);
 t_node		*create_new_node(int num, t_node *prev, t_node *next);
 int			check_duplicated(t_stack *a, int num);
 int			*make_arr_sort(t_stack *s, int size, int type);
+t_node		*create_new_node(int num, t_node *prev, t_node *next);
+void		push_front_num(t_stack *a, int num);
+void		save_rank(t_info *info);
 
 /*
 **	solve
@@ -108,6 +119,12 @@ int			rr(t_info *info);
 int			rra(t_info *info);
 int			rrb(t_info *info);
 int			rrr(t_info *info);
+
+/*
+**	checker
+*/
+
+int			get_next_line(int fd, char **line);
 
 /*
 **	test

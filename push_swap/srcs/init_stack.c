@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/16 04:04:02 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/05/19 17:55:15 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/05/22 18:27:32 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	create_stack(t_stack *a, char **av)
 		flag = 0;
 		num = ft_atoi(av[i], &flag);
 		// printf("num : %lld\n", num);
-		if (!(INT_MIN < num && num < INT_MAX) || flag == 1)
+		if (!(INT_MIN <= num && num <= INT_MAX) || flag == 1)
 			print_error();
 		if (!check_duplicated(a, (int)num))
 			print_error();
