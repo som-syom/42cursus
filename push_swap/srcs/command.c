@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/17 18:11:40 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/05/22 18:15:39 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/05/22 21:49:02 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ int		command(t_info *info, int cmd, char *str)
 	else
 		flag = command2(info, cmd);
 	print_cmd(str, flag);
-	// test(info);
-	// test_rank(info);
+	test(info);
+	test_rank(info);
 	return (1);
 }
 
