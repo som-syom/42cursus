@@ -1,10 +1,18 @@
-FROM	debian:buster
+FROM alpine:3.12
 
-RUN	apt-get update && apt-get install -y \
-	nginx \
-	vim
+RUN apk update &&\
+	apk upgrade &&\
+	apk add --no-cache nginx openssl &&\
+	adduser -D -g 'www' www &&\
+	mkdir /www &&\
+	chown -R www:www /var/lib/nginx &&\
+	chown -R www:www /www &&\
+	openssl req -x509 -nodes -days 365 -subj "/C=CA/ST=QC/O=Company, Inc./CN=mydomain.com" -addext "subjectAltName=DNS:mydomain.com" -newkey rsa:2048 -keyout /etc/ssl/private/nginx.key -out /etc/ssl/certs/nginx.crt;
 
-COPY	conf/default ./
-COPY	conf/init.sh ./
+COPY /conf/default.conf /etc/nginx/conf.d/default.conf
+# COPY /conf/nginx.conf /etc/nginx/nginx.conf
+COPY /conf/index.html /var/www/localhost/htdocs/index.html
 
-CMD	bash init.sh
+EXPOSE 80 443
+ENTRYPOINT ["nginx"]
+CMD ["-g", "daemon off;"]
