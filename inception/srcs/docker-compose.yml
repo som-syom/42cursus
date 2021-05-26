@@ -1,3 +1,31 @@
 version: "3"
 services:
+  nginx:
+    build: ./requirements/nginx
+    volumes:
+      - wp-volume:/var/www/wordpress:ro
+    ports:
+      - 80:80
+      - 443:443
+    env_file:
+      - .env
+  wordpress:
+    build: ./requirements/wordpress
+    volumes:
+      - wp-volume:/var/www/wordpress
+    ports:
+      - 9000:9000
+    restart: always
+    env_file:
+      - .env
+  mariadb: #db
+    build: ./requirements/mariadb
+    volumes:
+      - db-volume:/var/lib/mysql
+    ports:
+      - 3306:3306
+    env_file:
+      - .env
 volumes:
+  db-volume:
+  wp-volume:

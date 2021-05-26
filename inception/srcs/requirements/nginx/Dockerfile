@@ -7,12 +7,12 @@ RUN apk update &&\
 	mkdir /www &&\
 	chown -R www:www /var/lib/nginx &&\
 	chown -R www:www /www &&\
+	mkdir -p run/nginx &&\
 	openssl req -x509 -nodes -days 365 -subj "/C=CA/ST=QC/O=Company, Inc./CN=mydomain.com" -addext "subjectAltName=DNS:mydomain.com" -newkey rsa:2048 -keyout /etc/ssl/private/nginx.key -out /etc/ssl/certs/nginx.crt;
 
 COPY /conf/default.conf /etc/nginx/conf.d/default.conf
-# COPY /conf/nginx.conf /etc/nginx/nginx.conf
+COPY /conf/nginx.conf /etc/nginx/nginx.conf
 COPY /conf/index.html /var/www/localhost/htdocs/index.html
-
 EXPOSE 80 443
 ENTRYPOINT ["nginx"]
 CMD ["-g", "daemon off;"]
