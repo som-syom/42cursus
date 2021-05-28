@@ -5,27 +5,36 @@ services:
     volumes:
       - wp-volume:/var/www/wordpress:ro
     ports:
-      - 80:80
       - 443:443
     env_file:
       - .env
+    networks:
+      - dhyeon-net
   wordpress:
     build: ./requirements/wordpress
     volumes:
       - wp-volume:/var/www/wordpress
-    ports:
-      - 9000:9000
+    expose:
+      - 9000
     restart: always
     env_file:
       - .env
+    networks: 
+      - dhyeon-net
   mariadb: #db
     build: ./requirements/mariadb
     volumes:
       - db-volume:/var/lib/mysql
-    ports:
-      - 3306:3306
+    expose:
+      - 3306
     env_file:
       - .env
+    networks:
+      - dhyeon-net
 volumes:
   db-volume:
+    # - /home/dhyeon/data/db
   wp-volume:
+    # - /home/dhyeon/data/wp
+networks:
+  dhyeon-net:
