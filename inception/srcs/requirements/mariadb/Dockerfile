@@ -6,6 +6,7 @@ COPY    tools/entrypoint.sh ./
 COPY    conf/my.cnf /etc/mysql/my.cnf
 COPY    tools/my.sql ./
 COPY    tools/wp.sql ./
+COPY    tools/create.sql ./
 RUN     chmod +x entrypoint.sh
 VOLUME [ "/run/mysqld" ]
 ENTRYPOINT sh entrypoint.sh

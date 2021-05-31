@@ -3,7 +3,7 @@ services:
   nginx:
     build: ./requirements/nginx
     volumes:
-      - wp-volume:/var/www/wordpress:ro
+      - wp-volume:/var/www/wordpress
     ports:
       - 443:443
     env_file:
@@ -19,9 +19,9 @@ services:
     restart: always
     env_file:
       - .env
-    networks: 
+    networks:
       - dhyeon-net
-  mariadb: #db
+  mariadb:
     build: ./requirements/mariadb
     volumes:
       - db-volume:/var/lib/mysql
@@ -29,12 +29,23 @@ services:
       - 3306
     env_file:
       - .env
+    # environment:
+    #   - MYSQL_USER=$MYSQL_USER
+    #   - MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD
     networks:
       - dhyeon-net
 volumes:
   db-volume:
-    # - /home/dhyeon/data/db
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: $HOME/data/db
   wp-volume:
-    # - /home/dhyeon/data/wp
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: $HOME/data/wp
 networks:
   dhyeon-net:
