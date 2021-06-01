@@ -30,8 +30,8 @@ services:
     env_file:
       - .env
     # environment:
-    #   - MYSQL_USER=$MYSQL_USER
-    #   - MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD
+    #   - MYSQL_USER: $MYSQL_USER
+    #   - MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD
     networks:
       - dhyeon-net
 volumes:
