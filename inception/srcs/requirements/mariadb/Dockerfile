@@ -4,7 +4,8 @@ RUN     apk upgrade && apk update && \
 RUN     openrc default
 COPY    tools/entrypoint.sh ./
 COPY    conf/my.cnf /etc/mysql/my.cnf
-COPY    tools/my.sql ./
+COPY    tools/wp_users.sql ./
+COPY    tools/wp_usermeta.sql ./
 COPY    tools/wp.sql ./
 COPY    tools/create.sql ./
 RUN     chmod +x entrypoint.sh
