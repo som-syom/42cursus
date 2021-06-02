@@ -26,7 +26,7 @@ define( 'DB_NAME', 'wordpress' );
 define( 'DB_USER', 'root' );
 
 /** MySQL database password */
-define( 'DB_PASSWORD', 'password' ); /* no password for test */
+define( 'DB_PASSWORD', getenv("MYSQL_ROOT_PASSWORD") ); /* no password for test */
 
 /** MySQL hostname */
 define( 'DB_HOST', 'mariadb' );

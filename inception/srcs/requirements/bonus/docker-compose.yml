@@ -1,0 +1,48 @@
+version: "3"
+services:
+  nginx:
+    build: ./nginx
+    volumes:
+      - wp-volume:/var/www/wordpress
+    ports:
+      - 443:443
+    env_file:
+      - .env
+    networks:
+      - dhyeon-net
+  wordpress:
+    build: ./wordpress
+    volumes:
+      - wp-volume:/var/www/wordpress
+    expose:
+      - 9000
+    restart: always
+    env_file:
+      - .env
+    networks:
+      - dhyeon-net
+  mariadb:
+    build: ./mariadb
+    volumes:
+      - db-volume:/var/lib/mysql
+    expose:
+      - 3306
+    env_file:
+      - .env
+    networks:
+      - dhyeon-net
+volumes:
+  db-volume:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: $HOME/data/db
+  wp-volume:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: $HOME/data/wp
+networks:
+  dhyeon-net:

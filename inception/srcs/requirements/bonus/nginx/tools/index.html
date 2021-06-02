@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intra Profile Home</title>
+    <link rel="stylesheet" href="./index.css" />
+    <link rel="stylesheet" href="./header.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.9.0/css/all.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <div class="main-navbar">
+        <div class="main-navbar-left">
+            <div class="main-navbar-logo">
+                <a href="./main.html">
+                    <img alt="42" src="./images/42_logo.png">
+                </a>
+            </div>
+            <div class="main-navbar-search">
+                <div class="main-navbar-search-icon">
+                    <i class="fas fa-search"></i>
+                </div>
+                <form action="" class="main-navbar-search-form">
+                    <input type="text" class="search-input tt-input" placeholder="search...">
+                </form>
+            </div>
+        </div>
+        <div class="main-navbar-user-nav">
+            <div class="user-actions">
+                <a href="">
+                    <div class="user-actions-box">
+                        <span class="user-action icon">
+                            <i class="far fa-bell"></i>
+                        </span>
+                        <div class="user-action-count">
+                            0
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="dropdown">
+                <span class="data-login"></span>
+                <div class="user-profile-picture">
+                    <img class="data-picture" alt="" src="./images/smile.jpeg">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="page">
+        <div class="page-sidebar left">
+            <ul class="main-left-navbar">
+                <div class="navbar-box">
+                    <li class="main-left-navbar links">
+                        <div class="body-container"></div>
+                        <button id="temp">
+                            <span class="links icon">
+                                <i class="far fa-user"></i>
+                            </span>
+                        </button>
+                    </li>
+                    <li class="main-left-navbar links">
+                            <span class="links icon">
+                                <i class="fas fa-code-branch"></i>
+                            </span>
+                    </li>
+                </div>
+            </ul>
+        </div>
+        <div class="page-content">
+            <div class="body-container">
+                <div class="page-container">
+                    <div class="profile-container">
+                        <div class="profile-image-box">
+                            <!-- <div class"image-cropper"> -->
+                            <img class="profile-image" src="./images/smile.jpeg" alt="intra profile image">
+                            <!-- </div> -->
+                        </div>
+                        <div class="basic-info">
+                            <div class="basic-info-header">
+                                <div class="name">
+                                    <span class="full-name">
+                                        Dasom Hyeon
+                                    </span>
+                                    <span class="login-id">
+                                        dhyeon
+                                    </span>
+                                </div>
+                                <div class="rignt-button-profile">
+                                    <!-- buttons -->
+                                </div>
+                            </div>
+                            <div class="profile-black-background basic-info-boxes" id="status-box">
+                                <div class="status-box-inner-group" id="wallet-group">
+                                    <span class="status-box-header" id="wallet-header">
+                                        Wallet
+                                    </span>
+                                    <span class="status-box-value" id="wallet-value">
+                                        0 ₳
+                                    </span>
+                                </div>
+                                <div class="status-box-inner-group" id="evaluation-points-group">
+                                    <span class="status-box-header" id="evaluation-points-header">
+                                        Evaluation points
+                                    </span>
+                                    <span class="status-box-value" id="evaluation-points-value">
+                                        5
+                                    </span>
+                                </div>
+                                <div class="status-box-inner-group" id="cursus-group">
+                                    <span class="status-box-header" id="cursus-header">
+                                        Cursus
+                                    </span>
+                                    <span class="status-box-value" id="cursus-value">
+                                        C Piscine
+                                    </span>
+                                </div>
+                                <div class="status-box-inner-group" id="grade-group">
+                                    <span class="status-box-header" id="grade-header">
+                                        Grade
+                                    </span>
+                                    <span class="status-box-value" id="grade-value">
+                                        Novice
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="profile-black-background basic-info-boxes" id="current-seat-box">
+                                <span id="is-available">
+                                    Available
+                                </span>
+                                <br />
+                                <span id="current-seat">
+                                    c3r3s2
+                                </span>
+                            </div>
+                            <div class="profile-black-background basic-info-boxes" id="level-bar">
+                                <div class="level-progress" role="progressbar"
+                                    style="width: 6%; height: 100%; border-radius: 4px; background-color: rgb(0, 186, 188);">
+                                </div>
+                                <span id="level">
+                                    level 42 - 6%
+                                </span>
+                            </div>
+                        </div>
+                        <div class="profile-black-background" id="personal-info-box">
+                            <ul class="personal-info">
+                                <li class="phone">+82 10 4242 2424</li>
+                                <li class="email">dhyeon@42seoul.kr</li>
+                                <li class="primary-campus">Seoul</li>
+                                <li class="anonymization-date">3273-07-26</li>
+                                <ul>
+                        </div>
+                    </div>
+
+                    <div class="full-box-container">
+                        <div class="box-container">
+
+                            <div class="outline-contents-box">
+                                <div class="contents-box">
+                                    <div class="contents-header">
+                                        <span class="contents-header-name">AGENDA</span>
+                                        <span class="contents-buttons">
+                                            <a class="box-button btn">ALL EVENTS</a>
+                                            <a class="box-button btn">EVENT'S MARKS</a>
+                                            <a class="box-button btn">FILTERS▼</a>
+                                        </span>
+                                    </div>
+
+
+                                    <div class="contents-body">
+
+                                        <div class="agenda-contents-container">
+                                            <!--  -->
+                                            <div class="event-list">
+                                                <div class="event-item">
+                                                    <div class="event-left">
+                                                        <div class="data-day">24</div>
+                                                        <div class="data-month">November</div>
+                                                    </div>
+                                                    <div class="event-main">
+                                                        <div class="event-top">
+                                                            <b class="event-name">42 Piscine Exam</b>
+                                                            <span class="event-status">Subscribed</span>
+                                                            <span class="event-subname">For Exam blahblah</span>
+                                                        </div>
+                                                        <div class="event-bottom">
+                                                            <div class="event-time">
+                                                                <span class="icon-calendar">icon</span>
+                                                                <span>At 14:00</span>
+                                                            </div>
+                                                            <div class="event-date">
+                                                                <span class="icon-clock"></span>
+                                                                <span>for about 2 hours</span>
+                                                            </div>
+                                                            <div class="event-location">
+                                                                <span class="icon-location"></span>
+                                                                <span>C1, C2</span>
+                                                            </div>
+                                                        </div>
+                                                        <!-- 추가부분 -->
+                                                        <div class="event-caption">See More...</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <div class="modal-top">
+                                                            <div class="modal-title">
+                                                                EXAM
+                                                            </div>
+                                                            <h4 class="modal-event-name">42 PISCINE EXAM</h4>
+                                                            <small>November 24, 2020 at 14:00</small>
+                                                        </div>
+                                                        <aside class="modal-info">
+                                                            <span class="modal-event-date event-meta-item">in 23
+                                                                hours</span>
+                                                            <span class="modal-event-time event-meta-item">for about 2
+                                                                hours</span>
+                                                            <span class="modal-event-location event-meta-item">C3,
+                                                                C4</span>
+                                                            <span class="modal-event-subscriptions event-meta-item">41 /
+                                                                42</span>
+                                                        </aside>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        Hello world!
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button class="close-btn">
+                                                            Close
+                                                        </button>
+                                                        <button class="subscribe-btn">
+                                                            Subscribe
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="outline-contents-box">
+                                <div class="contents-box">
+                                    <div class="contents-header">
+                                        EVALUATIONS
+                                        <span class="contents-buttons">
+                                            <a class="box-button btn">HIDE▼</a>
+                                            <a class="box-button btn">FEEDBACKS LOGS</a>
+                                            <a class="box-button btn">MANAGE SLOTS</a>
+                                        </span>
+                                    </div>
+                                    <div class="contents-body">
+                                        <img src="./images/smile.jpeg">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="outline-contents-box">
+                                <div class="contents-box">
+                                    <div class="contents-header">
+                                        LOGTIME
+                                    </div>
+                                    <div class="contents-body"> 내용 </div>
+                                </div>
+                            </div>
+
+                            <div class="outline-contents-box">
+                                <div class="contents-box">
+                                    <div class="contents-header">
+                                        Expertises
+                                        <span class="contents-buttons">
+                                            <a class="box-button btn">Expertises</a>
+                                            <a class="box-button btn">See All Expertises</a>
+                                        </span>
+                                    </div>
+                                    <div class="contents-body">
+                                        <h3 class="contents-body-note">
+                                            YOU DON'T HAVE ANY EXPERTISES YET
+                                        </h3>
+                                        <span class="contents-inner-button btn">ADD ONE !</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="outline-contents-box">
+                                <div class="contents-box">
+                                    <div class="contents-header">
+                                        Projects
+                                        <span class="contents-buttons">
+                                            <a class="box-button">Evaluation Logs</a>
+                                            <a class="box-button">Quests</a>
+                                        </span>
+                                    </div>
+                                    <div class="contents-body">내용</div>
+                                </div>
+                            </div>
+
+                            <div class="outline-contents-box">
+                                <div class="contents-box">
+                                    <div class="contents-header">
+                                        Skills
+                                    </div>
+                                    <div class="contents-body">내용</div>
+                                </div>
+                            </div>
+
+                            <div class="outline-contents-box">
+                                <div class="contents-box">
+                                    <div class="contents-header">
+                                        Last Achievements
+                                        <span class="contents-buttons">
+                                            <a class="box-button">See All Achievements</a>
+                                        </span>
+                                    </div>
+                                    <div class="contents-body">내용</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+<!-- <script src='../static/js/header.js' type='module'></script> -->
+<!-- <script src='./main.js' type='module'></script> -->
+
+</html>
