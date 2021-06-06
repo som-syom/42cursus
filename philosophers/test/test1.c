@@ -39,36 +39,36 @@ void	*test1(void *num)
 
 int main(void)
 {
+	pthread_t thread;
+	int th_ret = 0;
+	char str[] = "Hello world\n";
+	int ret = pthread_create(&thread, 0, test, str);
+	printf("========= pthread test ==============\n");
+	printf("ret = %d\n", ret);
+	pthread_join(thread, (void *)&th_ret);
+	printf("th_ret = %d\n", th_ret);
+
+	printf("========== gettimeofday ============\n");
+	struct timeval tp;
+	gettimeofday(&tp, 0);
+	printf("time : %ld\n", tp.tv_sec);
+	usleep(3000000); // 10만당 1초 정도임(부정확함)
+	struct timeval tp2;
+	gettimeofday(&tp2, 0);
+	printf("time : %ld\n", tp2.tv_sec);
+
+	printf("=========== mutex =================\n");
+	pthread_t th1;
+	pthread_t th2;
+	int num = 0;
+
+	pthread_mutex_init(&mutex, 0);
+	pthread_create(&th1, 0, test1, (void *)num);
+	num++;
+	pthread_create(&th2, 0, test1, (void *)num);
+
+	pthread_join(th1, 0);
+	pthread_join(th2, 0);
+
 	msleep(5000);
-	// pthread_t thread;
-	// int th_ret = 0;
-	// char str[] = "Hello world\n";
-	// int ret = pthread_create(&thread, 0, test, str);
-	// printf("========= pthread test ==============\n");
-	// printf("ret = %d\n", ret);
-	// pthread_join(thread, (void *)&th_ret);
-	// printf("th_ret = %d\n", th_ret);
-
-	// printf("========== gettimeofday ============\n");
-	// struct timeval tp;
-	// gettimeofday(&tp, 0);
-	// printf("time : %ld\n", tp.tv_sec);
-	// usleep(3000000); // 10만당 1초 정도임(부정확함)
-	// struct timeval tp2;
-	// gettimeofday(&tp2, 0);
-	// printf("time : %ld\n", tp2.tv_sec);
-
-	// printf("=========== mutex =================\n");
-	// pthread_t th1;
-	// pthread_t th2;
-	// int num = 0;
-
-	// pthread_mutex_init(&mutex, 0);
-	// pthread_create(&th1, 0, test1, (void *)num);
-	// num++;
-	// pthread_create(&th2, 0, test1, (void *)num);
-
-	// pthread_join(th1, 0);
-	// pthread_join(th2, 0);
-
 }
