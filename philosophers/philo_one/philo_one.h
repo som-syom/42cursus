@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/06 17:48:47 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/06/07 20:18:20 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/06/07 22:29:29 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,14 @@
 # define EATING 1
 # define SLEEPING 2
 # define THINGKING 3
+# define DEAD 4
 
 typedef struct		s_philo
 {
 	struct s_info	*info;
 	int				num;
 	int				time;
-	int				eat;
+	int				is_eating;
 	int				left;
 	int				right;
 }					t_philo;
@@ -47,6 +48,8 @@ typedef struct	s_info
 	int			time_to_sleep;
 	int			must_eat;
 	int			eat_count;
+	int			dead_flag;
+	long		start_time;
 }				t_info;
 
 pthread_mutex_t	mutex[FORK_MAX];
