@@ -6,11 +6,22 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/06 18:01:30 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/06/06 18:15:24 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/06/07 16:07:02 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_one.h"
+
+void	*ft_calloc(size_t n, size_t size)
+{
+	void	*ret;
+
+	ret = (char *)malloc(size * n);
+	if (!ret)
+		return (0);
+	memset(ret, 0, (n * size));
+	return (ret);
+}
 
 int	ft_isdigit_str(char *str)
 {
