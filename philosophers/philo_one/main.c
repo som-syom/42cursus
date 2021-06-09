@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/06 17:52:31 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/06/07 22:40:55 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/06/09 20:58:51 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,18 +110,18 @@ void	print_status(t_philo *philo, int flag)
 	timestamp = ((now.tv_sec * 1000) + (now.tv_usec / 1000))
 				- ((start.tv_sec * 1000) + (start.tv_usec / 1000));
 	if (flag == TAKE_FORK)
-		printf("%dms %d has taken a fork\n", timestamp, philo->num);
+		printf("%dms %d has taken a fork\n", timestamp, philo->num + 1);
 	else if (flag == EATING)
 	{
 		philo->time = (now.tv_sec * 1000) + (now.tv_usec / 1000);
-		printf("%dms %d is eating\n", timestamp, philo->num);
+		printf("%dms %d is eating\n", timestamp, philo->num + 1);
 	}
 	else if (flag == SLEEPING)
-		printf("%dms %d is sleeping\n", timestamp, philo->num);
+		printf("%dms %d is sleeping\n", timestamp, philo->num + 1);
 	else if (flag == THINGKING)
-		printf("%dms %d is thinking\n", timestamp, philo->num);
+		printf("%dms %d is thinking\n", timestamp, philo->num + 1);
 	else
-		printf("%dms %d died\n", timestamp, philo->num);
+		printf("%dms %d died\n", timestamp, philo->num + 1);
 }
 
 void	eating(t_philo *philo, int first, int second)
@@ -136,8 +136,8 @@ void	eating(t_philo *philo, int first, int second)
 		return ;
 	msleep(philo->info->time_to_eat);
 	philo->info->eat_count++;
-	pthread_mutex_unlock(&mutex[philo->left]);
-	pthread_mutex_unlock(&mutex[philo->right]);
+	pthread_mutex_unlock(&mutex[second]);
+	pthread_mutex_unlock(&mutex[first]);
 	// printf("test : %d end\n", philo->num);
 	philo->is_eating = 0;
 }
@@ -150,7 +150,7 @@ void	*philo_routine(void *p)
 	while (philo->info->dead_flag)
 	{
 		//eat
-		if (philo->num == 0 && philo->num / 2 == 0 && philo->info->dead_flag)
+		if (philo->num == 0 || philo->num % 2 == 0)
 			eating(philo, philo->left, philo->right);
 		else
 			eating(philo, philo->right, philo->left);
