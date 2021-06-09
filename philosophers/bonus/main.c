@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/09 22:37:48 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/06/10 02:13:24 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/06/10 03:44:26 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ int	init_info(t_info *info)
 		i++;
 	}
 	info->forks = sem_open("fork", O_CREAT, 0644, info->num_philo);
+	sem_unlink("forks");
 	i = 0;
 	while (i < info->num_philo)
 	{
@@ -94,11 +95,11 @@ void	philo_routine(t_philo *philo)
 {
 	while (philo->info->end_flag)
 	{
-		printf("philo num : %d\n", philo->num);
-		sem_wait(philo->info->forks);
-			printf("fail\n");
+		if (sem_wait(philo->info->forks) == -1)
+			printf("wait error\n");
 		print_status(philo, TAKE_FORK, FORK_MSG);
-		sem_wait(philo->info->forks);
+		if (sem_wait(philo->info->forks) == -1)
+			printf("wait error\n");
 		print_status(philo, TAKE_FORK, FORK_MSG);
 		philo->is_eating = 1;
 		print_status(philo, EATING, EAT_MSG);
@@ -124,7 +125,7 @@ void	make_process(t_info *info)
 		pid[i] = fork();
 		if (pid[i] < 0)
 			printf("fork error\n");
-		if (pid[i] == 0)
+		else if (pid[i] == 0)
 		{
 			printf("status : %d flag : %d\n", i, info->end_flag);
 			philo_routine(info->philo[i]);
