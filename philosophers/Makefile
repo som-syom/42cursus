@@ -6,7 +6,7 @@ NAME	= philosopher
 SRCS	= philo/main.c \
 			philo/thread.c \
 			philo/util.c
-INC		= -I philo -I bonus
+INC		= -I philo -pthread
 OBJS	= $(SRCS:.c=.o)
 
 # bonus ==============================
@@ -14,7 +14,7 @@ B_NAME	= philo_bonus
 B_SRCS	= bonus/main.c \
 			bonus/util.c
 
-B_INC	= -I bonus
+B_INC	= -I bonus -pthread
 B_OBJS	= $(B_SRCS:.c=.o)
 
 all : $(NAME)
@@ -26,7 +26,7 @@ $(B_NAME) : $(B_OBJS)
 	$(CC) $(CFLAGS) -o $(B_NAME) $(B_OBJS) $(B_INC)
 
 .c.o :
-	$(CC) $(CFLAGS) -c $< -o $@ $(INC)
+	$(CC) $(CFLAGS) -c $< -o $@ $(INC) $(B_INC)
 
 bonus : $(B_NAME)
 
