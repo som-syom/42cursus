@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/09 22:25:20 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/06/09 22:27:24 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/06/10 22:33:25 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,14 +74,12 @@ int		check_must_eat(t_info *info)
 	}
 }
 
-void	*check_status(void *in)
+void	*check_status(t_info *info)
 {
 	struct timeval	now;
-	t_info			*info;
 	int				time;
 	int				i;
 
-	info = (t_info *)in;
 	while (info->end_flag)
 	{
 		gettimeofday(&now, 0);

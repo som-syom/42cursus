@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/06 17:48:47 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/06/09 22:28:13 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/06/10 22:29:52 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void			eating(t_philo *philo, int first, int second);
 void			*philo_routine(void *p);
 int				check_time(t_info *info, int i, int time);
 int				check_must_eat(t_info *info);
-void			*check_status(void *in);
+void			*check_status(t_info *info);
 
 /*
 **	utils

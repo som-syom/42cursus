@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/06 17:52:31 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/06/09 22:25:41 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/06/10 22:32:03 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,8 @@ void	print_status(t_philo *philo, int flag, char *msg)
 				- ((start.tv_sec * 1000) + (start.tv_usec / 1000));
 	if (flag == EATING)
 		philo->time = (now.tv_sec * 1000) + (now.tv_usec / 1000);
-	printf("%dms %d %s\n", timestamp, philo->num + 1, msg);
+	if (philo->info->end_flag)
+		printf("%dms %d %s\n", timestamp, philo->num + 1, msg);
 }
 
 void	make_thread(t_info *info)
@@ -101,7 +102,7 @@ void	make_thread(t_info *info)
 		pthread_create(&p[i], 0, philo_routine, (void *)info->philo[i]);
 		i++;
 	}
-	pthread_create(&monitor, 0, check_status, (void *)info);
+	pthread_create(&monitor, 0, (void*)(void*)check_status, (void *)info);
 	pthread_join(monitor, 0);
 	i = 0;
 	while (i < info->num_philo)
