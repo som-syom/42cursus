@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/09 22:37:15 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/06/10 00:26:04 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/06/10 22:20:22 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@
 
 typedef struct		s_philo
 {
+	pid_t			pid;
+	pthread_t		monitor;
 	struct s_info	*info;
 	int				num;
 	int				time;
@@ -51,14 +53,16 @@ typedef struct	s_info
 {
 	t_philo		**philo;
 	sem_t		*forks;
+	sem_t		*eat_count;
 	int			num_philo;
 	int			time_to_die;
 	int			time_to_eat;
 	int			time_to_sleep;
 	int			must_eat;
-	int			eat_count;
 	int			end_flag;
 	long		start_time;
+// jachoi
+	sem_t		*die;
 }				t_info;
 
 void	msleep(int ms);
