@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/09 22:37:48 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/06/10 22:25:20 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/06/11 17:25:24 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,10 +132,14 @@ void	philo_routine(t_philo *philo)
 	while (philo->info->end_flag)
 	{
 		eating(philo);
+		if (philo->info->end_flag == 0)
+			break ;
 		print_status(philo, SLEEPING, SLEEP_MSG);
 		if (philo->info->end_flag == 0)
 			break ;
 		msleep(philo->info->time_to_sleep);
+		if (philo->info->end_flag == 0)
+			break ;
 		print_status(philo, THINGKING, THINK_MSG);
 	}
 }

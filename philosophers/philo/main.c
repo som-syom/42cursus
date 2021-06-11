@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/06 17:52:31 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/06/10 22:32:03 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/06/11 17:36:11 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,16 +90,16 @@ void	print_status(t_philo *philo, int flag, char *msg)
 
 void	make_thread(t_info *info)
 {
-	pthread_t	*p;
+	// pthread_t	*p;
 	pthread_t	monitor;
 	int			i;
 
-	if (!(p = ft_calloc(info->num_philo, sizeof(pthread_t))))
+	if (!(info->p = ft_calloc(info->num_philo, sizeof(pthread_t))))
 		return ;
 	i = 0;
 	while (i < info->num_philo)
 	{
-		pthread_create(&p[i], 0, philo_routine, (void *)info->philo[i]);
+		pthread_create(&info->p[i], 0, philo_routine, (void *)info->philo[i]);
 		i++;
 	}
 	pthread_create(&monitor, 0, (void*)(void*)check_status, (void *)info);
@@ -107,7 +107,7 @@ void	make_thread(t_info *info)
 	i = 0;
 	while (i < info->num_philo)
 	{
-		pthread_join(p[i], 0);
+		pthread_join(info->p[i], 0);
 		i++;
 	}
 }

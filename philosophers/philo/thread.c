@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/09 22:25:20 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/06/10 22:33:25 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/06/11 17:38:48 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,13 @@
 void	eating(t_philo *philo, int first, int second)
 {
 	pthread_mutex_lock(&mutex[first]);
-	print_status(philo, TAKE_FORK, FORK_MSG);
+	if (philo->info->end_flag)
+		print_status(philo, TAKE_FORK, FORK_MSG);
 	pthread_mutex_lock(&mutex[second]);
-	print_status(philo, TAKE_FORK, FORK_MSG);
+	if (philo->info->end_flag)
+		print_status(philo, TAKE_FORK, FORK_MSG);
 	print_status(philo, EATING, EAT_MSG);
-	philo->info->eat_count++;
+	philo->eat_count++;
 	philo->is_eating = 1;
 	if (philo->info->end_flag == 0)
 		return ;
@@ -36,15 +38,16 @@ void	*philo_routine(void *p)
 	philo = (t_philo *)p;
 	while (philo->info->end_flag)
 	{
-		if (philo->num == 0 || philo->num % 2 == 0)
+		if (philo->info->end_flag && (philo->num == 0 || philo->num % 2 == 0))
 			eating(philo, philo->left, philo->right);
-		else
+		else if (philo->info->end_flag)
 			eating(philo, philo->right, philo->left);
-		print_status(philo, SLEEPING, SLEEP_MSG);
-		if (philo->info->end_flag == 0)
-			break ;
-		msleep(philo->info->time_to_sleep);
-		print_status(philo, THINGKING, THINK_MSG);
+		if (philo->info->end_flag)
+			print_status(philo, SLEEPING, SLEEP_MSG);
+		if (philo->info->end_flag)
+			msleep(philo->info->time_to_sleep);
+		if (philo->info->end_flag)
+			print_status(philo, THINGKING, THINK_MSG);
 	}
 	return (0);
 }
@@ -61,16 +64,20 @@ int		check_time(t_info *info, int i, int time)
 
 int		check_must_eat(t_info *info)
 {
+	int	i;
+
 	if (info->must_eat == 0)
 		return (0);
 	else
 	{
-		if (info->must_eat == info->eat_count)
+		i = -1;
+		while (++i < info->num_philo)
 		{
-			info->end_flag = 0;
-			return (1);
+			if (info->must_eat > info->philo[i]->eat_count)
+				return (0);
 		}
-		return (0);
+		info->end_flag = 0;
+		return (1);
 	}
 }
 
