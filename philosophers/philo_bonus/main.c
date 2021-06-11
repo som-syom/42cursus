@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/09 22:37:48 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/06/11 19:21:14 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/06/11 21:29:53 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,14 +68,14 @@ int	init_info(t_info *info)
 	sem_unlink("die");
 	info->die = sem_open("die", O_CREAT, 0644, 1);
 	sem_wait(info->die);
-	sem_unlink("all_eat");
-	if (info->must_eat)
-	{
-		info->eat_flag = sem_open("all_eat", O_CREAT, 0644, info->num_philo);
-		i = -1;
-		while (++i < info->num_philo)
-			sem_wait(info->eat_flag);
-	}
+	// sem_unlink("all_eat");
+	// if (info->must_eat)
+	// {
+	// 	info->eat_flag = sem_open("all_eat", O_CREAT, 0644, info->num_philo);
+	// 	i = -1;
+	// 	while (++i < info->num_philo)
+	// 		sem_wait(info->eat_flag);
+	// }
 	i = 0;
 	while (i < info->num_philo)
 	{
@@ -190,13 +190,21 @@ void	*check_eat(void *in)
 	int		i;
 
 	info = (t_info *)in;
-	i = -1;
-	while (++i < info->num_philo)
-		sem_wait(info->eat_flag);
-	i = -1;
-	while (++i < info->num_philo)
-		kill(info->philo[i]->pid, 9);
-	exit(0);
+	if (info->must_eat)
+	{
+		sem_unlink("all_eat");
+		info->eat_flag = sem_open("all_eat", O_CREAT, 0644, info->num_philo);
+		i = -1;
+		while (++i < info->num_philo * 2 - 1)
+		{
+			// printf("=============== %d===============\n", i);
+			sem_wait(info->eat_flag);
+		}	
+		i = -1;
+		while (++i < info->num_philo)
+			kill(info->philo[i]->pid, 9);
+		exit(0);
+	}
 	return (0);
 }
 
