@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/09 22:37:15 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/06/10 22:20:22 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/06/11 19:08:41 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ typedef struct		s_philo
 	int				num;
 	int				time;
 	int				is_eating;
+	int				eat_count;
 	int				left;
 	int				right;
 }					t_philo;
@@ -53,7 +54,9 @@ typedef struct	s_info
 {
 	t_philo		**philo;
 	sem_t		*forks;
-	sem_t		*eat_count;
+	sem_t		*eat_flag;
+	sem_t		*print;
+	sem_t		*print_die;
 	int			num_philo;
 	int			time_to_die;
 	int			time_to_eat;

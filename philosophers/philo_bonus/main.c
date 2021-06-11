@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/09 22:37:48 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/06/11 17:25:24 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/06/11 19:21:14 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ int	check_arg(t_info *info, int ac, char **av)
 int	init_info(t_info *info)
 {
 	int	i;
+	struct timeval	start;
 
 	info->end_flag = 1;
 	if (!(info->philo = ft_calloc(info->num_philo, sizeof(t_philo *))))
@@ -58,6 +59,10 @@ int	init_info(t_info *info)
 			return (0);
 		i++;
 	}
+	sem_unlink("print");
+	info->print = sem_open("print", O_CREAT, 0644, 1);
+	sem_unlink("print_die");
+	info->print_die = sem_open("print_die", O_CREAT, 0644, 1);
 	sem_unlink("fork");
 	info->forks = sem_open("fork", O_CREAT, 0644, info->num_philo);
 	sem_unlink("die");
@@ -66,10 +71,10 @@ int	init_info(t_info *info)
 	sem_unlink("all_eat");
 	if (info->must_eat)
 	{
-		info->eat_count = sem_open("all_eat", O_CREAT, 0644, info->must_eat);
+		info->eat_flag = sem_open("all_eat", O_CREAT, 0644, info->num_philo);
 		i = -1;
-		while (++i < info->must_eat)
-			sem_wait(info->eat_count);
+		while (++i < info->num_philo)
+			sem_wait(info->eat_flag);
 	}
 	i = 0;
 	while (i < info->num_philo)
@@ -78,29 +83,27 @@ int	init_info(t_info *info)
 		info->philo[i]->info = info;
 		i++;
 	}
+	gettimeofday(&start, 0);
+	info->start_time = (start.tv_sec * 1000) + (start.tv_usec / 1000);
 	return (1);
 }
 
 void	print_status(t_philo *philo, int flag, char *msg)
 {
-	static struct timeval	start;
 	struct timeval			now;
 	int						timestamp;
 
 	if (philo->info->end_flag == 0)
 		return ;
-	if (start.tv_sec == 0)
-	{
-		gettimeofday(&start, 0);
-		philo->info->start_time = (start.tv_sec * 1000) + (start.tv_usec / 1000);
-	}
 	gettimeofday(&now, 0);
 	timestamp = ((now.tv_sec * 1000) + (now.tv_usec / 1000))
-				- ((start.tv_sec * 1000) + (start.tv_usec / 1000));
+				- philo->info->start_time;
 	if (flag == EATING)
 		philo->time = (now.tv_sec * 1000) + (now.tv_usec / 1000);
-	if (philo->info->end_flag)
-		printf("%dms %d %s\n", timestamp, philo->num + 1, msg);
+	sem_wait(philo->info->print);
+	printf("%dms %d %s\n", timestamp, philo->num + 1, msg);
+	if (flag != DEAD)
+		sem_post(philo->info->print);
 }
 
 void	eating(t_philo *philo)
@@ -119,8 +122,9 @@ void	eating(t_philo *philo)
 	gettimeofday(&time, 0);
 	philo->time = (time.tv_sec * 1000) + (time.tv_usec / 1000);
 	print_status(philo, EATING, EAT_MSG);
-	if (philo->info->must_eat)
-		sem_post(philo->info->eat_count);
+	philo->eat_count++;
+	if (philo->info->must_eat && philo->eat_count == philo->info->must_eat)
+		sem_post(philo->info->eat_flag);
 	msleep(philo->info->time_to_eat);
 	philo->is_eating = 0;
 	sem_post(philo->info->forks);
@@ -132,14 +136,8 @@ void	philo_routine(t_philo *philo)
 	while (philo->info->end_flag)
 	{
 		eating(philo);
-		if (philo->info->end_flag == 0)
-			break ;
 		print_status(philo, SLEEPING, SLEEP_MSG);
-		if (philo->info->end_flag == 0)
-			break ;
 		msleep(philo->info->time_to_sleep);
-		if (philo->info->end_flag == 0)
-			break ;
 		print_status(philo, THINGKING, THINK_MSG);
 	}
 }
@@ -160,7 +158,9 @@ void	*check_status(void *p)
 			(philo->time == 0 &&
 				time - philo->info->start_time > philo->info->time_to_die)))
 		{
+			sem_wait(philo->info->print_die);
 			print_status(philo, DEAD, DIE_MSG);
+			// sem_post(philo->info->print_die);
 			sem_post(philo->info->die);
 			philo->info->end_flag = 0;
 			// kill(0, 9);
@@ -191,8 +191,8 @@ void	*check_eat(void *in)
 
 	info = (t_info *)in;
 	i = -1;
-	while (++i < info->must_eat)
-		sem_wait(info->eat_count);
+	while (++i < info->num_philo)
+		sem_wait(info->eat_flag);
 	i = -1;
 	while (++i < info->num_philo)
 		kill(info->philo[i]->pid, 9);
@@ -217,7 +217,6 @@ void	make_process(t_info *info)
 		else if (info->philo[i]->pid == 0)
 		{
 			pthread_create(&info->philo[i]->monitor, 0, check_status, (void *)info->philo[i]);
-			printf("status : %d flag : %d\n", i, info->end_flag);
 			philo_routine(info->philo[i]);
 			pthread_join(info->philo[i]->monitor, 0);
 			exit(0);
