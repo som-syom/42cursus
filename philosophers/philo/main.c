@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/06 17:52:31 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/06/11 18:12:55 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/06/11 18:30:04 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ int	init_info(t_info *info)
 		i++;
 	}
 	info->philo[info->num_philo - 1]->right = 0;
+	pthread_mutex_init(&info->print, 0);
 	return (1);
 }
 
@@ -84,16 +85,18 @@ void	print_status(t_philo *philo, int flag, char *msg)
 				- ((start.tv_sec * 1000) + (start.tv_usec / 1000));
 	if (flag == EATING)
 		philo->time = (now.tv_sec * 1000) + (now.tv_usec / 1000);
+	pthread_mutex_lock(&philo->info->print);
 	if (philo->info->end_flag)
 		printf("%dms %d %s\n", timestamp, philo->num + 1, msg);
+	pthread_mutex_unlock(&philo->info->print);
 }
 
 void	make_thread(t_info *info)
 {
-	// pthread_t	*p;
 	pthread_t	monitor;
 	int			i;
 
+	pthread_create(&monitor, 0, (void*)(void*)check_status, (void *)info);
 	if (!(info->p = ft_calloc(info->num_philo, sizeof(pthread_t))))
 		return ;
 	i = 0;
@@ -102,7 +105,6 @@ void	make_thread(t_info *info)
 		pthread_create(&info->p[i], 0, philo_routine, (void *)info->philo[i]);
 		i++;
 	}
-	pthread_create(&monitor, 0, (void*)(void*)check_status, (void *)info);
 	pthread_join(monitor, 0);
 	i = 0;
 	while (i < info->num_philo)

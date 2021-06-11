@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/09 22:25:20 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/06/11 18:12:53 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/06/11 18:21:04 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,12 +95,12 @@ void	*check_status(t_info *info)
 		while (++i < info->num_philo)
 		{
 			if (check_must_eat(info))
-				break ;
+				return (0);
 			if (info->philo[i]->is_eating == 0 && check_time(info, i, time))
 			{
 				print_status(info->philo[i], DEAD, DIE_MSG);
 				info->end_flag = 0;
-				break ;
+				return (0);
 			}
 		}
 	}

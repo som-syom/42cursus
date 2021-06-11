@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/06 17:48:47 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/06/11 18:13:14 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/06/11 18:24:35 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ typedef struct	s_info
 {
 	pthread_t	*p;
 	t_philo		**philo;
+	pthread_mutex_t	print;
 	int			num_philo;
 	int			time_to_die;
 	int			time_to_eat;
