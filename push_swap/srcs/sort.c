@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/18 14:09:42 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/05/22 21:49:29 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/06/12 21:31:28 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -219,7 +219,7 @@ void	b_to_a(t_info *info, int size)
 		return ;
 	}
 	init_solve(&sol, info->b, size);
-	printf("===================[ btoa ] \n");
+	printf("===================[ btoa ] size : %d\n", size);
 	test_pivot(size, sol.pivot1, sol.pivot2);
 	while (size--)
 	{
@@ -241,13 +241,13 @@ void	a_to_b(t_info *info, int size)
 {
 	t_solve	sol;
 
+	printf("===================[ atob ] size : %d\n", size);
 	if (size <= 3)
 	{
 		small_sort(info, size, 'a');
 		return ;
 	}
 	init_solve(&sol, info->a, size);
-	printf("===================[ atob ]\n");
 	test_pivot(size, sol.pivot1, sol.pivot2);
 	while (size--)
 	{
