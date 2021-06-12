@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/06 18:01:30 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/06/12 21:56:57 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/06/12 22:34:54 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@ void	msleep(int ms)
 	long			val2;
 
 	gettimeofday(&tv1, NULL);
-	val1 = tv1.tv_sec * 1000 + tv1.tv_usec/1000;
+	val1 = (tv1.tv_sec * 1000) + (tv1.tv_usec / 1000);
 	while (1)
 	{
 		gettimeofday(&tv2, NULL);
-		val2 = tv2.tv_sec * 1000 + tv2.tv_usec/1000;
+		val2 = (tv2.tv_sec * 1000) + (tv2.tv_usec / 1000);
 		if (val2 - val1 >= ms)
 			return ;
 	}
@@ -41,7 +41,7 @@ void	*ft_calloc(size_t n, size_t size)
 	return (ret);
 }
 
-int	ft_isdigit_str(char *str)
+int		ft_isdigit_str(char *str)
 {
 	int	i;
 

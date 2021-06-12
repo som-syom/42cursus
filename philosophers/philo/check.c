@@ -6,19 +6,19 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/12 22:00:23 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/06/12 22:29:02 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/06/12 22:35:41 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int print_error(char *str)
+int		print_error(char *str)
 {
 	printf("Error : %s\n", str);
 	return (0);
 }
 
-int	check_arg(t_info *info, int ac, char **av)
+int		check_arg(t_info *info, int ac, char **av)
 {
 	int	i;
 

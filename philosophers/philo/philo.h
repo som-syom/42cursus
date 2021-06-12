@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/06 17:48:47 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/06/12 22:19:43 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/06/12 22:33:44 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,14 +53,14 @@ typedef struct		s_info
 	pthread_mutex_t	print;
 	int				num_philo;
 	int				time_to_die;
-	int					time_to_eat;
+	int				time_to_eat;
 	int				time_to_sleep;
 	int				must_eat;
 	int				end_flag;
 	long			start_time;
 }					t_info;
 
-pthread_mutex_t		mutex[FORK_MAX];
+pthread_mutex_t		g_mutex[FORK_MAX];
 
 /*
 **	philo

@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/09 22:25:20 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/06/12 22:30:58 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/06/12 22:33:50 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 void	eating(t_philo *philo, int first, int second)
 {
-	pthread_mutex_lock(&mutex[first]);
+	pthread_mutex_lock(&g_mutex[first]);
 	if (philo->info->end_flag)
 		print_status(philo, TAKE_FORK, FORK_MSG);
 	if (philo->info->num_philo == 1)
 		return ;
-	pthread_mutex_lock(&mutex[second]);
+	pthread_mutex_lock(&g_mutex[second]);
 	if (philo->info->end_flag)
 		print_status(philo, TAKE_FORK, FORK_MSG);
 	print_status(philo, EATING, EAT_MSG);
@@ -28,8 +28,8 @@ void	eating(t_philo *philo, int first, int second)
 	if (philo->info->end_flag == 0)
 		return ;
 	msleep(philo->info->time_to_eat);
-	pthread_mutex_unlock(&mutex[second]);
-	pthread_mutex_unlock(&mutex[first]);
+	pthread_mutex_unlock(&g_mutex[second]);
+	pthread_mutex_unlock(&g_mutex[first]);
 	philo->is_eating = 0;
 }
 

@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/06 17:52:31 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/06/12 22:02:14 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/06/12 22:58:31 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	set_philo(t_info *info)
 	i = 0;
 	while (i < info->num_philo)
 	{
-		pthread_mutex_init(&mutex[i], 0);
+		pthread_mutex_init(&g_mutex[i], 0);
 		info->philo[i]->num = i;
 		info->philo[i]->left = i;
 		info->philo[i]->right = i + 1;
@@ -29,7 +29,7 @@ void	set_philo(t_info *info)
 	info->philo[info->num_philo - 1]->right = 0;
 }
 
-int	init_info(t_info *info)
+int		init_info(t_info *info)
 {
 	struct timeval	start;
 	int				i;
@@ -69,7 +69,18 @@ void	print_status(t_philo *philo, int flag, char *msg)
 	pthread_mutex_unlock(&philo->info->print);
 }
 
-int	main(int argc, char **argv)
+void	free_all(t_info *info)
+{
+	int	i;
+
+	i = -1;
+	while (i < info->num_philo)
+		free(info->philo[i]);
+	free(info->philo);
+	free(info->p);
+}
+
+int		main(int argc, char **argv)
 {
 	t_info	info;
 
@@ -78,5 +89,6 @@ int	main(int argc, char **argv)
 	if (!init_info(&info))
 		return (0);
 	make_thread(&info);
+	free_all(&info);
 	return (0);
 }
