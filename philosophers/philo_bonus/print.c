@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 00:30:28 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/06/13 00:52:22 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/06/13 05:25:43 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,16 @@
 
 void	print_status(t_philo *philo, int flag, char *msg)
 {
-	struct timeval			now;
-	int						timestamp;
+	long	now;
+	int		timestamp;
 
 	if (philo->info->end_flag == 0)
 		return ;
-	gettimeofday(&now, 0);
-	timestamp = ((now.tv_sec * 1000) + (now.tv_usec / 1000))
-				- philo->info->start_time;
-	if (flag == EATING)
-		philo->time = (now.tv_sec * 1000) + (now.tv_usec / 1000);
 	sem_wait(philo->info->print);
+	now = get_time();
+	timestamp = now - philo->info->start_time;
+	if (flag == EATING)
+		philo->time = now;
 	printf("%dms %d %s\n", timestamp, philo->num + 1, msg);
 	if (flag != DEAD)
 		sem_post(philo->info->print);

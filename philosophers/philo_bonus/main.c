@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/09 22:37:48 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/06/13 00:32:30 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/06/13 05:27:16 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ void	set_semaphore(t_info *info)
 int		init_info(t_info *info)
 {
 	int	i;
-	struct timeval	start;
 
 	info->end_flag = 1;
 	if (!(info->philo = ft_calloc(info->num_philo, sizeof(t_philo *))))
@@ -46,11 +45,9 @@ int		init_info(t_info *info)
 		info->philo[i]->num = i;
 		info->philo[i]->info = info;
 	}
-	gettimeofday(&start, 0);
-	info->start_time = (start.tv_sec * 1000) + (start.tv_usec / 1000);
+	info->start_time = get_time();
 	return (1);
 }
-
 
 void	all_free(t_info *info)
 {

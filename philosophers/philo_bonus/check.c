@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 00:27:45 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/06/13 00:51:41 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/06/13 05:23:41 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,15 +39,15 @@ int		check_arg(t_info *info, int ac, char **av)
 
 void	*check_status(void *p)
 {
-	struct timeval	now;
 	t_philo			*philo;
 	int				time;
 
 	philo = (t_philo *)p;
 	while (philo->info->end_flag)
 	{
-		gettimeofday(&now, 0);
-		time = (now.tv_sec * 1000) + (now.tv_usec / 1000);
+		if (philo->info->must_eat && philo->eat_count == philo->info->must_eat)
+			return (0);
+		time = get_time();
 		if (!philo->is_eating &&
 			((philo->time && time - philo->time > philo->info->time_to_die) ||
 			(philo->time == 0 &&
@@ -72,7 +72,10 @@ void	*all_check(void *in)
 	sem_wait(info->die);
 	i = -1;
 	while (++i < info->num_philo)
-		kill(info->philo[i]->pid, 9);
+	{
+		if (info->philo[i]->pid != 0)
+			kill(info->philo[i]->pid, 9);
+	}
 	exit(0);
 	return (0);
 }

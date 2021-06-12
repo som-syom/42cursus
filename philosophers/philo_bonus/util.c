@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/06 18:01:30 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/06/12 23:21:27 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/06/13 05:28:20 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,15 @@
 
 void	msleep(int ms)
 {
-	struct timeval tv1;
-	struct timeval tv2;
+	long	val1;
+	long	val2;
 
-	gettimeofday(&tv1, NULL);
-	long val1 = tv1.tv_sec * 1000 + tv1.tv_usec / 1000;
+	val1 = get_time();
 	while (1)
 	{
-		gettimeofday(&tv2, NULL);
-		long val2 = tv2.tv_sec * 1000 + tv2.tv_usec / 1000;
+		val2 = get_time();
 		if (val2 - val1 >= ms)
-			return;
+			return ;
 		usleep(1);
 	}
 }
@@ -40,7 +38,7 @@ void	*ft_calloc(size_t n, size_t size)
 	return (ret);
 }
 
-int	ft_isdigit_str(char *str)
+int		ft_isdigit_str(char *str)
 {
 	int	i;
 
@@ -54,7 +52,7 @@ int	ft_isdigit_str(char *str)
 	return (1);
 }
 
-int	print_i(const char *str, int min, long long res, int i)
+int		print_i(const char *str, int min, long long res, int i)
 {
 	long long	tmp;
 
@@ -75,7 +73,7 @@ int	print_i(const char *str, int min, long long res, int i)
 	return (res);
 }
 
-int	ft_atoi(const char *str)
+int		ft_atoi(const char *str)
 {
 	int				i;
 	int				min;

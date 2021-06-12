@@ -6,16 +6,24 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 00:29:17 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/06/13 00:41:55 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/06/13 05:20:09 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
 
+long	get_time(void)
+{
+	struct timeval	timeval;
+	long			time;
+
+	gettimeofday(&timeval, 0);
+	time = (timeval.tv_sec * 1000) + (timeval.tv_usec / 1000);
+	return (time);
+}
+
 void	eating(t_philo *philo)
 {
-	struct timeval	time;
-
 	if (sem_wait(philo->info->forks) == -1)
 		printf("wait error\n");
 	print_status(philo, TAKE_FORK, FORK_MSG);
@@ -25,8 +33,6 @@ void	eating(t_philo *philo)
 		printf("wait error\n");
 	print_status(philo, TAKE_FORK, FORK_MSG);
 	philo->is_eating = 1;
-	gettimeofday(&time, 0);
-	philo->time = (time.tv_sec * 1000) + (time.tv_usec / 1000);
 	print_status(philo, EATING, EAT_MSG);
 	philo->eat_count++;
 	if (philo->info->must_eat && philo->eat_count == philo->info->must_eat)
@@ -35,6 +41,8 @@ void	eating(t_philo *philo)
 	philo->is_eating = 0;
 	sem_post(philo->info->forks);
 	sem_post(philo->info->forks);
+	if (philo->info->must_eat && philo->eat_count == philo->info->must_eat)
+		exit(0);
 }
 
 void	philo_routine(t_philo *philo)
