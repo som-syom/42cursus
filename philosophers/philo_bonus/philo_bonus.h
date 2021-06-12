@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/09 22:37:15 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/06/11 19:08:41 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/06/13 00:53:16 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ typedef struct	s_info
 	sem_t		*eat_flag;
 	sem_t		*print;
 	sem_t		*print_die;
+	sem_t		*die;
 	int			num_philo;
 	int			time_to_die;
 	int			time_to_eat;
@@ -64,9 +65,28 @@ typedef struct	s_info
 	int			must_eat;
 	int			end_flag;
 	long		start_time;
-// jachoi
-	sem_t		*die;
 }				t_info;
+
+/*
+**	philo
+*/
+
+void	make_process(t_info *info);
+void	philo_routine(t_philo *philo);
+void	eating(t_philo *philo);
+void	pid_child(t_philo *philo);
+void	*check_eat(void *in);
+void	*all_check(void *in);
+void	*check_status(void *p);
+int		check_arg(t_info *info, int ac, char **av);
+void	set_semaphore(t_info *info);
+int		init_info(t_info *info);
+void	print_status(t_philo *philo, int flag, char *msg);
+int		print_error(char *str);
+
+/*
+**	util
+*/
 
 void	msleep(int ms);
 void	*ft_calloc(size_t n, size_t size);

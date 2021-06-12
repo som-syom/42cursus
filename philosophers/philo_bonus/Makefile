@@ -2,6 +2,9 @@ CC		= gcc
 CFLAGS	= -Wall -Wextra -Werror
 NAME	= philo_bonus
 SRCS	= main.c \
+			check.c \
+			print.c \
+			process.c \
 			util.c
 INC		= -pthread
 OBJS	= $(SRCS:.c=.o)
