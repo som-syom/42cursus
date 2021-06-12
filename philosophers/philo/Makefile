@@ -1,9 +1,10 @@
 CC		= gcc
-CFLAGS	= -Wall -Wextra -Werror
+CFLAGS	= -Wall -Wextra -Werror -g
 NAME	= philo
 SRCS	= main.c \
 			thread.c \
-			util.c
+			util.c \
+			check.c
 INC		= -pthread
 OBJS	= $(SRCS:.c=.o)
 

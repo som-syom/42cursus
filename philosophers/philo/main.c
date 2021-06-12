@@ -6,52 +6,16 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/06 17:52:31 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/06/11 18:30:04 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/06/12 22:02:14 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	check_arg(t_info *info, int ac, char **av)
+void	set_philo(t_info *info)
 {
 	int	i;
 
-	if (ac != 5 && ac != 6)
-		return (0);
-	i = 1;
-	while (i < ac)
-	{
-		if (!ft_isdigit_str(av[i]))
-			return (0);
-		i++;
-	}
-	memset(info, 0, sizeof(t_info));
-	info->num_philo = ft_atoi(av[1]);
-	info->time_to_die = ft_atoi(av[2]);
-	info->time_to_eat = ft_atoi(av[3]);
-	info->time_to_sleep = ft_atoi(av[4]);
-	if (ac == 6)
-		info->must_eat = ft_atoi(av[5]);
-	if (info->num_philo < 2 || info->time_to_die < 0 || info->time_to_eat < 0
-		|| info->time_to_sleep < 0 || info->must_eat < 0)
-		return (0);
-	return (1);
-}
-
-int	init_info(t_info *info)
-{
-	int	i;
-
-	info->end_flag = 1;
-	if (!(info->philo = ft_calloc(info->num_philo, sizeof(t_philo *))))
-		return (0);
-	i = 0;
-	while (i < info->num_philo)
-	{
-		if (!(info->philo[i] = ft_calloc(1, sizeof(t_philo))))
-			return (0);
-		i++;
-	}
 	i = 0;
 	while (i < info->num_philo)
 	{
@@ -63,55 +27,46 @@ int	init_info(t_info *info)
 		i++;
 	}
 	info->philo[info->num_philo - 1]->right = 0;
+}
+
+int	init_info(t_info *info)
+{
+	struct timeval	start;
+	int				i;
+
+	info->end_flag = 1;
+	if (!(info->philo = ft_calloc(info->num_philo, sizeof(t_philo *))))
+		return (0);
+	i = 0;
+	while (i < info->num_philo)
+	{
+		if (!(info->philo[i] = ft_calloc(1, sizeof(t_philo))))
+			return (0);
+		i++;
+	}
+	set_philo(info);
 	pthread_mutex_init(&info->print, 0);
+	gettimeofday(&start, 0);
+	info->start_time = (start.tv_sec * 1000) + (start.tv_usec / 1000);
 	return (1);
 }
 
 void	print_status(t_philo *philo, int flag, char *msg)
 {
-	static struct timeval	start;
 	struct timeval			now;
 	int						timestamp;
 
 	if (philo->info->end_flag == 0)
 		return ;
-	if (start.tv_sec == 0)
-	{
-		gettimeofday(&start, 0);
-		philo->info->start_time = (start.tv_sec * 1000) + (start.tv_usec / 1000);
-	}
 	gettimeofday(&now, 0);
 	timestamp = ((now.tv_sec * 1000) + (now.tv_usec / 1000))
-				- ((start.tv_sec * 1000) + (start.tv_usec / 1000));
+				- philo->info->start_time;
 	if (flag == EATING)
 		philo->time = (now.tv_sec * 1000) + (now.tv_usec / 1000);
 	pthread_mutex_lock(&philo->info->print);
 	if (philo->info->end_flag)
 		printf("%dms %d %s\n", timestamp, philo->num + 1, msg);
 	pthread_mutex_unlock(&philo->info->print);
-}
-
-void	make_thread(t_info *info)
-{
-	pthread_t	monitor;
-	int			i;
-
-	pthread_create(&monitor, 0, (void*)(void*)check_status, (void *)info);
-	if (!(info->p = ft_calloc(info->num_philo, sizeof(pthread_t))))
-		return ;
-	i = 0;
-	while (i < info->num_philo)
-	{
-		pthread_create(&info->p[i], 0, philo_routine, (void *)info->philo[i]);
-		i++;
-	}
-	pthread_join(monitor, 0);
-	i = 0;
-	while (i < info->num_philo)
-	{
-		pthread_join(info->p[i], 0);
-		i++;
-	}
 }
 
 int	main(int argc, char **argv)
