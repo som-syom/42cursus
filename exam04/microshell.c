@@ -92,7 +92,6 @@ t_cmd	*make_cmd(t_cmd *new, char **av, int *i)
 	z = 0;
 	while (*i < j)
 	{
-		// new->cmds[z] = ft_strdup(av[*i]);
 		new->cmds[z] = av[*i];
 		new->num++;
 		(*i)++;
