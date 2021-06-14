@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 22:23:13 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/06/14 22:23:53 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/06/14 22:56:29 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ char	*ft_strdup(char *str)
 void	*ft_memset(void *ptr, int val, size_t n)
 {
 	unsigned char	*tmp_ptr;
-	unsigned char	*tmp_val;
+	unsigned char	tmp_val;
 	size_t			i;
 
 	tmp_ptr = ptr;

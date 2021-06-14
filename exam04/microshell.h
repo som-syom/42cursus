@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 19:12:40 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/06/14 22:54:10 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/06/14 23:35:22 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <sys/wait.h>
 # include <string.h>
 # include <stdio.h>
+# include <dirent.h>
 
 # define ERROR	-1
 # define SEMI	0
@@ -52,5 +53,6 @@ typedef struct	s_info
 int		ft_strlen(char *str);
 char	*ft_strdup(char *str);
 void	*ft_memset(void *ptr, int val, size_t n);
+void	print_error(int flag, t_cmd *cmd);
 
 #endif
