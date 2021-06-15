@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 00:27:45 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/06/13 05:23:41 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/06/15 19:05:48 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ int		check_arg(t_info *info, int ac, char **av)
 	info->time_to_sleep = ft_atoi(av[4]);
 	if (ac == 6)
 		info->must_eat = ft_atoi(av[5]);
-	if (info->num_philo < 1 || info->time_to_die < 0 || info->time_to_eat < 0
-		|| info->time_to_sleep < 0 || info->must_eat < 0)
+	if (info->num_philo < 1 || info->time_to_die <= 0 || info->time_to_eat <= 0
+		|| info->time_to_sleep <= 0 || (ac == 6 && info->must_eat <= 0))
 		return (print_error("put positive number"));
 	return (1);
 }

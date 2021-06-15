@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/06 17:48:47 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/06/12 22:33:44 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/06/15 18:23:49 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,10 @@ typedef struct		s_philo
 {
 	struct s_info	*info;
 	int				num;
-	int				time;
+	long			time;
+	int				take_fork;
 	int				is_eating;
+	int				printing;
 	int				eat_count;
 	int				left;
 	int				right;
@@ -74,6 +76,7 @@ int					check_must_eat(t_info *info);
 void				*check_status(t_info *info);
 void				make_thread(t_info *info);
 int					check_arg(t_info *info, int ac, char **av);
+long				get_time(void);
 
 /*
 **	utils

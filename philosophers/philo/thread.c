@@ -6,20 +6,32 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/09 22:25:20 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/06/12 22:33:50 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/06/15 19:06:25 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+long	get_time(void)
+{
+	struct timeval	now;
+	long			ret;
+
+	gettimeofday(&now, 0);
+	ret = (now.tv_sec * 1000) + (now.tv_usec / 1000);
+	return (ret);
+}
+
 void	eating(t_philo *philo, int first, int second)
 {
+	philo->take_fork = 1;
 	pthread_mutex_lock(&g_mutex[first]);
 	if (philo->info->end_flag)
 		print_status(philo, TAKE_FORK, FORK_MSG);
 	if (philo->info->num_philo == 1)
 		return ;
 	pthread_mutex_lock(&g_mutex[second]);
+	philo->take_fork = 0;
 	if (philo->info->end_flag)
 		print_status(philo, TAKE_FORK, FORK_MSG);
 	print_status(philo, EATING, EAT_MSG);
@@ -47,6 +59,8 @@ void	*philo_routine(void *p)
 		while (philo->info->num_philo == 1)
 			if (philo->info->end_flag)
 				return (0);
+		if (philo->info->must_eat && philo->eat_count == philo->info->must_eat)
+			return (0);
 		if (philo->info->end_flag)
 			print_status(philo, SLEEPING, SLEEP_MSG);
 		if (philo->info->end_flag)
@@ -70,12 +84,13 @@ void	make_thread(t_info *info)
 	{
 		pthread_create(&info->p[i], 0, philo_routine, (void *)info->philo[i]);
 		i++;
+		usleep(1);
 	}
 	pthread_join(monitor, 0);
 	i = 0;
 	while (i < info->num_philo)
 	{
-		pthread_join(info->p[i], 0);
+		pthread_detach(info->p[i]);
 		i++;
 	}
 }

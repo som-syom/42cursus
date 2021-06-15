@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/12 22:00:23 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/06/12 22:35:41 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/06/15 19:06:11 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ int		check_arg(t_info *info, int ac, char **av)
 	info->time_to_sleep = ft_atoi(av[4]);
 	if (ac == 6)
 		info->must_eat = ft_atoi(av[5]);
-	if (info->num_philo < 1 || info->time_to_die < 0 || info->time_to_eat < 0
-		|| info->time_to_sleep < 0 || info->must_eat < 0)
-		return (print_error("put positive number"));
+	if (info->num_philo < 1 || info->time_to_die <= 0 || info->time_to_eat <= 0
+		|| info->time_to_sleep <= 0 || (ac == 6 && info->must_eat <= 0))
+		return (print_error("wrong arg"));
 	return (1);
 }
 
@@ -75,14 +75,12 @@ int		check_must_eat(t_info *info)
 
 void	*check_status(t_info *info)
 {
-	struct timeval	now;
 	long			time;
 	int				i;
 
 	while (info->end_flag)
 	{
-		gettimeofday(&now, 0);
-		time = ((now.tv_sec * 1000) + (now.tv_usec / 1000));
+		time = get_time();
 		i = -1;
 		while (++i < info->num_philo)
 		{
@@ -90,6 +88,9 @@ void	*check_status(t_info *info)
 				return (0);
 			if (info->philo[i]->is_eating == 0 && check_time(info, i, time))
 			{
+				if (info->must_eat
+					&& info->must_eat == info->philo[i]->eat_count)
+					continue ;
 				print_status(info->philo[i], DEAD, DIE_MSG);
 				info->end_flag = 0;
 				return (0);

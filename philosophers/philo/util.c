@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/06 18:01:30 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/06/12 22:34:54 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/06/15 16:47:02 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,14 @@
 
 void	msleep(int ms)
 {
-	struct timeval	tv1;
-	struct timeval	tv2;
-	long			val1;
-	long			val2;
+	long	val1;
+	long	val2;
 
-	gettimeofday(&tv1, NULL);
-	val1 = (tv1.tv_sec * 1000) + (tv1.tv_usec / 1000);
+	val1 = get_time();
 	while (1)
 	{
-		gettimeofday(&tv2, NULL);
-		val2 = (tv2.tv_sec * 1000) + (tv2.tv_usec / 1000);
+		usleep(1);
+		val2 = get_time();
 		if (val2 - val1 >= ms)
 			return ;
 	}
