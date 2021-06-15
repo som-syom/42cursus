@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 06:28:17 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/06/13 06:44:30 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/06/15 20:48:30 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,9 @@
 int		main(void)
 {
 	std::string	input;
+	phonebook	list[8];
 
-	while (1)
+	while (!std::cin.eof)
 	{
 		std::cin >> input;
 		if (input.compare("ADD") == 0)
