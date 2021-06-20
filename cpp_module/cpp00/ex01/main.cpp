@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 17:54:16 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/06/21 02:41:23 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/06/21 03:39:46 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	printPreview(PhoneBook *list)
 	std::cout << resizeString("NICKNAME", 10) << "|" << std::endl;
 	std::cout << line << std::endl;
 	
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < 8; i++)
 	{
 		if (!list[i].isSaved())
 			break ;
@@ -80,6 +80,11 @@ void	printPreview(PhoneBook *list)
 
 void	printAll(PhoneBook list)
 {
+	if (list.isSaved() == 0)
+	{
+		std::cout << "Error : INDEX NOT EXIST" << std::endl;
+		return ;
+	}
 	std::string set[11] = {"FIRST NAME",
 						"LAST NAME",
 						"NICKNAME",
@@ -108,37 +113,38 @@ void	printAll(PhoneBook list)
 
 void	commandSearch(PhoneBook *list)
 {
-	std::string input;
 	int			num;
 	int			flag;
 
-	std::cout << "========== SEARCH PHONE BOOK ==========" << std::endl;
+	std::cout << "============= SEARCH PHONE BOOK =============" << std::endl;
 	printPreview(list);
 	while (1)
 	{
 		flag = 0;
+		num = 0;
 		std::cout << "(if you want to go HOME, ENTER '0')" << std::endl;
 		std::cout << "SELECT INDEX : ";
-		getline(std::cin, input);
+		std::cin >> std::noskipws >> num;
 		if (std::cin.eof())
 			return ;
-		for (int i = 0; i < input.size(); i++)
-			if (!('0' <= input[i] && input[i] <= '8'))
-			{
-				std::cout << "WRONG INPUT" << std::endl;
-				flag = 1;
-				break ;
-			}
+		else if (std::cin.fail() || num >= 9)
+		{
+			std::cout << "WRONG INPUT" << std::endl;
+			flag = 1;
+		}
 		if (flag == 0)
 		{
-			num = stoi(input);
 			if (num == 0)
-				return ;
-			else if (1 <= num && num <= 8)
 			{
-				printAll(list[num - 1]);
+				std::cin.clear();
+				fflush(stdin);
+				return ;
 			}
+			else if (1 <= num && num <= 8)
+				printAll(list[num - 1]);
 		}
+		std::cin.clear();
+		fflush(stdin);
 	}
 
 }
@@ -151,22 +157,20 @@ int		main(void)
 	std::cout << "========== [[ PHONE BOOK ]] ==========" << std::endl;
 	while (!std::cin.eof())
 	{
+		std::cout << "[COMMAND : ADD, SEARCH, EXIT]" << std::endl;
 		std::cout << "PLEASE ENTER COMMAND : ";
 		getline(std::cin, input);
 		if (std::cin.eof())
 			return (0);
 		if (input.compare("ADD") == 0)
-		{
-			std::cout << "ADD" << std::endl;
 			commandAdd(list);
-		}
 		else if (input.compare("SEARCH") == 0)
-		{
-			std::cout << "SEARCH" << std::endl;
 			commandSearch(list);
-		}
 		else if (input.compare("EXIT") == 0)
-			std::cout << "EXIT" << std::endl;
+		{
+			std::cout << "============= [ bye bye ] =============" << std::endl;
+			return (0);
+		}
 		else
 			continue ;
 	}

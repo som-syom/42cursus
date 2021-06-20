@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 06:29:03 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/06/21 00:28:42 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/06/21 02:54:31 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,9 @@ class PhoneBook {
 		std::string	underwear_color;
 		std::string	darkest_secret;
 	public:
+		PhoneBook() {
+			is_saved = 0;
+		}
 		int	isSaved(void);
 		void setAllList(void);
 		void setFirstName(const std::string);
