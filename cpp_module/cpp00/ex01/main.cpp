@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 17:54:16 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/06/21 03:39:46 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/06/21 03:51:18 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	commandAdd(PhoneBook *list)
 	}
 	else
 	{
-		std::cout << "========== ADD PHONE BOOK ==========" << std::endl;
+		std::cout << "=========== ADD PHONE BOOK ===========" << std::endl;
 		list[i].setAllList();
 	}
 }
@@ -155,9 +155,11 @@ int		main(void)
 	std::string	input;
 
 	std::cout << "========== [[ PHONE BOOK ]] ==========" << std::endl;
+	std::cout << "*    Welcome Awesome My PhoneBook    *" << std::endl;
+	std::cout << "*   [COMMAND : ADD, SEARCH, EXIT]    *" << std::endl;
+	std::cout << "======================================" << std::endl;
 	while (!std::cin.eof())
 	{
-		std::cout << "[COMMAND : ADD, SEARCH, EXIT]" << std::endl;
 		std::cout << "PLEASE ENTER COMMAND : ";
 		getline(std::cin, input);
 		if (std::cin.eof())
@@ -168,7 +170,7 @@ int		main(void)
 			commandSearch(list);
 		else if (input.compare("EXIT") == 0)
 		{
-			std::cout << "============= [ bye bye ] =============" << std::endl;
+			std::cout << "************* [ bye bye ] *************" << std::endl;
 			return (0);
 		}
 		else
