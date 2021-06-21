@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 06:08:48 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/06/13 06:26:26 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/06/21 13:43:56 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@ int		main(int argc, char **argv)
 		std::cout << "* LOUD AND UNBEARABLE FEEDBACK NOISE *" << std::endl;
 	else
 	{
-		i = 0;
-		while (argv[++i])
+		for (int i = 1; argv[i]; i++)
 		{
-			for (int j = 0; argv[i][j]; j++)
-				std::cout << char(toupper(argv[i][j]));
+			std::string str = argv[i];
+			for (int j = 0; j < str.size(); j++)
+				std::cout << char(toupper(str[j]));
 		}
 		std::cout << std::endl;
 	}

@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 17:54:16 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/06/21 03:51:18 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/06/21 14:09:32 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,8 @@ void	printPreview(PhoneBook *list)
 	{
 		if (!list[i].isSaved())
 			break ;
-		std::string num = std::to_string(i + 1);
+		std::string num;
+		num += char(i + '0' + 1);
 		std::cout << "|" << resizeString(num, 10) << "|";
 		std::cout << resizeString(list[i].getFirstName(), 10) << "|";
 		std::cout << resizeString(list[i].getLastName(), 10) << "|";
@@ -82,7 +83,7 @@ void	printAll(PhoneBook list)
 {
 	if (list.isSaved() == 0)
 	{
-		std::cout << "Error : INDEX NOT EXIST" << std::endl;
+		std::cout << "Error : INDEX IS EMPTY" << std::endl;
 		return ;
 	}
 	std::string set[11] = {"FIRST NAME",
@@ -96,7 +97,10 @@ void	printAll(PhoneBook list)
 						"FAVORITE MEAL",
 						"UNDERWEAR COLOR",
 						"DARKEST SECRET"};
-	std::cout << "--------------- [ " << list.getNickame() << "'s INFO ] ---------------" << std::endl;
+	std::cout << "--------------- [ ";
+	std::cout << std::setw(10);
+	std::cout << list.getNickame();
+	std::cout << "'s INFO ] ---------------" << std::endl;
 	std::cout << resizeString(set[0], 16) << " : " << list.getFirstName() << std::endl;
 	std::cout << resizeString(set[1], 16) << " : " << list.getLastName() << std::endl;
 	std::cout << resizeString(set[2], 16) << " : " << list.getNickame() << std::endl;
@@ -108,7 +112,7 @@ void	printAll(PhoneBook list)
 	std::cout << resizeString(set[8], 16) << " : " << list.getFavoriteMeal() << std::endl;
 	std::cout << resizeString(set[9], 16) << " : " << list.getUnderwearColor() << std::endl;
 	std::cout << resizeString(set[10], 16) << " : " << list.getDarkestSecret() << std::endl;
-	std::cout << "--------------------------------------------------" << std::endl;
+	std::cout << "-----------------------------------------------------" << std::endl;
 }
 
 void	commandSearch(PhoneBook *list)
@@ -129,7 +133,7 @@ void	commandSearch(PhoneBook *list)
 			return ;
 		else if (std::cin.fail() || num >= 9)
 		{
-			std::cout << "WRONG INPUT" << std::endl;
+			std::cout << "Error : WRONG INPUT" << std::endl;
 			flag = 1;
 		}
 		if (flag == 0)
@@ -142,6 +146,8 @@ void	commandSearch(PhoneBook *list)
 			}
 			else if (1 <= num && num <= 8)
 				printAll(list[num - 1]);
+			else
+				std::cout << "Error : WRONG INPUT" << std::endl;
 		}
 		std::cin.clear();
 		fflush(stdin);
@@ -174,7 +180,7 @@ int		main(void)
 			return (0);
 		}
 		else
-			continue ;
+			std::cout << "[CHOOSE COMMAND : ADD, SEARCH, EXIT]" << std::endl;
 	}
 	return (0);
 }
