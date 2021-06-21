@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 16:53:25 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/06/21 17:07:22 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/06/21 18:44:39 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,18 @@
 
 # include <string>
 # include <iostream>
+# include "Zombie.hpp"
 
 class ZombieEvent
 {
 	private:
-		/* data */
+		std::string	type;
 	public:
 		ZombieEvent(/* args */);
 		~ZombieEvent();
+		void	setZombieType(std::string type);
+		Zombie	*newZombie(std::string name);
+		Zombie	*randomChump(void);
 };
 
 #endif

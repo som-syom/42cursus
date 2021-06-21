@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 16:53:19 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/06/21 17:05:29 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/06/21 18:39:04 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # include <string>
 # include <iostream>
+# include <cstdlib>
+# include <ctime>
 
 class Zombie
 {
@@ -22,7 +24,7 @@ class Zombie
 		std::string	name;
 		std::string	type;
 	public:
-		Zombie(/* args */);
+		Zombie(std::string name, std::string type);
 		~Zombie();
 		void	announce(void);
 };
