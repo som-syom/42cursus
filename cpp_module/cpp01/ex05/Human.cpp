@@ -1,4 +1,5 @@
 #include "Human.hpp"
+#include "Brain.hpp"
 
 Human::Human()
 {
@@ -7,10 +8,15 @@ Human::Human()
 
 Human::~Human()
 {
-	std::cout << "Human is died" << std::endl;
+	std::cout << "Human died" << std::endl;
 }
 
-std::string	Human::identify()
+const Brain*	Human::identify() const
 {
-	
+	return (this->b.identify());
+}
+
+const Brain&	Human::getBrain() const
+{
+	return (this->b);
 }

@@ -11,6 +11,7 @@ private:
 public:
 	Brain();
 	~Brain();
+	const Brain	*identify() const;
 };
 
 #endif

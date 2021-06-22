@@ -12,8 +12,8 @@ class Human
 	public:
 		Human();
 		~Human();
-		std::string	identify();
-		Human		getBrain();
+		const Brain	*identify() const;
+		const Brain	&getBrain() const;
 };
 
 #endif
