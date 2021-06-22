@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 19:15:51 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/06/15 01:38:12 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/06/22 18:07:59 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,10 @@ t_cmd	*make_cmd(t_cmd *new, char **av, int *i)
 	z = 0;
 	while (*i < j)
 	{
+		while (av[*i] && strcmp(av[*i], ";") == 0)
+			(*i)++;
+		if (!av[*i])
+			break ;
 		new->cmds[z] = av[*i];
 		new->num++;
 		(*i)++;
@@ -102,6 +106,16 @@ t_cmd	*make_cmd(t_cmd *new, char **av, int *i)
 	return (new);
 }
 
+void	test_cmd(t_cmd *cmd)
+{
+	printf("===cmd===\n");
+	printf("cmd = %s\n", cmd->cmd);
+	for (int i = 0; cmd->cmds[i]; i++)
+		printf("%d : %s\n", i, cmd->cmds[i]);
+	printf("num = %d\n", cmd->num);
+	printf("status = %d\n", cmd->status);
+}
+
 void	parsing(char **av, int ac, t_info *info)
 {
 	t_cmd	*new;
@@ -109,7 +123,6 @@ void	parsing(char **av, int ac, t_info *info)
 	
 	while (++i < ac)
 	{
-		// printf("av : %s \n", av[i]);
 		if (i == 1 || strcmp(av[i], ";") == 0 || strcmp(av[i], "|") == 0)
 			new = new_cmd(info);
 		if (strcmp(av[i], ";") == 0)
@@ -118,14 +131,15 @@ void	parsing(char **av, int ac, t_info *info)
 			new->status = PIPE;
 		else
 			new = make_cmd(new, av, &i);
+		test_cmd(new);
 	}
 }
 
 void	set_pipe(t_cmd *cmd)
 {
-	if (cmd->status != PIPE)
+	if (cmd->status != PIPE) // 현재는 SEMI, next가 PIPE 일때 write 만 열어줌
 		dup2(cmd->pipe[1], 1);
-	else if (cmd->next == 0 || cmd->next->num == 0 || cmd->next->status == SEMI)
+	else if (cmd->next == 0 || cmd->next->num == 0 || cmd->next->status == SEMI) // next 가 없거나, next 가 SEMI 인경우 이전 read 만 열어줌
 		dup2(cmd->prev->pipe[0], 0);
 	else
 	{
@@ -186,15 +200,6 @@ void	close_pipe(t_cmd *cmd, int *stin, int *stout)
 	close(*stout);
 }
 
-void	test_cmd(t_cmd *cmd)
-{
-	printf("===cmd===\n");
-	printf("cmd = %s\n", cmd->cmd);
-	for (int i = 0; cmd->cmds[i]; i++)
-		printf("%d : %s\n", i, cmd->cmds[i]);
-	printf("num = %d\n", cmd->num);
-	printf("status = %d\n", cmd->status);
-}
 
 void	execute(t_info *info, t_cmd *cmd)
 {
@@ -250,7 +255,6 @@ int	main(int argc, char **argv, char **envp)
 	cmd = info.cmd;
 	while (cmd)
 	{
-		// test_cmd(cmd);
 		pipe(cmd->pipe);
 		stin = dup(0);
 		stout = dup(1);
