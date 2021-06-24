@@ -2,7 +2,7 @@ NAME = ex07
 CC = clang++
 CFLAGS = -Wall -Wextra -Wall
 SRCS = ./main.cpp
-OBJS = $(SRCS:.c=.o)
+OBJS = $(SRCS:.cpp=.o)
 
 all : $(NAME)
 
