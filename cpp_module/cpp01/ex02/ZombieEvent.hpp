@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 16:53:25 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/06/21 19:04:12 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/07/01 16:08:01 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ class ZombieEvent
 		~ZombieEvent();
 		void	setZombieType(std::string type);
 		Zombie	*newZombie(std::string name);
-		Zombie	*randomChump(void);
+		Zombie	randomChump(void);
 };
 
 #endif

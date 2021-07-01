@@ -12,7 +12,10 @@ int		main(int argc, char **argv)
 	int				size;
 
 	if (argc != 4 || !std::strlen(argv[2]))
+	{
+		std::cout << "arg error" << std::endl;
 		return (1);
+	}
 	s1.open(argv[1], std::fstream::in | std::fstream::ate);
 	if (!s1.is_open())
 	{

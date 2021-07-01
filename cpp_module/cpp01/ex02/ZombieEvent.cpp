@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 16:53:22 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/06/21 18:55:53 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/07/01 16:08:00 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ Zombie	*ZombieEvent::newZombie(std::string name)
 	return (new Zombie(name, this->type));
 }
 
-Zombie	*ZombieEvent::randomChump(void)
+Zombie	ZombieEvent::randomChump(void)
 {
 	std::string list[5] = {"dhyeon", "jachoi", "hyeyoo", "kankim", "hyulee"};
 	srand(time(NULL));
-	return (new Zombie(list[std::rand() % 5], this->type));
+	return (Zombie(list[std::rand() % 5], this->type));
 }

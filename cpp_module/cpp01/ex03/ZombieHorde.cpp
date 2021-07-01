@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 19:25:15 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/06/21 19:59:10 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/07/01 16:10:48 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,5 @@ ZombieHorde::ZombieHorde(int n)
 ZombieHorde::~ZombieHorde()
 {
 	delete [] zombie;
-	std::cout << this->num << " zombies were die" << std::endl;
+	std::cout << this->num << " zombies were died" << std::endl;
 }
