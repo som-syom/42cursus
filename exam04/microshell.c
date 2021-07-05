@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 19:15:51 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/06/22 18:07:59 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/07/06 02:06:55 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,52 @@
 // malloc, free, write, close, fork, waitpid, signal, kill, 
 // exit, chdir, execve, dup, dup2, pipe, strcmp, strncmp
 
-#include "microshell.h"
+// #include "microshell.h"
+# include <unistd.h>
+# include <stdlib.h>
+# include <signal.h>
+# include <sys/wait.h>
+# include <string.h>
+# include <stdio.h>
+# include <dirent.h>
+
+# define ERROR	-1
+# define SEMI	0
+# define PIPE	1
+
+# define FATAL	1
+# define EXECVE_ERR	2
+# define CD_ERR	3
+# define CD_ARG_ERR 4
+
+typedef struct		s_cmd
+{
+	char			*cmd;
+	char			**cmds;
+	int				num;
+	int				status;
+	int				pipe[2];
+	struct s_cmd	*next;
+	struct s_cmd	*prev;
+}					t_cmd;
+
+
+typedef struct	s_info
+{
+	char		**av;
+	int			ac;
+	char		**env;
+	t_cmd		*cmd;
+}				t_info;
+
+
+int		ft_strlen(char *str)
+{
+	int i = 0;
+	while (str[i])
+		i++;
+	return (i);
+}
 
 void	print_error(int flag, t_cmd *cmd)
 {
@@ -45,6 +90,43 @@ void	print_error(int flag, t_cmd *cmd)
 		write(2, cmd->cmd, ft_strlen(cmd->cmd));
 		write(2, "\n", 1);
 	}
+}
+
+char	*ft_strdup(char *str)
+{
+	int	i;
+	int len;
+	char *ret;
+
+	len = ft_strlen(str);
+	ret = (char *)malloc(sizeof(char) * (len + 1));
+	if (!ret)
+		print_error(FATAL, 0);
+	i = 0;
+	while (str[i])
+	{
+		ret[i] = str[i];
+		i++;
+	}
+	ret[i] = '\0';
+	return (ret);
+}
+
+void	*ft_memset(void *ptr, int val, size_t n)
+{
+	unsigned char	*tmp_ptr;
+	unsigned char	tmp_val;
+	size_t			i;
+
+	tmp_ptr = ptr;
+	tmp_val = val;
+	i = 0;
+	while (i < n)
+	{
+		tmp_ptr[i] = tmp_val;
+		i++;
+	}
+	return (ptr);
 }
 
 void	init_info(char **av, int ac, char **env, t_info *info)
@@ -123,6 +205,7 @@ void	parsing(char **av, int ac, t_info *info)
 	
 	while (++i < ac)
 	{
+		// printf("i : %d : %s\n", i, av[i]);
 		if (i == 1 || strcmp(av[i], ";") == 0 || strcmp(av[i], "|") == 0)
 			new = new_cmd(info);
 		if (strcmp(av[i], ";") == 0)
@@ -131,7 +214,8 @@ void	parsing(char **av, int ac, t_info *info)
 			new->status = PIPE;
 		else
 			new = make_cmd(new, av, &i);
-		test_cmd(new);
+		// if (!(strcmp(av[i], ";") == 0 || strcmp(av[i], "|") == 0))
+		// 	test_cmd(new);
 	}
 }
 
@@ -189,15 +273,15 @@ void	ft_cd(t_info *info, t_cmd *cmd)
 
 void	close_pipe(t_cmd *cmd, int *stin, int *stout)
 {
-	if (cmd->prev)
+	if (cmd->prev != 0)
 		close(cmd->prev->pipe[0]);
 	close(cmd->pipe[1]);
 	if (cmd->next == 0 || cmd->next->cmd == 0)
 		close(cmd->pipe[0]);
-	dup2(*stin, 0);
-	dup2(*stout, 1);
-	close(*stin);
-	close(*stout);
+	// dup2(*stin, 0);
+	// dup2(*stout, 1);
+	// close(*stin);
+	// close(*stout);
 }
 
 
@@ -256,8 +340,8 @@ int	main(int argc, char **argv, char **envp)
 	while (cmd)
 	{
 		pipe(cmd->pipe);
-		stin = dup(0);
-		stout = dup(1);
+		// stin = dup(0);
+		// stout = dup(1);
 		if (cmd->num == 0)
 			;
 		else if (strcmp(cmd->cmd, "cd") == 0)
@@ -269,5 +353,5 @@ int	main(int argc, char **argv, char **envp)
 	}
 	all_free(&info);
 	// while (1) ;
-	return (0);
+	// return (0);
 }

@@ -9,7 +9,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/a.out",
-            "args": ["/bin/ls", "|", "/usr/bin/grep", "a", ";"], //, "/bin/echo", "i love my microshell"],
+            "args": ["blah", "|", "/bin/echo", "hi"], //, "/bin/echo", "i love my microshell"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],
