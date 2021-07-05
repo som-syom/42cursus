@@ -7,12 +7,12 @@ class Fixed
 {
 	private :
 		int	value;
-		static const int frac;
+		static const int frac = 8;
 	public :
 		Fixed();
+		Fixed(Fixed const&);
 		~Fixed();
-		//복사생성자
-		//오버로드
+		Fixed& operator=(const Fixed&);
 		int getRawBits(void) const;
 		void setRawBits(int const raw);
 };
