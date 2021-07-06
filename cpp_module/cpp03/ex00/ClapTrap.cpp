@@ -20,18 +20,18 @@ ClapTrap::ClapTrap(std::string n)
 
 ClapTrap::~ClapTrap()
 {
-	std::cout << "==== destructor called ====" << std::endl;
+	std::cout << "==== ClapTrap " << this->name << " is removed ====" << std::endl;
 }
 
 ClapTrap::ClapTrap(ClapTrap const& origin)
 {
-	std::cout << "Copy constructor called" << std::endl;
+	std::cout << "==== Copy constructor called ====" << std::endl;
 	*this = origin;
 }
 
 ClapTrap& ClapTrap::operator=(const ClapTrap& origin)
 {
-	std::cout << "Assignation operator called" << std::endl;
+	std::cout << "==== Assignation operator called ====" << std::endl;
 	name = origin.name;
 	hitpoints = origin.hitpoints;
 	energe_points = origin.hitpoints;
@@ -56,4 +56,9 @@ void ClapTrap::beRepaired(unsigned int amount)
 {
 	std::cout << "ClapTrap " << this->name << " be repaired " << amount;
 	std::cout << std::endl;
+}
+
+std::string ClapTrap::getName(void)
+{
+	return (this->name);
 }
