@@ -6,7 +6,7 @@
 /*   By: dhyeon <dhyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 19:15:51 by dhyeon            #+#    #+#             */
-/*   Updated: 2021/07/06 02:06:55 by dhyeon           ###   ########.fr       */
+/*   Updated: 2021/07/06 17:44:34 by dhyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -278,10 +278,6 @@ void	close_pipe(t_cmd *cmd, int *stin, int *stout)
 	close(cmd->pipe[1]);
 	if (cmd->next == 0 || cmd->next->cmd == 0)
 		close(cmd->pipe[0]);
-	// dup2(*stin, 0);
-	// dup2(*stout, 1);
-	// close(*stin);
-	// close(*stout);
 }
 
 
@@ -297,7 +293,10 @@ void	execute(t_info *info, t_cmd *cmd)
 		if (cmd->status == PIPE || (cmd->next && cmd->next->status == PIPE))
 			set_pipe(cmd);
 		if (execve(cmd->cmd, cmd->cmds, info->env) < 0)
+		{
 			print_error(EXECVE_ERR, cmd);
+			exit (1);
+		}
 	}
 	else
 	{
@@ -339,9 +338,8 @@ int	main(int argc, char **argv, char **envp)
 	cmd = info.cmd;
 	while (cmd)
 	{
+		// printf(" %d : %s \n", cmd->num, cmd->cmds[0]);
 		pipe(cmd->pipe);
-		// stin = dup(0);
-		// stout = dup(1);
 		if (cmd->num == 0)
 			;
 		else if (strcmp(cmd->cmd, "cd") == 0)
@@ -353,5 +351,5 @@ int	main(int argc, char **argv, char **envp)
 	}
 	all_free(&info);
 	// while (1) ;
-	// return (0);
+	return (0);
 }
