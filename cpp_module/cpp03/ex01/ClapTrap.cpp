@@ -62,3 +62,17 @@ std::string ClapTrap::getName(void)
 {
 	return (this->name);
 }
+unsigned int ClapTrap::getHitpoints(void)
+{
+	return (this->hitpoints);
+}
+
+unsigned int ClapTrap::getEnergePoints(void)
+{
+	return (this->energe_points);
+}
+
+unsigned int ClapTrap::getAttackDamage(void)
+{
+	return (this->attack_damage);
+}

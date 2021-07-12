@@ -10,7 +10,7 @@ int main(void)
 	ScavTrap d(c);
 
 	d.attack(a.getName());
-	b.takeDamage(20);
+	b.takeDamage(d.getAttackDamage());
 	a.beRepaired(5);
 	a.guardGate();
 

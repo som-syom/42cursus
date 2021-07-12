@@ -1,4 +1,4 @@
-NAME = ClapTrap
+NAME = ScavTrap
 CC = clang++
 CFLAGS = -Wall -Wextra -Werror
 SRCS = ./ClapTrap.cpp \
