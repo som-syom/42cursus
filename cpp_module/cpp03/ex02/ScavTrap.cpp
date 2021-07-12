@@ -29,7 +29,7 @@ ScavTrap::ScavTrap(ScavTrap const& origin)
 	*this = origin;
 }
 
-ScavTrap& ScavTrap::operator=(const ScavTrap& origin)
+ScavTrap& ScavTrap::operator=(ScavTrap const& origin)
 {
 	std::cout << "==== Assignation operator called ====" << std::endl;
 	name = origin.name;

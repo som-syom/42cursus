@@ -29,7 +29,7 @@ ClapTrap::ClapTrap(ClapTrap const& origin)
 	*this = origin;
 }
 
-ClapTrap& ClapTrap::operator=(const ClapTrap& origin)
+ClapTrap& ClapTrap::operator=(ClapTrap const& origin)
 {
 	std::cout << "==== Assignation operator called ====" << std::endl;
 	name = origin.name;
