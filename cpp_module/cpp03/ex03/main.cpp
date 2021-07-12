@@ -26,6 +26,8 @@ int main(void)
 	std::cout << "-------------------------------------" << std::endl;
 	a.whoAmI();
 	b.whoAmI();
+	aa.whoAmI();
+	bb.whoAmI();
 	std::cout << "-------------------------------------" << std::endl;
 
 	return (0);
