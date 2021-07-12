@@ -13,6 +13,11 @@ class FragTrap : public ClapTrap
 		FragTrap(std::string);
 		FragTrap(FragTrap const&);
 		FragTrap& operator=(FragTrap const&);
+
+		void	attack(std::string const& target);
+		void	takeDamage(unsigned int amount);
+		void	beRepaired(unsigned int amount);
+		void	highFiveGuys(void);
 };
 
 #endif

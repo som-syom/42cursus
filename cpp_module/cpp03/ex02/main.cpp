@@ -1,18 +1,20 @@
-#include "ClapTrap.hpp"
-#include "ScavTrap.hpp"
+#include "FragTrap.hpp"
 
 int main(void)
 {
-	ScavTrap a("dhyeon");
-	ScavTrap b;
-	b = a;
-	ScavTrap c("Cardet");
-	ScavTrap d(c);
+	FragTrap a("dhyeon");
+	FragTrap aa;
+	aa = a;
+	FragTrap b("jachoi");
+	FragTrap bb(b);
 
-	d.attack(a.getName());
-	b.takeDamage(20);
-	a.beRepaired(5);
-	a.guardGate();
+	std::cout << b.getName() << "'s HP is " << b.getHitpoints() << std::endl;
+	a.attack(b.getName());
+	b.takeDamage(a.getAttackDamage());
+	std::cout << b.getName() << "'s HP is " << b.getHitpoints() - a.getAttackDamage() << std::endl;
+	b.beRepaired(5);
+	std::cout << b.getName() << "'s HP is " << b.getHitpoints() - a.getAttackDamage() + 5 << std::endl;
+	a.highFiveGuys();
 
 	return (0);
 }
