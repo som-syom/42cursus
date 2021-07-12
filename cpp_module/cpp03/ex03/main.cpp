@@ -1,12 +1,17 @@
-#include "FragTrap.hpp"
+#include "DiamondTrap.hpp"
 
 int main(void)
 {
-	FragTrap a("dhyeon");
-	FragTrap aa;
+	std::cout << "-------------------------------------" << std::endl;
+	DiamondTrap a("som");
+	std::cout << "-------------------------------------" << std::endl;
+	DiamondTrap aa;
 	aa = a;
-	FragTrap b("jachoi");
-	FragTrap bb(b);
+	std::cout << "-------------------------------------" << std::endl;
+	DiamondTrap b("dhyeon");
+	std::cout << "-------------------------------------" << std::endl;
+	DiamondTrap bb(b);
+	std::cout << "-------------------------------------" << std::endl;
 
 	std::cout << b.getName() << "'s HP is " << b.getHitpoints() << std::endl;
 	a.attack(b.getName());
@@ -14,7 +19,14 @@ int main(void)
 	std::cout << b.getName() << "'s HP is " << b.getHitpoints() - a.getAttackDamage() << std::endl;
 	b.beRepaired(5);
 	std::cout << b.getName() << "'s HP is " << b.getHitpoints() - a.getAttackDamage() + 5 << std::endl;
-	a.highFiveGuys();
+	b.highFiveGuys();
+
+	std::cout << "-------------------------------------" << std::endl;
+		aa.attack(bb.getName());
+	std::cout << "-------------------------------------" << std::endl;
+	a.whoAmI();
+	b.whoAmI();
+	std::cout << "-------------------------------------" << std::endl;
 
 	return (0);
 }

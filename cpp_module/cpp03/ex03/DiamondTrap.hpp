@@ -5,9 +5,10 @@
 # include "FragTrap.hpp"
 # include "ClapTrap.hpp"
 
-class DiamondTrap : public FragTrap, public ScavTrap, public ClapTrap
+class DiamondTrap : public FragTrap, public ScavTrap
 {
 	private:
+		std::string name;
 
 	public:
 		DiamondTrap();

@@ -1,11 +1,15 @@
-NAME = FragTrap
+NAME = DiamondTrap
 CC = clang++
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Werror -Wextra
 SRCS = ./ClapTrap.cpp \
 		./ScavTrap.cpp \
 		./FragTrap.cpp \
+		./DiamondTrap.cpp \
 		./main.cpp
 OBJS = $(SRCS:.cpp=.o)
+
+%.o: %.cpp
+	$(CC) -c $(CFLAGS) $^
 
 all : $(NAME)
 

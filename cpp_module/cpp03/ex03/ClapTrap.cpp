@@ -12,7 +12,7 @@ ClapTrap::ClapTrap(void)
 ClapTrap::ClapTrap(std::string n)
 {
 	std::cout << "==== ClapTrap " << n << " is created ====" << std::endl;
-	name = n;
+	name = n +  "_clap_name";
 	hitpoints = 10;
 	energe_points = 10;
 	attack_damage = 0;
@@ -41,20 +41,20 @@ ClapTrap& ClapTrap::operator=(ClapTrap const& origin)
 
 void ClapTrap::attack(std::string const& target)
 {
-	std::cout << "ClapTrap " << this->name << " attacks " << target;
+	std::cout << this->name << " attacks " << target;
 	std::cout << ", causing " << this->attack_damage << " points of damage!";
 	std::cout << std::endl;
 }
 
 void ClapTrap::takeDamage(unsigned int amount)
 {
-	std::cout << "ClapTrap " << this->name << " take attacks " << amount;
+	std::cout << this->name << " take attacks " << amount;
 	std::cout << std::endl;
 }
 
 void ClapTrap::beRepaired(unsigned int amount)
 {
-	std::cout << "ClapTrap " << this->name << " be repaired " << amount;
+	std::cout << this->name << " be repaired " << amount;
 	std::cout << std::endl;
 }
 

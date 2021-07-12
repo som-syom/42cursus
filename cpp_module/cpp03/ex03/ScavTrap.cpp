@@ -17,7 +17,7 @@ ScavTrap::~ScavTrap()
 ScavTrap::ScavTrap(std::string n) : ClapTrap(n)
 {
 	std::cout << "==== ScavTrap " << n << " is created ====" << std::endl;
-	name = n;
+	this->name = n;
 	hitpoints = 100;
 	energe_points = 50;
 	attack_damage = 20;
@@ -39,24 +39,6 @@ ScavTrap& ScavTrap::operator=(ScavTrap const& origin)
 	return (*this);
 }
 
-void	ScavTrap::attack(std::string const& target)
-{
-	std::cout << "ScavTrap " << this->name << " attacks " << target;
-	std::cout << ", causing " << this->attack_damage << " points of damage!";
-	std::cout << std::endl;
-}
-
-void	ScavTrap::takeDamage(unsigned int amount)
-{
-	std::cout << "ScavTrap " << this->name << " take attacks " << amount;
-	std::cout << std::endl;
-}
-
-void	ScavTrap::beRepaired(unsigned int amount)
-{
-	std::cout << "ScavTrap " << this->name << " be repaired " << amount;
-	std::cout << std::endl;
-}
 
 void	ScavTrap::guardGate(void)
 {

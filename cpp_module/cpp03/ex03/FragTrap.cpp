@@ -17,7 +17,7 @@ FragTrap::~FragTrap()
 FragTrap::FragTrap(std::string n) : ClapTrap(n)
 {
 	std::cout << "==== FragTrap " << n << " is created ====" << std::endl;
-	name = n;
+	this->name = n;
 	hitpoints = 100;
 	energe_points = 100;
 	attack_damage = 30;
@@ -43,23 +43,3 @@ void	FragTrap::highFiveGuys(void)
 {
 	std::cout << "!!! " << this->name << " gave a high five !!!" << std::endl; 
 }
-
-void FragTrap::attack(std::string const& target)
-{
-	std::cout << "FragTrap " << this->name << " attacks " << target;
-	std::cout << ", causing " << this->attack_damage << " points of damage!";
-	std::cout << std::endl;
-}
-
-void FragTrap::takeDamage(unsigned int amount)
-{
-	std::cout << "FragTrap " << this->name << " take attacks " << amount;
-	std::cout << std::endl;
-}
-
-void FragTrap::beRepaired(unsigned int amount)
-{
-	std::cout << "FragTrap " << this->name << " be repaired " << amount;
-	std::cout << std::endl;
-}
-
