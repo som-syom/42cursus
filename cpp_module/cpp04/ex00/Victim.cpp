@@ -1,5 +1,11 @@
 #include "Victim.hpp"
 
+Victim::Victim()
+{
+	this->name = "none";
+	std::cout << "Some random victim called " << this->name << " just appeared!" << std::endl;
+}
+
 Victim::Victim(std::string name)
 {
 	this->name = name;
@@ -28,7 +34,6 @@ std::string Victim::getName()
 {
 	return (this->name);
 }
-
 
 void Victim::getPolymorphed() const
 {

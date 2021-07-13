@@ -6,11 +6,12 @@
 
 class Victim
 {
-	private:
+	protected:
 		std::string	name;
 	public:
+		Victim();
 		Victim(std::string name);
-		~Victim();
+		virtual ~Victim();
 		Victim(Victim const&);
 		Victim& operator=(Victim const&);
 
