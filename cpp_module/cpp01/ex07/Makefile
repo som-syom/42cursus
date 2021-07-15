@@ -1,6 +1,6 @@
 NAME = ex07
 CC = clang++
-CFLAGS = -Wall -Wextra -Wall
+CFLAGS = -Wall -Wextra -Werror
 SRCS = ./main.cpp
 OBJS = $(SRCS:.cpp=.o)
 

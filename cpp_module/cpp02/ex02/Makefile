@@ -1,6 +1,6 @@
 NAME = Fixed
 CC = clang++
-CFLAGS = -Wall -Wextra -Wall
+CFLAGS = -Wall -Wextra -Werror
 SRCS = ./main.cpp \
 		./Fixed.cpp
 OBJS = $(SRCS:.cpp=.o)
