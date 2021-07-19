@@ -1,15 +1,19 @@
 #include "Enemy.hpp"
 
+Enemy::Enemy()
+{
+	this->type = "none";
+	this->hp = 0;
+}
+
 Enemy::Enemy(int hp, std::string const& type)
 {
 	this->type = type;
 	this->hp = hp;
-	std::cout << "Enemy" << this->type << " is created" << std::endl;
 }
 
 Enemy::~Enemy()
 {
-	std::cout << "Enemy" << this->type << " is removed" << std::endl;
 }
 
 Enemy::Enemy(Enemy const& origin)
@@ -21,9 +25,22 @@ Enemy& Enemy::operator=(Enemy const& origin)
 {
 	this->hp = origin.hp;
 	this->type = origin.type;
+	return (*this);
 }
 
-void	takeDamage(int)
+std::string Enemy::getType() const
 {
+	return (this->type);
+}
 
+int	Enemy::getHP() const
+{
+	return (this->hp);
+}
+
+void	Enemy::takeDamage(int damage)
+{
+	this->hp -= damage;
+	if (this->hp < 0)
+		this->hp = 0;
 }

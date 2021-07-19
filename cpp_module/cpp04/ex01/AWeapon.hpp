@@ -7,7 +7,7 @@
 class AWeapon
 {
 	protected:
-		std::string	name;
+		std::string name;
 		int			apcost;
 		int			damage;
 		AWeapon();
@@ -17,7 +17,7 @@ class AWeapon
 		AWeapon(AWeapon const&);
 		AWeapon& operator=(AWeapon const&);
 
-		std::string&	getName() const;
+		std::string	getName() const;
 		int	getAPCost() const;
 		int	getDamage() const;
 		virtual void	attack() const = 0;

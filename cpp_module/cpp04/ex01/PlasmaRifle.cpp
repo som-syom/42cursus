@@ -1,21 +1,15 @@
 #include "PlasmaRifle.hpp"
 
-PlasmaRifle::PlasmaRifle()
+PlasmaRifle::PlasmaRifle() : AWeapon("Plasma Rifle", 5, 21)
 {
-	this->name = "Plasma Rifle";
-	this->damage = 21;
-	this->apcost = 5;
-	std::cout << "Plasma Rifle !!!" << std::endl;
 }
 
 PlasmaRifle::~PlasmaRifle()
 {
-	std::cout << name << " is removed" << std::endl;
 }
 
-PlasmaRifle::PlasmaRifle(PlasmaRifle const& origin)
+PlasmaRifle::PlasmaRifle(PlasmaRifle const& origin) : AWeapon(origin)
 {
-	*this = origin;
 }
 
 PlasmaRifle& PlasmaRifle::operator=(PlasmaRifle const& origin)

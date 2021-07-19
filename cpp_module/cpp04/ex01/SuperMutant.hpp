@@ -4,7 +4,9 @@
 # include <iostream>
 # include <string>
 
-class SuperMutant
+# include "Enemy.hpp"
+
+class SuperMutant : public Enemy
 {
 	private:
 		
@@ -14,6 +16,7 @@ class SuperMutant
 		SuperMutant(SuperMutant const&);
 		SuperMutant& operator=(SuperMutant const&);
 
+		virtual void takeDamage(int);
 };
 
 #endif
