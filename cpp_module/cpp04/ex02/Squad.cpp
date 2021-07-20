@@ -8,9 +8,12 @@ Squad::Squad()
 
 Squad::~Squad()
 {
-	for (int i = 0; i < this->count; i++)
+	if (this->count)
 	{
-		delete this->unit[i];
+		for (int i = 0; i < this->count; i++)
+		{
+			delete this->unit[i];
+		}
 	}
 }
 
@@ -21,7 +24,8 @@ Squad::Squad(Squad const& origin)
 
 Squad& Squad::operator=(Squad const& origin)
 {
-	if (this->unit)
+		std::cout << "ccc : " << std::endl;
+	if (this->count)
 	{
 		for (int i = 0; i < this->count; i++)
 			delete this->unit[i];
@@ -29,10 +33,8 @@ Squad& Squad::operator=(Squad const& origin)
 		this->unit = 0;
 		this->count = 0;
 	}
-	this->count = origin.count;
-	this->unit = new ISpaceMarine*[origin.count];
 	for (int i = 0; i < origin.count; i++)
-		this->unit[i] = origin.unit[i]->clone();
+		this->push(origin.getUnit(i)->clone());
 	return (*this);
 }
 
