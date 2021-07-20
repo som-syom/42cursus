@@ -8,7 +8,7 @@ Cure::Cure()
 
 Cure::~Cure()
 {
-
+	std::cout << "cure bye ~" << std::endl;
 }
 
 Cure::Cure(Cure const& origin)

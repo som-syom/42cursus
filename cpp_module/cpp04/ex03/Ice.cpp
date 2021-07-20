@@ -8,7 +8,7 @@ Ice::Ice()
 
 Ice::~Ice()
 {
-
+	std::cout << "ice bye ~" << std::endl;
 }
 
 Ice::Ice(Ice const& origin)

@@ -42,4 +42,5 @@ unsigned int AMateria::getXP() const
 void AMateria::use(ICharacter& target)
 {
 	this->_xp += 10;
+	std::cout << "* Unknown materia shoot at " << target.getName() << " *" << std::endl;
 }
