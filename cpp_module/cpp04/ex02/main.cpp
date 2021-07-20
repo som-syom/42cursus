@@ -64,7 +64,7 @@ int main()
 	ISquad *tst2 = new Squad;
 	ISpaceMarine* dhyeon5 = new AssaultTerminator;
 	std::cout << "tst2 count : " << tst2->push(dhyeon5) << std::endl;
-	tst2 = tst;
+	tst2 = tst; // <- 여기서 할당연산자 들어가서, delete 로 들어간 애들 소멸자 출력되어야하지않나
 	std::cout << "assignment count : " << tst2->getCount() << std::endl;
 
 	// std::cout << "---------------------------[copy test]" << std::endl;
