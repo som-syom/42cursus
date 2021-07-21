@@ -14,6 +14,7 @@ Squad::~Squad()
 		{
 			delete this->unit[i];
 		}
+		delete[] this->unit;
 	}
 }
 
@@ -24,8 +25,7 @@ Squad::Squad(Squad const& origin)
 
 Squad& Squad::operator=(Squad const& origin)
 {
-		std::cout << "ccc : " << std::endl;
-	if (this->count)
+	if (this->unit)
 	{
 		for (int i = 0; i < this->count; i++)
 			delete this->unit[i];
@@ -33,8 +33,10 @@ Squad& Squad::operator=(Squad const& origin)
 		this->unit = 0;
 		this->count = 0;
 	}
-	for (int i = 0; i < origin.count; i++)
-		this->push(origin.getUnit(i)->clone());
+	this->count = origin.count;
+    this->unit = new ISpaceMarine*[count];
+    for (int i = 0; i < this->count; i++)
+        this->unit[i] = origin.getUnit(i)->clone();
 	return (*this);
 }
 
@@ -52,7 +54,7 @@ ISpaceMarine* Squad::getUnit(int n) const
 
 int Squad::push(ISpaceMarine* marine)
 {
-	if (marine == 0)
+	if (!marine)
 		return (this->count);
 	for (int i = 0; i < count; i++)
 	{

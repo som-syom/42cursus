@@ -17,16 +17,14 @@ TacticalMarine::TacticalMarine(TacticalMarine const& origin)
 
 TacticalMarine& TacticalMarine::operator=(TacticalMarine const& origin)
 {
-	delete this;
-	TacticalMarine *new_t = new TacticalMarine(origin);
-	// this = new_t;
-	return (*new_t);
+	(void)origin;
+	return (*this);
 }
 
 ISpaceMarine* TacticalMarine::clone() const
 {
 	ISpaceMarine *t = new TacticalMarine(*this);
-	return (t);//최근 개체를 복사하여 리턴
+	return (t);
 }
 
 void TacticalMarine::battleCry() const

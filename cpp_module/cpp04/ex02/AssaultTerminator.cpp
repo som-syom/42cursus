@@ -17,9 +17,8 @@ AssaultTerminator::AssaultTerminator(AssaultTerminator const& origin)
 
 AssaultTerminator& AssaultTerminator::operator=(AssaultTerminator const& origin)
 {
-	delete this;
-	AssaultTerminator *new_t = new AssaultTerminator(origin);
-	return (*new_t);
+	(void)origin;
+	return (*this);
 }
 
 ISpaceMarine* AssaultTerminator::clone() const

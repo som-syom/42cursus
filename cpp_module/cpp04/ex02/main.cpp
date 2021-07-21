@@ -51,7 +51,7 @@ int main()
 	delete cardet;
 
 	std::cout << "---------------------------[assignment test]" << std::endl;
-	ISquad *tst = new Squad;
+	Squad *tst = new Squad;
 	ISpaceMarine* dhyeon1 = new TacticalMarine;
 	ISpaceMarine* dhyeon2 = new TacticalMarine;
 	ISpaceMarine* dhyeon3 = new TacticalMarine;
@@ -61,23 +61,28 @@ int main()
 	std::cout << "count : " << tst->push(dhyeon3) << std::endl;
 	std::cout << "count : " << tst->push(dhyeon4) << std::endl;
 
-	ISquad *tst2 = new Squad;
+	Squad *tst2 = new Squad;
 	ISpaceMarine* dhyeon5 = new AssaultTerminator;
 	std::cout << "tst2 count : " << tst2->push(dhyeon5) << std::endl;
-	tst2 = tst; // <- 여기서 할당연산자 들어가서, delete 로 들어간 애들 소멸자 출력되어야하지않나
+	std::cout << "tst2 battle cry : ";
+	tst2->getUnit(0)->battleCry();
+	*tst2 = *tst;
+	std::cout << "tst2 battle cry : ";
+	tst2->getUnit(0)->battleCry();
 	std::cout << "assignment count : " << tst2->getCount() << std::endl;
 
-	// std::cout << "---------------------------[copy test]" << std::endl;
-	// Squad *tst3 = new Squad(*tst2);
-	// std::cout << "copy count : " << tst3->getCount() << std::endl;
+	std::cout << "---------------------------[copy test]" << std::endl;
+	Squad *tst3 = new Squad(*tst2);
+	std::cout << "copy count : " << tst3->getCount() << std::endl;
 
 
 
-	std::cout << "---------------------------[delete]" << std::endl;
-	// delete cardet;
-	// delete tst;
-	// delete tst2;
-	// delete tst3;
+	std::cout << "---------------------------[delete tst]" << std::endl;
+	delete tst;
+	std::cout << "---------------------------[delete tst2]" << std::endl;
+	delete tst2;
+	std::cout << "---------------------------[delete tst3]" << std::endl;
+	delete tst3;
 
 
 	return 0;
