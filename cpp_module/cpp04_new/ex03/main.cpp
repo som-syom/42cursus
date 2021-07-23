@@ -109,11 +109,13 @@ int main()
 	delete bob;
 	delete me;
 	delete dhyeon2;
+	delete dhyeon;
 
 	std::cout << "----------------------[materia source delete test]" << std::endl;
 	// delete tst_dup;
 	delete src;
 	delete som1;
+	delete som2;
 
 	// while (1) ;
 	return 0;

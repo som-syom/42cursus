@@ -29,7 +29,8 @@ MateriaSource& MateriaSource::operator=(MateriaSource const& origin)
 		// 	delete this->_learn[i];
 			this->_learn[i] = 0;
 		// }
-		this->_learn[i] = origin._learn[i];
+		if (origin._learn[i])
+			this->_learn[i] = origin._learn[i]->clone();
 	}
 	return (*this);
 }
