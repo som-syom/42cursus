@@ -21,7 +21,7 @@ Dog::Dog(Dog const& origin)
 Dog& Dog::operator=(Dog const& origin)
 {
 	this->type = origin.type;
-	this->b = origin.b;
+	this->b = new Brain(*origin.b);
 	return (*this);
 }
 
@@ -29,3 +29,14 @@ void Dog::makeSound() const
 {
 	std::cout << "* Wang!! Wang!! *" << std::endl;
 }
+
+void Dog::setIdea(int idx, std::string const& idea)
+{
+	this->b->setIdea(idx, idea);
+}
+
+std::string Dog::getIdea(int idx)
+{
+	return (this->b->getIdea(idx));
+}
+

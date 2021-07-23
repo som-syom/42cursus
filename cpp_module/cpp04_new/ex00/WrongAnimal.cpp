@@ -29,6 +29,6 @@ std::string WrongAnimal::getType() const
 
 void WrongAnimal::makeSound() const
 {
-
+	std::cout << "* WRONG ANIMAL TYPE IS EMPTY *" << std::endl;
 }
 

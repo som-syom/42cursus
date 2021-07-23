@@ -20,10 +20,8 @@ Cat::Cat(Cat const& origin)
 
 Cat& Cat::operator=(Cat const& origin)
 {
-	if (this->b)
-		delete this->b;
 	this->type = origin.type;
-	this->b = origin.b;
+	this->b = new Brain(*origin.b);
 	return (*this);
 }
 

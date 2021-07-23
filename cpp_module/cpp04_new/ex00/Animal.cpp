@@ -29,6 +29,6 @@ std::string Animal::getType() const
 
 void Animal::makeSound() const
 {
-
+	std::cout << "* ANIMAL TYPE IS EMPTY *" << std::endl;
 }
 

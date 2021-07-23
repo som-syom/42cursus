@@ -18,6 +18,8 @@ class Dog : public Animal
 		Dog& operator=(Dog const&);
 
 		void makeSound() const;
+		void setIdea(int, std::string const&);
+		std::string getIdea(int);
 };
 
 #endif

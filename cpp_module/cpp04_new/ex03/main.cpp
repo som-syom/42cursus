@@ -43,7 +43,7 @@ int main()
 	std::cout << "----------------------[new character]" << std::endl;
 	ICharacter* bob = new Character("bob");
 
-	std::cout << "----------------------[use test]" << std::endl;
+	std::cout << "----------------------[0equip use test]" << std::endl;
 	me->use(0, *bob);
 	me->use(1, *bob);
 	me->use(2, *bob);
@@ -52,12 +52,6 @@ int main()
 	std::cout << "----------------------[nonexist metaria test]" << std::endl;
 	me->unequip(3);
 	me->use(3, *bob);
-
-	std::cout << "----------------------[materiasource copy test]" << std::endl;
-	MateriaSource* tst = new MateriaSource();
-	tst->learnMateria(new Fire);
-	MateriaSource* tst_dup = new MateriaSource(*tst);
-	tst_dup->createMateria("fire");
 
 	std::cout << "----------------------[materiasource assignment test]" << std::endl;
 	MateriaSource* som1 = new MateriaSource();
@@ -81,9 +75,18 @@ int main()
 	dhyeon->use(0, *bob);
 	dhyeon->use(1, *bob);
 
+
+	std::cout << "----------------------[materiasource copy test]" << std::endl;
+	MateriaSource* tst = new MateriaSource();
+	tst->learnMateria(new Fire);
+	MateriaSource tst_dup(*tst);
+	Character dup;
+	dup.equip(tst_dup.createMateria("fire"));
+	dup.use(0, *bob);
+
 	std::cout << "----------------------[character copy test]" << std::endl;
-	Character* dhyeon1 = new Character(*dhyeon);
-	dhyeon1->use(0, *bob);
+	Character dhyeon1(*dhyeon);
+	dhyeon1.use(0, *bob);
 
 	std::cout << "----------------------[character assignment test]" << std::endl;
 	Character* dhyeon2 = new Character;
@@ -108,9 +111,10 @@ int main()
 	delete dhyeon2;
 
 	std::cout << "----------------------[materia source delete test]" << std::endl;
-	delete tst_dup;
+	// delete tst_dup;
 	delete src;
 	delete som1;
 
+	// while (1) ;
 	return 0;
 }
