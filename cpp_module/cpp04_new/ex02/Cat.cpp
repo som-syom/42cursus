@@ -15,6 +15,7 @@ Cat::~Cat()
 
 Cat::Cat(Cat const& origin)
 {
+	this->b = 0;
 	*this = origin;
 }
 
@@ -23,7 +24,7 @@ Cat& Cat::operator=(Cat const& origin)
 	if (this->b)
 		delete this->b;
 	this->type = origin.type;
-	this->b = origin.b;
+	this->b = new Brain(*origin.b);
 	return (*this);
 }
 

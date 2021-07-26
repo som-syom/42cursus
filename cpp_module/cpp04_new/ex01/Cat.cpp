@@ -15,6 +15,7 @@ Cat::~Cat()
 
 Cat::Cat(Cat const& origin)
 {
+	this->b = 0;
 	*this = origin;
 }
 

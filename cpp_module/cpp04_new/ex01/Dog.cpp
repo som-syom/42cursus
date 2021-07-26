@@ -15,6 +15,7 @@ Dog::~Dog()
 
 Dog::Dog(Dog const& origin)
 {
+	this->b = 0;
 	*this = origin;
 }
 

@@ -15,13 +15,14 @@ Dog::~Dog()
 
 Dog::Dog(Dog const& origin)
 {
+	this->b = 0;
 	*this = origin;
 }
 
 Dog& Dog::operator=(Dog const& origin)
 {
 	this->type = origin.type;
-	this->b = origin.b;
+	this->b = new Brain(*origin.b);
 	return (*this);
 }
 

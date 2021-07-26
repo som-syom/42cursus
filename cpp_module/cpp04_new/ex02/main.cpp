@@ -16,6 +16,9 @@ int main()
 	Dog *d1 = new Dog();
 	Dog *d2 = new Dog(*d1);
 
+	std::cout << d2->getType() << std::endl;
+
 	delete d1;
+	delete d2;
 
 }
