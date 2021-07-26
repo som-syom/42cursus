@@ -32,6 +32,8 @@ Character::Character(Character const& origin)
 {
 	for (int i = 0; i < 4; i++)
 		this->_inven[i] = 0;
+	for (int i = 0; i < 10; i++)
+		this->_temp[i] = 0;
 	*this = origin;
 }
 
@@ -42,6 +44,13 @@ Character& Character::operator=(Character const& origin)
 		this->_inven[i] = 0;
 		if (origin._inven[i])
 			this->_inven[i] = origin._inven[i];
+	}
+	for (int i = 0; i < 10; i++)
+	{
+		if (origin._temp[i] != 0)
+			this->_temp[i] = origin._temp[i]->clone();
+		else
+			this->_temp[i] = 0;
 	}
 	this->_name = origin._name;
 	return (*this);
