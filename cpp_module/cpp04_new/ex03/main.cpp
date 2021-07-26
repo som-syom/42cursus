@@ -69,6 +69,7 @@ int main()
 	dhyeon->use(0, *bob);
 	dhyeon->use(1, *bob); // <- fail
 
+	std::cout << "aaa " << std::endl;
 	*som1 = *som2;
 	dhyeon->equip(som1->createMateria("fire"));
 	dhyeon->equip(som1->createMateria("ice"));
@@ -112,10 +113,12 @@ int main()
 	delete dhyeon;
 
 	std::cout << "----------------------[materia source delete test]" << std::endl;
-	// delete tst_dup;
+	delete tst;
 	delete src;
 	delete som1;
 	delete som2;
+
+	std::cout << "----------------------[end]" << std::endl;
 
 	// while (1) ;
 	return 0;

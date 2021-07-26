@@ -3,33 +3,35 @@
 Character::Character()
 {
 	this->_name = "none";
-	this->_inven[0] = 0;
-	this->_inven[1] = 0;
-	this->_inven[2] = 0;
-	this->_inven[3] = 0;
+	for (int i = 0; i < 4; i++)
+		this->_inven[i] = 0;
+	for (int i = 0; i < 10; i++)
+		this->_temp[i] = 0;
 }
 
 Character::Character(std::string const& name)
 {
 	this->_name = name;
-	this->_inven[0] = 0;
-	this->_inven[1] = 0;
-	this->_inven[2] = 0;
-	this->_inven[3] = 0;
+	for (int i = 0; i < 4; i++)
+		this->_inven[i] = 0;
+	for (int i = 0; i < 10; i++)
+		this->_temp[i] = 0;
 }
 
 Character::~Character()
 {
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < 10; i++)
 	{
-		if (this->_inven[i] != 0)
-			delete this->_inven[i];
+		if (this->_temp[i] != 0)
+			delete this->_temp[i];
 	}
 	std::cout << this->_name << " bye ~" << std::endl;
 }
 
 Character::Character(Character const& origin)
 {
+	for (int i = 0; i < 4; i++)
+		this->_inven[i] = 0;
 	*this = origin;
 }
 
@@ -37,13 +39,9 @@ Character& Character::operator=(Character const& origin)
 {
 	for (int i = 0; i < 4; i++)
 	{
-		if (this->_inven[i] != 0)
-		{
-			// delete this->_inven[i];
-			this->_inven[i] = 0;
-		}
+		this->_inven[i] = 0;
 		if (origin._inven[i])
-			this->_inven[i] = origin._inven[i]->clone();
+			this->_inven[i] = origin._inven[i];
 	}
 	this->_name = origin._name;
 	return (*this);
@@ -63,6 +61,14 @@ void Character::equip(AMateria* m)
 			if (this->_inven[i] == 0)
 			{
 				this->_inven[i] = m;
+				for (int i = 0; i < 10; i++)
+				{
+					if (this->_temp[i] == 0)
+					{
+						this->_temp[i] = m;
+						break ;
+					}
+				}
 				break ;
 			}
 		}

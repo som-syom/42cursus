@@ -12,6 +12,7 @@ class Character : public ICharacter
 	private:
 		std::string	_name;
 		AMateria*	_inven[4];
+		AMateria*	_temp[10];
 	public:
 		Character();
 		Character(std::string const&);

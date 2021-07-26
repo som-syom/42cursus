@@ -1,6 +1,6 @@
 NAME = Materia
 CC = clang++
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra -std=c++98 -g
 SRCS = ./AMateria.cpp \
 		./Character.cpp \
 		./Cure.cpp \
