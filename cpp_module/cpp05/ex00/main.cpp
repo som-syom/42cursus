@@ -6,7 +6,7 @@ int main()
 	Bureaucrat som("som", 1);
 	Bureaucrat dhyeon("dhyeon", 150);
 
-	std::cout << som << dhyeon;
+	std::cout << som1 << som << dhyeon;
 
 	try
 	{
