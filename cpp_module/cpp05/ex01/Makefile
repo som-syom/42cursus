@@ -2,6 +2,7 @@ NAME = Bureaucrat
 CC = clang++
 CFLAGS = -Wall -Werror -Wextra
 SRCS = ./Bureaucrat.cpp \
+		./Form.cpp \
 		./main.cpp
 OBJS = $(SRCS:.cpp=.o)
 
