@@ -48,7 +48,32 @@ int main()
 	{
 		std::cerr << e.what() << '\n';
 	}
-	
+
+	Form form4("form4", 1, 1);
+	Form form5("form5", 60, 60);
+
+	try
+	{
+		std::cout << "____________________________[test 4]" << std::endl;
+		std::cout << dhyeon << form4;
+		form4.beSigned(dhyeon);
+		std::cout << dhyeon << form4;
+	}
+	catch(const std::exception& e)
+	{
+		std::cerr << e.what() << '\n';
+	}
+	try
+	{
+		std::cout << "____________________________[test 5]" << std::endl;
+		std::cout << dhyeon << form5;
+		form5.beSigned(dhyeon);
+		std::cout << dhyeon << form5;
+	}
+	catch(const std::exception& e)
+	{
+		std::cerr << e.what() << '\n';
+	}
 
 
 	return (0);

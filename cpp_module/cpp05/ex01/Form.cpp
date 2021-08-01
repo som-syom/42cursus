@@ -27,10 +27,7 @@ Form::Form(Form const& origin)
 Form& Form::operator=(Form const& origin)
 {
 	checkGrade(origin._sign_grade, origin._exec_grade);
-	// this->_name = origin._name;
 	this->_signed = origin._signed;
-	// this->_sign_grade = origin._sign_grade;
-	// this->_exec_grade = origin._exec_grade;
 	return (*this);
 }
 
