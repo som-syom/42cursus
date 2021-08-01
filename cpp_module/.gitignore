@@ -4,3 +4,4 @@
 !*.hpp
 !.gitignore
 !Makefile
+!tree_shrubbery
