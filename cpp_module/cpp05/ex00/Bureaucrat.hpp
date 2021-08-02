@@ -8,12 +8,12 @@
 class Bureaucrat
 {
 	private:
-		std::string	_name;
-		int			_grade;
+		std::string const	_name;
+		int					_grade;
 		Bureaucrat();
 	public:
 		Bureaucrat(std::string const&, int);
-		~Bureaucrat();
+		virtual ~Bureaucrat();
 		Bureaucrat(Bureaucrat const&);
 		Bureaucrat& operator=(Bureaucrat const&);
 

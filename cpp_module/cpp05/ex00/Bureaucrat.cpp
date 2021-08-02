@@ -5,8 +5,8 @@ Bureaucrat::Bureaucrat()
 }
 
 Bureaucrat::Bureaucrat(std::string const& name, int grade)
+	: _name(name)
 {
-	this->_name = name;
 	this->setGrade(grade);
 }
 
@@ -21,7 +21,6 @@ Bureaucrat::Bureaucrat(Bureaucrat const& origin)
 
 Bureaucrat& Bureaucrat::operator=(Bureaucrat const& origin)
 {
-	this->_name = origin._name;
 	this->setGrade(origin._grade);
 	return (*this);
 }

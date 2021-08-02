@@ -14,7 +14,7 @@ int main()
 	{
 		std::cout << "____________________________[Shrubbery Creation test]" << std::endl;
 		Form* form1 = som.makeForm("Shrubbery Creation", "test1");
-		std::cout << form1;
+		std::cout << *form1;
 		zzang.signForm(*form1);
 		zzang.executeForm(*form1);
 		delete form1;
@@ -42,8 +42,8 @@ int main()
 	
 	try
 	{
-		std::cout << "____________________________[President Pardon test]" << std::endl;
-		Form* form3 = som.makeForm("President Pardon", "test3");
+		std::cout << "____________________________[Presidential Pardon test]" << std::endl;
+		Form* form3 = som.makeForm("Presidential Pardon", "test3");
 		std::cout << *form3;
 		zzang.signForm(*form3);
 		zzang.executeForm(*form3);

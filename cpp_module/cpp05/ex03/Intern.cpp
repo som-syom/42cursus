@@ -39,7 +39,7 @@ Form* Intern::makeForm(std::string const& name, std::string const& target)
 	t_forms forms[3] = {
 		{"Shrubbery Creation", CreateShrubberyCreationForm},
 		{"Robotomy Request", CreateRobotomyRequestForm},
-		{"President Pardon", CreatePresidentialPardonForm}
+		{"Presidential Pardon", CreatePresidentialPardonForm}
 	};
 	for (int i = 0; i < 3; i++)
 	{
