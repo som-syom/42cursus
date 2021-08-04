@@ -1,7 +1,8 @@
 NAME = convert
 CC = clang++
 CFLAGS = -Wall -Werror -Wextra
-SRCS = ./main.cpp
+SRCS = ./main.cpp \
+		./Convert.cpp
 OBJS = $(SRCS:.cpp=.o)
 
 all : $(NAME)
