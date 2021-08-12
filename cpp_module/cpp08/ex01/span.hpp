@@ -7,7 +7,7 @@
 class span
 {
 	private:
-		
+		unsigned int	_N;
 	public:
 		span();
 		~span();
