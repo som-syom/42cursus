@@ -17,9 +17,11 @@ class Span
 		Span(Span const&);
 		Span& operator=(Span const&);
 
-		void addNumber(unsigned int);
-		int shortestSpan();
-		int longestSpan();
+		void addNumber(int);
+		void addRandomNumber(unsigned int size);
+		void printAll();
+		long long shortestSpan();
+		long long longestSpan();
 
 		class OutofRangeException : public std::exception
 		{
@@ -31,12 +33,12 @@ class Span
 			public:
 				virtual const char* what() const throw();
 		};
-		class NotFoundNumException : public std::exception
+		class FullContainerException : public std::exception
 		{
 			public:
 				virtual const char* what() const throw();
 		};
-		class NumCountOneException : public std::exception
+		class NotEnoghNumException : public std::exception
 		{
 			public:
 				virtual const char* what() const throw();
